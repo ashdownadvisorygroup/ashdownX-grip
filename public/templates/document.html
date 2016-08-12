@@ -1,0 +1,37 @@
+
+<div ng-if="affiche == 'video'" >
+    <video width="800px" height="500px" class="youtube" controls>
+        <source ng-src="{{livre.link}}">
+        Your browser does not support the video tag.
+    </video>
+</div>
+
+<div ng-if="affiche == 'audio'" >
+    <audio class="youtube" controls>
+        <source ng-src="{{livre.link}}" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+</div>
+
+<div ng-if="affiche == 'pdf'" >
+       <!-- <object data="img/1470140610525-STI03-ed4_0505.pdf" type="application/pdf" width="100%" height="100%"></object>-->
+    <iframe ng-src="{{livre.link}}" width="100%" height="100%"></iframe>
+</div>
+<div ng-if="affiche == 'youtube'" >
+    <!--<youtube-video video-id="theBestVideo"></youtube-video>-->
+    <youtube-video video-id="theBestVideo" player="bestPlayer" class="youtube"
+                   player-width="'50%'" player-height="'500px'"></youtube-video>
+    <br>
+    <!-- perform video playback operations -->
+    <a ng-click="bestPlayer.playVideo()" title="play button"><span class="glyphicon glyphicon-play home" style="margin-left: 40%"
+                                                        aria-hidden="true"></span></a>
+    <a ng-click="bestPlayer.stopVideo()" title="stop button"><span class="glyphicon glyphicon-stop home"
+                                               aria-hidden="true"></span></a>
+
+
+</div>
+
+
+
+
+

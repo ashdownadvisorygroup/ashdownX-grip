@@ -1,0 +1,106 @@
+<div class="container">
+    <div class="row main">
+        <div class="panel-heading">
+            <div class="panel-title text-center">
+                <h1 class="title">Register</h1>
+                <hr />
+            </div>
+        </div>
+        <div class="main-login main-center">
+            <form class="form-horizontal" method="post" action="#">
+
+
+
+                <div class="form-group">
+                    <div class="row"><label for="username" class="cols-sm-2 control-label">Username</label></div>
+                    <div class="row">
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control" name="username" ng-model="user.name"
+                                       id="username"  placeholder="Enter your Username"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row"><label for="password" class="cols-sm-2 control-label">Password</label></div>
+                    <div class="row">
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock" aria-hidden="true"></i></span>
+                                <input type="password" class="form-control" name="password" ng-model="user.password"
+                                       id="password"  placeholder="Enter your Password"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row"><label for="accessLevel" class="cols-sm-2 control-label">accessLevel</label></div>
+                    <div class="row">
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock" aria-hidden="true"></i></span>
+                                <input type="number" class="form-control" name="accessLevel" ng-model="user.accessLevel"
+                                       id="accessLevel"  placeholder="Enter your accessLevel"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row"><label for="activate" class="cols-sm-2 control-label">activate</label></div>
+                    <div class="row">
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock" aria-hidden="true"></i></span>
+                                <input type="number" class="form-control" name="activate" ng-model="user.activate"
+                                       id="activate"  placeholder="true or false"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row"><label for="photo" class="cols-sm-2 control-label">photo</label></div>
+                    <div class="row">
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-user" aria-hidden="true"></i></span>
+                                <div id="photo" name="photo" type="file" ngf-drop ngf-select ng-model="user.photo" class="drop-boxi"
+                                     ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="false"
+                                     accept="image/*" ngf-max-size="10MB"
+                                     ngf-pattern="'image/*'" >cliquez et deposez la photo </div>
+
+                            </div>
+                            <img ngf-src="user.photo" class="thumb ng-hide" style="height: 35px">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row"><label for="confirm" class="cols-sm-2 control-label">Confirm Password</label></div>
+                    <div class="row">
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock" aria-hidden="true"></i></span>
+                                <input type="password" class="form-control" name="confirm" ng-model="user.password"
+                                       id="confirm"  placeholder="Confirm your Password"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group ">
+                    <button type="button" ng-click="signup()"
+                            class="btn btn-primary btn-large btn-block  login-button">Register</button>
+                </div>
+                <div class="login-register">
+                    <button type="button" ui-sref="login"
+                            class="btn btn-primary btn-large btn-block  login-button">Login!</button>
+
+                </div>
+            </form>
+            <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+        </div>
+    </div>
+</div>

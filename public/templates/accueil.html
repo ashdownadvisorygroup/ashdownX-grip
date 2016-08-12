@@ -1,0 +1,38 @@
+
+<div class="row">
+    <div class="col-md-3">
+
+        <div class=" row form-group" style="padding-left: 25px;">
+            <h1>CATEGORIES
+                <a ui-sref="formulaireCategorie">
+
+                <span class="glyphicon glyphicon-plus plus"  title="ajouter une nouvelle categorie"
+                      aria-hidden="true"></span>
+                </a>
+            </h1>
+
+        </div>
+        <div class="menu-categorie">
+            <table style="width: 100%">
+                <tr ng-repeat="cat in categories" title="{{cat.description}}" class="menu-categorie-moins">
+                    <td><a ui-sref="categorie({id:cat._id})">{{cat.nom}}</a></td>
+                    <td>
+                        <a ui-sref="updateCategorie({id:cat._id})" class="glyphicon glyphicon-pencil"
+                           title="modifier la categorie" aria-hidden="true" >
+                        </a>
+                    </td>
+                </tr>
+            </table>
+       <!--     <input type="image" src="image/supprimer.jpg" alt="Submit" width="48" height="48" title="Supprimer le document" ng-click="launch('confirm'); deletes({id:cat._id})" >-->
+        </div>
+    </div>
+    <div class="col-md-9" style="text-align: center">
+    <p>
+        <span class="titre">
+            <b><i>
+                BIENVENUE <br>DANS <br> LA <br>BIBLIOTHEQUE</i>
+            </b>
+        </span>
+    </p>
+    </div>
+</div>

@@ -1,0 +1,67 @@
+<html>
+<head>
+  <title>Biblioteque virtuelle!</title>
+  <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body ng-app="bv" ng-controller="AppCtrl">
+
+  <!-- Static navbar -->
+  <nav class="navbar navbar-default menu-principal"  style="background-color: ghostwhite;">
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a ui-sref="accueil"><span class="glyphicon glyphicon-home home"
+                                                      aria-hidden="true"></span>ACCUEIL</a></li>
+        <li class="dropdown">
+          <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-th-list home"
+                  aria-hidden="true"></span>
+            OPTIONS <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a ui-sref="formulaireLivre">Inserer livre</a></li>
+            <li><a ui-sref="formulaireCategorie">Inserer Categorie</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a ui-sref="login">LOGIN</a></li>
+        <li><a ui-sref="register">REGISTER</a></li>
+        <li><a  ng-click="logout();">LOGOUT</a></li>
+      </ul>
+    </div>
+
+  </nav>
+  <ui-view></ui-view>
+
+
+</body>
+<script src="vendor/angular/angular.js"></script>
+<script src="vendor/ng-file-upload/ng-file-upload.min.js"></script>
+<script src="vendor/ng-file-upload/ng-file-upload-shim.min.js"></script>
+<script src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="vendor/jquery/dist/jquery.js"></script>
+<script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
+<script src="vendor/angular-utils-pagination/dirPagination.js"></script>
+<script src="vendor/angular-loading-bar/build/loading-bar.min.js"></script>
+<script src="vendor/angular-sanitize/angular-sanitize.js"></script>
+<script src="vendor/angular-dialog-service/dist/dialogs.js"></script>
+<script src="vendor/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="vendor/angular-messages/angular-messages.js"></script>
+<script src="vendor/angular-filter/dist/angular-filter.min.js"></script>
+<script src="vendor/angular-youtube-mb/src/angular-youtube-embed.js"></script>
+<script src="vendor/angular-thumbnails/dist/angular-thumbnails.min.js"></script>
+<script src="https://www.youtube.com/iframe_api"></script>
+
+
+
+<script src="app.js"></script>
+<script src="app/service.js"></script>
+<script src="app/controller.js"></script>
+<script src="app/config.js"></script>
+<script src="app/filter.js"></script>
+<script src="app/constant.js"></script>
+
+
+
+</html>

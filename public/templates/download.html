@@ -1,0 +1,78 @@
+<div class="row">
+    <div class="col col-md-2">
+        <h2>{{categorie.nom}}</h2>
+        <hr>
+        <p>
+            {{categorie.description}}
+        </p>
+        <input type="image" src="image/supprimer.jpg" alt="Submit" width="48" height="48" title="Supprimer le document" ng-click="launch('confirm'); deletes({id:categorie._id})" >
+    </div>
+
+    <div class="row col col-md-10">
+
+        <div class=" row form-group" >
+            <input class="bar-pagination" id="inpt"  type="number"  ng-model="nbparpage" >
+            <button ui-sref="formulaireLivre" class="btn btn-primary right">+</button>
+            <input type="image" src="image/add-a-document-button.png" class="inptimg" alt="Submit" width="48" height="48" title="Nouveau le document" onclick="donouveau();">
+        </div>
+
+        <div class="col col-lg-3 OK"  dir-paginate="livre in livres | itemsPerPage: nbparpage">
+            <div class="livre">
+                <div class="row">
+                    <div class="col col-md-8 all">
+                        <p>
+                            Nom du livre:  {{livre.nom}}
+                        </p>
+
+                        <p>
+                            Description:   {{livre.description}}
+                        </p>
+                        <p>
+                            Lu : {{livre.readed}}
+                        </p>
+                        <p>
+                            Telecharger : {{livre.downloaded}}
+                        </p>
+                        <p>
+                            <a href="./img/+{{livre.link}}">lien vers le document</a>
+                        </p>
+                        <span></span>
+                        <span> </span>
+
+                    </div>
+                    <div class="col col-md-4">
+                        <div class="row" style="margin-top: -12px; text-align: center;margin-right: 10px;">
+                            <img ng-src="{{livre.logo}}" alt="">
+                            <h5>LOGO</h5>
+                            <hr>
+                        </div>
+                        <div class="row" style="margin-left: -50px;">
+                            <a ui-sref="updateLivre({id:livre._id})">
+                                <img  src="image/update.jpg"  alt="Submit" width="48" height="48"  title="Modifier le document">
+                            </a>
+                            <input type="image" src="image/telecharger.jpg" alt="Submit" width="48" height="48"
+                                   title="Telecharger le document" ng-click="telecharger()" >
+                            <a href="">
+
+                            </a>
+                            <a ui-sref="deleteLivre({id:livre._id})">
+                                <img  src="image/supprimer.jpg"  alt="Submit" width="48" height="48">
+                            </a>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+    <div class="text-center">
+        <dir-pagination-controls ></dir-pagination-controls>
+    </div>
+
+</div>

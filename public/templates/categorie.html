@@ -1,0 +1,140 @@
+<div class="row">
+    <div class="col col-md-2">
+        <h2>{{categorie.nom}} <a ng-click="launch('confirm')" class="glyphicon glyphicon-trash"
+                                title="Supprimer le document" aria-hidden="true" >
+        </a></h2>
+        <hr>
+        <p>
+            {{categorie.description}}
+        </p>
+
+    </div>
+
+    <div class="col col-md-10">
+
+        <div id="filter-panel" class="collapse filter-panel">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form class="form-inline" role="form">
+                        <div class="form-group">
+                            <label class="bar-pagination"  style="margin-right:0;" for="pref-perpage">Rows per page:</label>
+                            <select id="pref-perpage" ng-model="nbparpage" class="form-control">
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option selected="selected" value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option  value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                                <option value="40">40</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                                <option value="200">200</option>
+                                <option value="300">300</option>
+                                <option value="400">400</option>
+                                <option value="500">500</option>
+                                <option value="1000">1000</option>
+                            </select>
+                        </div> <!-- form group [rows] -->
+                        <div class="form-group">
+                            <label class="bar-pagination" style="margin-right:0;" for="pref-search">Search:</label>
+                            <input type="text" class="form-control input-sm" id="pref-search" ng-model="search">
+                        </div>
+                        <div class="form-group">
+                            <a ui-sref="formulaireLivre">
+
+                            <span class="glyphicon glyphicon-plus cat"  title="ajouter un nouveau livre"
+                                aria-hidden="true"></span>
+                            </a>
+                        </div><!-- form group [new book] -->
+                        <div class="form-group">
+                            <label class="bar-pagination" style="margin-right:0;" for="pref-orderby">Order by:</label>
+                            <select id="pref-orderby" ng-model="sortorder" class="form-control">
+                                <option value="+nom">Ascendant</option>
+                                <option value="-nom">Descendant</option>
+                            </select>
+                        </div> <!-- form group [order by] -->
+                    </form>
+                </div>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">
+            <span class="glyphicon glyphicon-cog"></span> Advanced Search
+        </button>
+    </div>
+        <div class="row">
+            <!--,description:search-->
+            <div class="col col-md-4 col-xs-6  col-lg-3"  dir-paginate="livre in filteredLivre=( livres
+            | filterBy: ['nom', 'description']:search) | orderBy:sortorder
+            |itemsPerPage: nbparpage ">
+
+                    <div class="row livre">
+                        <div class="col col-md-8">
+                            <p>
+                                Nom du livre:  {{livre.nom}}
+                            </p>
+
+                            <p>
+                                Description:   {{livre.description}}
+                            </p>
+                            <p>
+                                Lu : {{livre.readed}}
+                            </p>
+                            <p>
+                                Telecharger : {{livre.downloaded}}
+                            </p>
+                            <p>
+                                  <a ui-sref="document({id:livre._id})"
+                                   ng-click="lire(livre._id)">{{livre.affiche}}</a>
+
+                            </p>
+
+
+                        </div>
+                        <div class="col col-md-4 right">
+                            <div class="row" >
+                                <img ng-src="{{livre.logo}}" alt="" >
+                                <h5>LOGO</h5>
+                                <hr>
+                            </div>
+                            <div class="row">
+
+                                <a ui-sref="updateLivre({id:livre._id})" class="glyphicon glyphicon-pencil cat" title="Modifier le document">
+                                </a>
+
+                                <a href="/download/{{livre._id}}" ng-click="telecharger(livre._id)" title="Telecharger le document"
+                                   class="glyphicon glyphicon-download-alt cat">
+                                </a>
+                                <a ui-sref="deleteLivre({id:livre._id})" class="glyphicon glyphicon-trash cat" title="supprimer le document">
+                                </a>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
+            </div>
+            <div ng-hide="filteredLivre.length" class="col col-md-4 col-xs-6  col-lg-8">
+                <h2>Aucun resultat a la recherche....</h2>
+            </div>
+
+        </div>
+
+
+
+
+
+    </div>
+    <div class="text-center">
+        <dir-pagination-controls ></dir-pagination-controls>
+    </div>
+
+</div>
