@@ -62,11 +62,11 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
         },
         getOneLivre: function(id){
             factory.loadUserCredentials();
-            var livre;
+            var media;
             var deferred = $q.defer();
             $http({
                 method: 'GET',
-                url: '/livre/'+id
+                url: '/media/'+id
             }).success(function(data,status){
                 deferred.resolve(data);
             }).error(function(error,status){
@@ -74,13 +74,13 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
             });
             return deferred.promise;
         },
-        ajouterlivre: function(livre){
+        ajouterlivre: function(media){
             factory.loadUserCredentials();
         var deferred = $q.defer();
-        categorie=livre.categorie;
+        categorie=media.categorie;
         Upload.upload({
-            url: '/categories/'+categorie+'/livres',
-            data:livre
+            url: '/categories/'+categorie+'/Medias',
+            data:media
         }).then(function (resp) {
             console.log(resp.data)
             deferred.resolve(resp.data);
@@ -91,13 +91,13 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
 
         return deferred.promise;
     },
-        ajouterlivres: function(livre){
+        ajouterlivres: function(media){
             factory.loadUserCredentials();
         var deferred = $q.defer();
-        categorie=livre.categorie;
+        categorie=media.categorie;
         Upload.upload({
-            url: '/categories/'+categorie+'/livre',
-            data:livre
+            url: '/categories/'+categorie+'/media',
+            data:media
         }).then(function (resp) {
             console.log(resp.data)
             deferred.resolve(resp.data);
@@ -108,30 +108,30 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
 
         return deferred.promise;
     },
-        updateLivre: function(livre){//pour l'url
-            factory.loadUserCredentials();
-        var deferred = $q.defer();
-        Upload.upload({
-            method: 'PUT',
-            url: '/livre/'+livre._id,
-            data:livre
-        }).then(function (resp) {
-            console.log(resp.data)
-            deferred.resolve(resp.data);
-
-        },function(msg){
-            deferred.reject(msg)
-        });
-
-        return deferred.promise;
-    },
-        updateLivres: function(livre){//pour les fichiers
+        updateLivre: function(media){//pour l'url
             factory.loadUserCredentials();
         var deferred = $q.defer();
         Upload.upload({
             method: 'PUT',
-            url: '/livres/'+livre._id,
-            data:livre
+            url: '/media/'+media._id,
+            data:media
+        }).then(function (resp) {
+            console.log(resp.data)
+            deferred.resolve(resp.data);
+
+        },function(msg){
+            deferred.reject(msg)
+        });
+
+        return deferred.promise;
+    },
+        updateLivres: function(media){//pour les fichiers
+            factory.loadUserCredentials();
+        var deferred = $q.defer();
+        Upload.upload({
+            method: 'PUT',
+            url: '/Medias/'+media._id,
+            data:media
         }).then(function (resp) {
             console.log(resp.data)
             deferred.resolve(resp.data);
@@ -143,13 +143,13 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
         return deferred.promise;
     },
 
-        deleteLivre: function(livre){
+        deleteLivre: function(media){
             factory.loadUserCredentials();
         var deferred = $q.defer();
         $http({
             method: 'DELETE',
-            url: '/livre/'+livre._id,
-            data:livre
+            url: '/media/'+media._id,
+            data:media
         }).then(function (resp) {
             deferred.resolve(resp.data);
 
@@ -260,7 +260,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
             var deferred = $q.defer(id);
             $http({
                 method: 'PUT',
-                url:' /livres/'+id+'/downloaded',
+                url:' /Medias/'+id+'/downloaded',
 
             }).success(function(data,status){
                 deferred.resolve(data);
@@ -276,7 +276,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
             var deferred = $q.defer(id);
             $http({
                 method: 'PUT',
-                url:' /livres/'+id+'/readed',
+                url:' /Medias/'+id+'/readed',
 
             }).success(function(data,status){
                 deferred.resolve(data);
@@ -314,13 +314,17 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
     return factory;
 }])
 
-    .factory('isAuthenticated', function(){
-        var data = {};
+    .factory('isAuthenticated', function($cookieStore){
+        var data = $cookieStore.get('user');
         function set(dataAuth){
             data = dataAuth;
         }
         function get(){
-            return data;
+            if($cookieStore.get('user'))
+                return true;
+            else
+                return false
+            //return data;
         }
         return{
             set:set,
@@ -328,7 +332,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
         }
     })//,$window
 
-.service('AuthService', function($q, $http, isAuthenticated) {
+.service('AuthService', function($q, $http,$resource, $rootScope, $sessionStorage,$cookies,$cookieStore, isAuthenticated,Upload) {
     var LOCAL_TOKEN_KEY = 'yourTokenKey';
     var authToken;
     function loadUserCredentials() {
@@ -360,16 +364,104 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
     var register = function(user) {
     //this.register = function(user) {
         return $q(function(resolve, reject) {
-            Upload.upload('/signup', user).then(function(result) {
+            $http.post('/signup', user).then(function(result) {
                 //alert(JSON.stringify(result));
-                if (result.data.success) {
-                    resolve(result.data.msg);
+                //alert('result'+result);
+                console.log(result)
+                if (!result.data.success) {
+                    resolve(result.data);
                 } else {
+                    alert(result.data.msg)
                     reject(result.data.msg);
                 }
             });
         });
-    };/*var register = function(user) {
+    };
+
+    /**
+     *  Saves the current user in the root scope
+     *  Call this in the app run() method
+     */
+    var init = function(){
+        if (isLoggedIn()){
+            $rootScope.user = currentUser();
+           // alert($rootScope.user)
+        }
+    };
+
+
+
+    var logout = function() {
+        $cookieStore.remove('user');
+        delete $rootScope.user;
+        alert(JSON.stringify($cookieStore.get('user')));
+        destroyUserCredentials();
+        //alert($rootScope.user)
+        //alert($sessionStorage.user)
+    };
+
+
+    var checkPermissionForView = function(view) {
+        if (!view.requiresAuthentication) {
+            return true;
+        }
+
+        return userHasPermissionForView(view);
+    };
+
+
+    var userHasPermissionForView = function(view){
+        if(!isLoggedIn()){
+            return false;
+        }
+
+        if(!view.permissions || !view.permissions.length){
+            return true;
+        }
+
+        return userHasPermission(view.permissions);
+    };
+
+
+    var userHasPermission = function(permissions){
+        if(!isLoggedIn()){
+            return false;
+        }
+
+        var found = false;
+        //console.log($sessionStorage.user.permissions)
+        angular.forEach(permissions, function(permission, index){
+            if ($cookieStore.get('user').permissions.indexOf(permission) >= 0){
+                found = true;
+                return;
+            }
+        });
+        console.log(found)
+        return found;
+    };
+
+
+    var currentUser = function(){
+        return $cookieStore.get('user');
+        //return $sessionStorage.user;
+    };
+
+
+    var isLoggedIn = function(){
+        return $cookieStore.get('user') != null;
+        //return $sessionStorage.user != null;
+    };
+    var Profile = $resource('/authenticate', {}, {
+        login: {
+            method: "POST",
+            isArray : false
+        }
+    });
+
+
+
+
+    /*var register = function(user) {
     //this.register = function(user) {
         return $q(function(resolve, reject) {
             $http.post('/signup', user).then(function(result) {
@@ -382,13 +474,13 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
             });
         });
     };*/
-    /*ajouterlivres: function(livre){
+    /*ajouterlivres: function(media){
         factory.loadUserCredentials();
         var deferred = $q.defer();
-        categorie=livre.categorie;
+        categorie=media.categorie;
         Upload.upload({
-            url: '/categories/'+categorie+'/livre',
-            data:livre
+            url: '/categories/'+categorie+'/media',
+            data:media
         }).then(function (resp) {
             console.log(resp.data)
             deferred.resolve(resp.data);
@@ -402,36 +494,124 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
     var login = function(user) {
    // this.login = function(user) {
         return $q(function(resolve, reject) {
-            $http.post('/authenticate', user).then(function(result) {
+            Profile.login(user).$promise
+            .then(function(result) {
                 //alert(JSON.stringify(result));
-               // console.log("Authentication started");
-                if (result.data.success) {
-                    console.log(result.data)
+               console.log("Authentication started");
+                if (result.success) {
                    // isAuthenticateds = true;
                     isAuthenticated.set(true);
-                    storeUserCredentials(result.data.token);
+                    console.log(isAuthenticated)
+                    $cookieStore.put('user', result);
+                   // $sessionStorage.user =result;
+                    console.log($cookieStore.get('user'))
+                    $rootScope.user = $cookieStore.get('user');
+                    console.log($rootScope.user)
+                    storeUserCredentials(result.token);
                     //console.log(isAuthenticated.get());
-                    resolve(result.data.msg);
+                    resolve(result);
                 } else {
-                    reject(result.data.msg);
+                    reject(result);
                 }
             });
         });
     };
-    var logout = function() {
-        destroyUserCredentials();
+    var updatuser = function(user) {
+   // this.login = function(user) {
+        return $q(function(resolve, reject) {
+            $http({
+                method: 'PUT',
+                url: '/user',
+                data:user
+            })
+            .then(function(result) {
+                console.log(result)
+                //alert(JSON.stringify(result));
+               //console.log("Authentication started");
+                if (!result.success) {
+                   // isAuthenticateds = true;
+                    isAuthenticated.set(true);
+                    console.log(isAuthenticated)
+                    $cookieStore.put('user',result);
+                    //$sessionStorage.user =result;
+                    //console.log($sessionStorage.user)
+                    $rootScope.user = $cookieStore.get('user');
+                    console.log($rootScope.user)
+                    storeUserCredentials(result.token);
+                    //console.log(isAuthenticated.get());
+                    resolve(result);
+                } else {
+                    reject(result);
+                }
+            });
+        });
     };
+
     loadUserCredentials();
     return {
         login: login,
         register: register,
         logout: logout,
+        currentUser: currentUser,
+        isLoggedIn: isLoggedIn,
+        userHasPermission: userHasPermission,
+        userHasPermissionForView: userHasPermissionForView,
+        checkPermissionForView:checkPermissionForView,
+        init:init,
+        updatuser:updatuser,
         isAuthenticated: isAuthenticated,
     };
 
 
 
+
 })
+    .directive('permission', ['AuthService', function(AuthService) {
+        return {
+            restrict: 'A',
+            scope: {
+                permission: '='
+            },
+
+            link: function (scope, elem, attrs) {
+
+                scope.$watch(AuthService.isLoggedIn, function() {
+                    console.log(elem)
+                    if (AuthService.userHasPermission(scope.permission)) {
+                        console.log(elem)
+                       elem.show();
+                    } else {
+                        elem.hide();
+                    }
+                });
+            }
+        }
+    }])
+
+    .directive('selectpicker', ['$parse', function ($parse) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                element.selectpicker($parse(attrs.selectpicker)());
+                element.selectpicker('refresh');
+
+                scope.$watch(attrs.ngModel, function (newVal, oldVal) {
+                    scope.$parent[attrs.ngModel] = newVal;
+                    scope.$evalAsync(function () {
+                        if (!attrs.ngOptions || /track by/.test(attrs.ngOptions)) element.val(newVal);
+                        element.selectpicker('refresh');
+                    });
+                });
+
+                scope.$on('$destroy', function () {
+                    scope.$evalAsync(function () {
+                        element.selectpicker('destroy');
+                    });
+                });
+            }
+        };
+    }])
+
     .factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS) {
         return {
             responseError: function (response) {
@@ -445,5 +625,6 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
 
     .config(function ($httpProvider) {
         $httpProvider.interceptors.push('AuthInterceptor');
-    });
+    })
+
 

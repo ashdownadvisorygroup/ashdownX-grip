@@ -6,7 +6,7 @@
                     <h1>Mise a jour du media</h1>
                     <hr>
 
-                    <form class="form-horizontal" name="myForm" role="form"  ng-submit="updatelivre()">
+                    <form class="form-horizontal" name="myForm" role="form"  ng-submit="updatemedia()">
 
                         <div class='row'>
 
@@ -17,7 +17,7 @@
                                     <label for="civilite" class="col-sm-2 control-label">Nom :</label>
                                     <div  ng-class="{'erreur':myForm.name.$error&&myForm.name.$touched}"
                                           class="col-sm-6" >
-                                        <input ng-model="livre.nom" name="name" type="text" class="form-control"
+                                        <input ng-model="media.nom" name="name" type="text" class="form-control"
                                                name="name" ng-minlength="4"
                                                ng-maxlength="8" id="civilite" required >
                                         <!-- ng-class="{'erreur':myForm.name.$error&&myForm.name.$touched}"-->
@@ -32,7 +32,7 @@
 
                                     </div>
                                     <div class="col-sm-2">
-                                        {{livre.nom}}
+                                        {{media.nom}}
                                     </div>
 
 
@@ -45,10 +45,10 @@
                                     <label for="logo" class="col-sm-2 btn btn-primary control-label" style="text-align: center;margin-left: 18px;">
                                         changer de logo </label>
                                     <div class="col-md-6">
-                                        <!--<input type="file" ng-model="livre.nom" class="form-control" name="prenom" id="prenom">-->
+                                        <!--<input type="file" ng-model="media.nom" class="form-control" name="prenom" id="prenom">-->
 
 
-                                        <input id="logo" name="logo" type="file" ngf-drop ngf-select ng-model="livre.logo" class="drop-box"
+                                        <input id="logo" name="logo" type="file" ngf-drop ngf-select ng-model="media.logo" class="drop-box"
                                                ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="false"
                                                accept="image/*" ngf-max-size="10MB" style="display: none"
                                                ngf-pattern="'image/*'" />
@@ -61,7 +61,7 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
-                                        <img ngf-src="livre.logo" class="thumb ng-hide" style="height: 35px">
+                                        <img ngf-src="media.logo" class="thumb ng-hide" style="height: 35px">
                                     </div>
 
 
@@ -69,41 +69,41 @@
                                 <div class="form-group">
                                     <label for="link" class="col-sm-2 control-label">Fichier :</label>
                                     <div class="col-sm-6" >
-                                        <!--<input type="file" id="link" ng-model="livre.link" class="form-control" name="email" id="email">-->
+                                        <!--<input type="file" id="link" ng-model="media.link" class="form-control" name="email" id="email">-->
                                         <div class="row" >
-                                            <input id="fichier" type="radio" ng-model="livre.tlink" value="fichier"> <label for="fichier">Fichier</label>
-                                            <input id="url" type="radio" ng-model="livre.tlink"  value="url"> <label for="url">Url</label>
+                                            <input id="fichier" type="radio" ng-model="media.tlink" value="fichier"> <label for="fichier">Fichier</label>
+                                            <input id="url" type="radio" ng-model="media.tlink"  value="url"> <label for="url">Url</label>
                                         </div>
-                                        <div ng-show="livre.tlink=='url'">
+                                        <div ng-show="media.tlink=='url'">
                                             <!-- <input  type="url" class="form-control" >-->
-                                            <input ng-model="livre.link.text"    class="form-control" accept="text/plain"
+                                            <input ng-model="media.link.text"    class="form-control" accept="text/plain"
                                                    ngf-pattern="'text/plain'">
                                         </div>
 
-                                        <input ng-show="livre.tlink=='fichier'" id="link" name="link" type="file" ngf-drop ngf-select ng-model="livre.link.file" class="drop-box"
+                                        <input ng-show="media.tlink=='fichier'" id="link" name="link" type="file" ngf-drop ngf-select ng-model="media.link.file" class="drop-box"
                                                ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="false"
                                                accept="image/*,application/pdf,audio/mp3,video/mp4" ngf-max-size="30MB"
                                                ngf-pattern="'image/*,application/pdf,audio/mp3,video/mp4'">
 
 
                                         <div class="col-sm-4">
-                                            <div ng-show="livre.link.text.length">
+                                            <div ng-show="media.link.text.length">
                                                 <img  ng-src="{{affiche}}" width="50" height="50" >
                                                 <br>
                                                 <p>
-                                                    Audio preview: <audio controls ngf-src="livre.link.file" class="thumb ng-hide"></audio>
+                                                    Audio preview: <audio controls ngf-src="media.link.file" class="thumb ng-hide"></audio>
                                                 </p>
                                                 <br>
                                                 <p >
-                                                    Video preview: <video controls ngf-src="livre.link.file" class="thumb ng-hide"></video>
+                                                    Video preview: <video controls ngf-src="media.link.file" class="thumb ng-hide"></video>
                                                 </p>
                                                 <br>
                                                 <p>
-                                                    <thumbnail file-type="video" source="{{livre.link.text}}" max-height="150" max-width="300"></thumbnail>
+                                                    <thumbnail file-type="video" source="{{media.link.text}}" max-height="150" max-width="300"></thumbnail>
                                                 </p>
                                             </div>
-                                            <div ng-show="livre.link.text.length" class="form-control" >
-                                                {{livre.link.text}}
+                                            <div ng-show="media.link.text.length" class="form-control" >
+                                                {{media.link.text}}
                                             </div>
                                         </div>
 
@@ -121,7 +121,7 @@
                                 <div class="form-group">
                                     <label for="categorie" class="col-sm-2 control-label">Categorie :</label>
                                     <div class="col-sm-8">
-                                        <select ng-model="livre.categorie" name="categorie" class="form-control" id="categorie" required>
+                                        <select ng-model="media.categorie" name="categorie" class="form-control" id="categorie" required>
                                             <option ng-repeat="cat in categories" value="{{cat._id}}">{{cat.nom}}</option>
                                         </select>
                                         <div ng-messages="myForm.categorie.$error" ng-if="myForm.categorie.$touched">
@@ -133,7 +133,7 @@
                                 <div class="form-group">
                                     <label for="description" class="col-sm-2 control-label">Description :</label>
                                     <div class="col-sm-8">
-                                        <textarea ng-model="livre.description" name="description" id="description"  class="form-control"
+                                        <textarea ng-model="media.description" name="description" id="description"  class="form-control"
                                                   ng-minlength="10"
                                                   ng-maxlength="30"
                                                   cols="30" rows="4" required></textarea>

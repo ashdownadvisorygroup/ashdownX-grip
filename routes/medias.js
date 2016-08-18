@@ -9,15 +9,21 @@ expressValidator = require('express-validator');
 var util = require('util');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var Group = mongoose.model('Group');
 var passport = require('passport');
 var jwt = require('jwt-simple');
 var config = require('../config/database');
 var Categorie = mongoose.model('Categorie');
-var Livre = mongoose.model('Livre');
+var Media = mongoose.model('Media');
 var path = require('path');
 var mime = require('mime');
 var fs = require('fs');
 var oembed=require("oembed-auto");
+var mustBe = require("mustbe");
+//var mustbe = require("mustbe").activities();
+var mustBeConfig = require("../mustbe-config");
+mustBe.configure(mustBeConfig);
+mustBe= mustBe.routeHelpers();
 
 
 
@@ -33,53 +39,53 @@ router.post('/get_meta',passport.authenticate('jwt', { session: false}),function
     }
 
 });
-router.param('livre', function (req, res, next, id) {
+router.param('media', function (req, res, next, id) {
     var token = getToken(req.headers);
     if (token) {
-        var query = Livre.findById(id);
+        var query = Media.findById(id);
 
-        query.exec(function (err, livre) {
+        query.exec(function (err, media) {
             if (err) {
                 return next(err);
             }
-            if (!livre) {
-                return next(new Error('can\'t find livre'));
+            if (!media) {
+                return next(new Error('can\'t find media'));
             }
 
-            req.livre = livre;
+            req.media = media;
             return next();
         });
     }
 
 });
 
-router.get('/livres',passport.authenticate('jwt', { session: false}), function (req, res, next) {
+router.get('/Medias',passport.authenticate('jwt', { session: false}), function (req, res, next) {
     var token = getToken(req.headers);
     if (token) {
-        Livre.find(function (err, livres) {
+        Media.find(function (err, medias) {
             if (err) {
                 return next(err);
             }
 
-            res.json(livres);
+            res.json(medias);
         });
     }
 
 });
 
-router.get('/livre/:livre',passport.authenticate('jwt', { session: false}), function (req, res) {
+router.get('/media/:media',passport.authenticate('jwt', { session: false}), function (req, res) {
     var token = getToken(req.headers);
     if (token) {
-        res.json(req.livre);
+        res.json(req.media);
     }
 
 });
 
 
-router.post('/livres',passport.authenticate('jwt', { session: false}), function (req, res, next) {
+router.post('/Medias',passport.authenticate('jwt', { session: false}), function (req, res, next) {
     var token = getToken(req.headers);
     if (token) {
-        var liv = new Livre(req.body);
+        var liv = new Media(req.body);
 
         liv.save(function (err, liv) {
             if (err) {
@@ -92,7 +98,7 @@ router.post('/livres',passport.authenticate('jwt', { session: false}), function 
 
 });
 
-router.route('/livre/:livre',passport.authenticate('jwt', { session: false})).put(function (req, res, next) {
+router.route('/media/:media',passport.authenticate('jwt', { session: false})).put(function (req, res, next) {
     var token = getToken(req.headers);
     if (token) {
         var maxSize = 10 * 1000 * 1000;
@@ -114,7 +120,7 @@ router.route('/livre/:livre',passport.authenticate('jwt', { session: false})).pu
         ).array('logo', 1);
         upload(req, res, function (err) {
 
-            liv = req.livre;
+            liv = req.media;
             if (err == "phoebe") {
                 res.status(422).json({msg: "probleme avec fichier"});
                 return;
@@ -157,7 +163,7 @@ router.route('/livre/:livre',passport.authenticate('jwt', { session: false})).pu
 
                     acat = categorie;
 
-                    acat.livres.splice(acat.livres.indexOf(liv._id), 1);
+                    acat.medias.splice(acat.medias.indexOf(liv._id), 1);
                     acat.save(function (err, acat) {
                         if (err) {
                             return next(err);
@@ -180,7 +186,7 @@ router.route('/livre/:livre',passport.authenticate('jwt', { session: false})).pu
                                 return next(err);
                             }
 
-                            ncat.livres.push(liv)
+                            ncat.medias.push(liv)
                             ncat.save(function (err, ncat) {
                                 if (err) {
                                     return next(err);
@@ -218,7 +224,7 @@ router.route('/livre/:livre',passport.authenticate('jwt', { session: false})).pu
     }
 
 });//pour l'url
-router.put('/livres/:livre',passport.authenticate('jwt', { session: false}), function (req, res, next) {
+router.put('/Medias/:media',passport.authenticate('jwt', { session: false}), function (req, res, next) {
     var token = getToken(req.headers);
     if (token) {
         var maxSize = 30 * 1000 * 1000;
@@ -242,7 +248,7 @@ router.put('/livres/:livre',passport.authenticate('jwt', { session: false}), fun
 
         upload(req, res, function (err) {
 
-            liv = req.livre;
+            liv = req.media;
             var name = [];
             for (var index in req.files) {
 
@@ -276,7 +282,7 @@ router.put('/livres/:livre',passport.authenticate('jwt', { session: false}), fun
 
                     acat = categorie;
 
-                    acat.livres.splice(acat.livres.indexOf(liv._id), 1);
+                    acat.medias.splice(acat.medias.indexOf(liv._id), 1);
                     acat.save(function (err, acat) {
                         if (err) {
                             return next(err);
@@ -299,7 +305,7 @@ router.put('/livres/:livre',passport.authenticate('jwt', { session: false}), fun
                                 return next(err);
                             }
 
-                            ncat.livres.push(liv)
+                            ncat.medias.push(liv)
                             ncat.save(function (err, ncat) {
                                 if (err) {
                                     return next(err);
@@ -339,11 +345,11 @@ router.put('/livres/:livre',passport.authenticate('jwt', { session: false}), fun
 
 
 
-router.route('/livre/:livre',passport.authenticate('jwt', { session: false})).delete(function (req, res) {
+router.route('/media/:media',mustBe.authorized("admin"),passport.authenticate('jwt', { session: false})).delete(function (req, res) {
     var token = getToken(req.headers);
     if (token) {
-        Livre.remove({
-            _id: req.livre._id
+        Media.remove({
+            _id: req.media._id
         }, function (err, movie) {
             if (err) {
                 return res.send(err);
@@ -356,35 +362,35 @@ router.route('/livre/:livre',passport.authenticate('jwt', { session: false})).de
 });
 
 
-router.put('/livres/:livre/downloaded',passport.authenticate('jwt', { session: false}), function (req, res, next) {
+router.put('/Medias/:media/downloaded',passport.authenticate('jwt', { session: false}), function (req, res, next) {
     var token = getToken(req.headers);
     if (token) {
-        req.livre.download(function (err, livre) {
+        req.media.download(function (err, media) {
             if (err) {
                 return next(err);
             }
-            res.json(livre);
+            res.json(media);
         });
     }
 
 });
-router.put('/livres/:livre/readed',passport.authenticate('jwt', { session: false}), function (req, res, next) {
+router.put('/Medias/:media/readed',passport.authenticate('jwt', { session: false}), function (req, res, next) {
     var token = getToken(req.headers);
     if (token) {
-        req.livre.read(function (err, livre) {
+        req.media.read(function (err, media) {
             if (err) {
                 return next(err);
             }
-            res.json(livre);
+            res.json(media);
         });
     }
 
 });
 
-router.get('/download/:livre',passport.authenticate('jwt', { session: false}), function (req, res) {
+router.get('/download/:media',passport.authenticate('jwt', { session: false}), function (req, res) {
     var token = getToken(req.headers);
     if (token) {
-        var file = 'public/' + req.livre.link;
+        var file = 'public/' + req.media.link;
 
         var filename = path.basename(file);
         var mimetype = mime.lookup(file);

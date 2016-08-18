@@ -4,7 +4,7 @@
 
         <div class=" row form-group" style="padding-left: 25px;">
             <h1>CATEGORIES
-                <a ui-sref="formulaireCategorie">
+                <a ui-sref="formulaireCategorie" permission="['admin']">
 
                 <span class="glyphicon glyphicon-plus plus"  title="ajouter une nouvelle categorie"
                       aria-hidden="true"></span>
@@ -18,7 +18,7 @@
                     <td><a ui-sref="categorie({id:cat._id})">{{cat.nom}}</a></td>
                     <td>
                         <a ui-sref="updateCategorie({id:cat._id})" class="glyphicon glyphicon-pencil"
-                           title="modifier la categorie" aria-hidden="true" >
+                           title="modifier la categorie" aria-hidden="true" permission="['admin']">
                         </a>
                     </td>
                 </tr>

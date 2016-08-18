@@ -1,0 +1,153 @@
+<div class="container" style="margin-top:20px;">
+    <div class="row">
+        <div class="col-xs-12">
+            <h3 class="text-center">Cursus Developpeur web MEAN</h3>
+            <div class="well" style="max-height: 400px;overflow: auto;">
+                <ul id="check-list-box" class="list-group checked-list-box">
+                    <li class="list-group-item" ng-model="un">Creation compte GITHUB</li>
+                    <!--<li class="list-group-item"><a href="#">Creation compte GITHUB</a> </li>-->
+                    <li class="list-group-item" ng-model="deux">html</li>
+                        <div class="well" style="max-height: 300px;overflow: auto;">
+                            <ul class="list-group checked-list-box">
+                                <li class="list-group-item">g</li>
+                                <li class="list-group-item" >j</li>
+
+                            </ul>
+                        </div>
+
+
+
+
+
+                    <li class="list-group-item" data-color="success" ng-model="trois">Css</li>
+                    <div class="well" style="max-height: 300px;overflow: auto;">
+                        <ul class="list-group checked-list-box">
+                            <li class="list-group-item">CSS</li>
+                            <li class="list-group-item">Saas</li>
+
+                        </ul>
+                    </div>
+                    <li class="list-group-item" data-color="info" ng-model="quatre">JAVASCRIPT</li>
+                    <div class="well" style="max-height: 300px;overflow: auto;">
+                        <ul class="list-group checked-list-box">
+                            <li class="list-group-item">JAVASCRIPT</li>
+                            <li class="list-group-item">JQUERY</li>
+                            <li class="list-group-item">ANGULARJS</li>
+                            <div class="well" style="max-height: 300px;overflow: auto;">
+                                <ul class="list-group checked-list-box">
+                                    <li class="list-group-item">FILTRES</li>
+                                    <li class="list-group-item" >CONTROLLEURS</li>
+                                    <li class="list-group-item" >SERVICES</li>
+                                    <li class="list-group-item" >VUE</li>
+
+                                </ul>
+                            </div>
+                            <li class="list-group-item">NODEJS</li>
+                            <div class="well" style="max-height: 300px;overflow: auto;">
+                                <ul class="list-group checked-list-box">
+                                    <li class="list-group-item">FILTRES</li>
+                                    <li class="list-group-item" >CONTROLLEURS</li>
+                                    <li class="list-group-item" >SERVICES</li>
+                                    <li class="list-group-item" >VUE</li>
+
+                                </ul>
+                            </div>
+
+
+                        </ul>
+                    </div>
+                    <li class="list-group-item" ng-model="cinq">GULP</li>
+                    <li class="list-group-item" ng-model="six">TESTS UNITAIRES</li>
+                    <li class="list-group-item" ng-model="sept">MIGRATIONS</li>
+                    <li class="list-group-item" ng-model="huit">SEED</li>
+
+                </ul>
+                <br />
+                <button class="btn btn-primary col-xs-12" id="get-checked-data" ng-click="dataChecked()">Get Checked Data</button>
+            </div>
+            <pre id="display-json"></pre>
+        </div>
+    </div>
+
+    <small><em>progression du cursus</em></small>
+    <uib-progressbar class="progress-striped active" value="dynamic" type="{{type}}"><b>{{dynamic}}%</b>{{type}} <i ng-show="showWarning">!!! Watch out !!!</i></uib-progressbar>
+    </div>
+
+<script>
+
+$(function () {
+$('.list-group.checked-list-box .list-group-item').each(function () {
+
+// Settings
+var $widget = $(this),
+$checkbox = $('<input type="checkbox" class="hidden" />'),
+color = ($widget.data('color') ? $widget.data('color') : "primary"),
+style = ($widget.data('style') == "button" ? "btn-" : "list-group-item-"),
+settings = {
+on: {
+icon: 'glyphicon glyphicon-check'
+},
+off: {
+icon: 'glyphicon glyphicon-unchecked'
+}
+};
+
+$widget.css('cursor', 'pointer')
+$widget.append($checkbox);
+// Event Handlers
+$widget.on('click', function () {
+$checkbox.prop('checked', !$checkbox.is(':checked'));
+$checkbox.triggerHandler('change');
+updateDisplay();
+});
+$checkbox.on('change', function () {
+updateDisplay();
+});
+// Actions
+function updateDisplay() {
+var isChecked = $checkbox.is(':checked');
+
+// Set the button's state
+$widget.data('state', (isChecked) ? "on" : "off");
+
+// Set the button's icon
+$widget.find('.state-icon')
+.removeClass()
+.addClass('state-icon ' + settings[$widget.data('state')].icon);
+
+// Update the button's color
+if (isChecked) {
+$widget.addClass(style + color + ' active');
+} else {
+$widget.removeClass(style + color + ' active');
+}
+}
+
+// Initialization
+function init() {
+
+if ($widget.data('checked') == true) {
+$checkbox.prop('checked', !$checkbox.is(':checked'));
+}
+
+updateDisplay();
+
+// Inject the icon if applicable
+if ($widget.find('.state-icon').length == 0) {
+$widget.prepend('<span class="state-icon ' + settings[$widget.data('state')].icon + '"></span>');
+}
+}
+init();
+});
+
+$('#get-checked-data').on('click', function(event) {
+event.preventDefault();
+
+/*$("#check-list-box li.active").each(function(idx, li) {
+checkedItems[counter] = $(li).text();
+counter++;
+});
+$('#display-json').html(JSON.stringify(checkedItems, null, '\t'));*/
+});
+});
+</script>

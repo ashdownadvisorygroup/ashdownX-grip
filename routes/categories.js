@@ -2,6 +2,12 @@
  * Created by NOUBISSI TAPAH PHOEB on 26/07/2016.
  */
 
+
+var mustBe = require("mustbe");
+var mustBeConfig = require("../mustbe-config");
+mustBe.configure(mustBeConfig);
+mustBe= mustBe.routeHelpers();
+
 var express = require('express');
 
 var passport = require('passport');
@@ -13,9 +19,11 @@ var multer = require('multer');
 var mongoose = require('mongoose');
 var Categorie = mongoose.model('Categorie');
 var User = mongoose.model('User');
-var Livre = mongoose.model('Livre');
+var Group = mongoose.model('Group');
+var Media = mongoose.model('Media');
 var util = require('util');
 var fs = require('fs');
+
 
 router.param('categorie', function (req, res, next, id) {
     console.log(id)
@@ -46,9 +54,9 @@ router.param('categorie', function (req, res, next, id) {
 
 });
 
-router.get('/categories',passport.authenticate('jwt', { session: false}), function (req, res, next) {
+router.get('/categories', function (req, res, next) {
     var token = getToken(req.headers);
-    if (token) {
+    if (token || true) {
         /*var decoded = jwt.decode(token, config.secret);
         var ids=decoded._id;
         console.log(decoded);*/
@@ -68,7 +76,7 @@ router.get('/categorie/:categorie',passport.authenticate('jwt', { session: false
     var token = getToken(req.headers);
     console.log(req.categorie);
     if (token) {
-        req.categorie.populate('livres', function (err, categorie) {
+        req.categorie.populate('Medias', function (err, categorie) {
             if (err) {
                 return next(err);
             }
@@ -80,9 +88,9 @@ router.get('/categorie/:categorie',passport.authenticate('jwt', { session: false
 
 });
 
-router.post('/categories',passport.authenticate('jwt', { session: false}), function (req, res, next) {
+router.post('/categories', function (req, res, next) {
     var token = getToken(req.headers);
-    if (token) {
+    if (token || true) {
         req.checkBody('nom', 'Veuillez renseigne les nom').notEmpty();
         req.checkBody('nom', 'Veuillez ajouter des caractere aux nom').len(3, 20);
 
@@ -103,7 +111,7 @@ router.post('/categories',passport.authenticate('jwt', { session: false}), funct
 
 });
 
-router.put('/categorie/:categorie',passport.authenticate('jwt', { session: false}), function (req, res) {
+router.put('/categorie/:categorie',mustBe.authorized("admin"),passport.authenticate('jwt', { session: false}), function (req, res) {
     var token = getToken(req.headers);
     if (token) {
         cat = req.categorie;
@@ -120,9 +128,10 @@ router.put('/categorie/:categorie',passport.authenticate('jwt', { session: false
 
 });
 
-router.delete('/categorie/:categorie',passport.authenticate('jwt', { session: false}), function (req, res) {
+router.delete('/categorie/:categorie',mustBe.authorized("admin"),passport.authenticate('jwt', { session: false}), function (req, res) {
     var token = getToken(req.headers);
     if (token) {
+
         Categorie.remove({_id: req.categorie._id}, function (err, movie) {
             var quer = Categorie.findById("57a1a6934ebd15fc14135837")
 
@@ -134,22 +143,22 @@ router.delete('/categorie/:categorie',passport.authenticate('jwt', { session: fa
                     return res.json("error lor de la sauvegarde");
                     return next(new Error('can\'t find categorie'));
                 }
-                long=cat.livres.length;
-                Array.prototype.push.apply(cat.livres, req.categorie.livres);
-                for (var i = long-1, len = cat.livres.length; i < len; i++) {
-                    var quer2 = Livre.findById(cat.livres[i]);
-                    quer2.exec(function (err, livre) {
+                long=cat.medias.length;
+                Array.prototype.push.apply(cat.medias, req.categorie.medias);
+                for (var i = long-1, len = cat.medias.length; i < len; i++) {
+                    var quer2 = Media.findById(cat.medias[i]);
+                    quer2.exec(function (err, media) {
 
                         if (err) {
                             return next(err);
                         }
                         if (!cat) {
                             return res.json("error lor de la sauvegarde");
-                            return next(new Error('can\'t find livre'));
+                            return next(new Error('can\'t find media'));
                         }
-                        livre.categorie=cat._id;
-                        livre=new Livre(livre);
-                        livre.save(function (err, liv) {
+                        media.categorie=cat._id;
+                        media=new Media(media);
+                        media.save(function (err, liv) {
                             if (err) {
                                 return next(err);
                             }
@@ -189,7 +198,7 @@ router.delete('/categorie/:categorie',passport.authenticate('jwt', { session: fa
 });
 
 
-router.route('/categories/:categorie/livre',passport.authenticate('jwt', { session: false})).post(function (req, res, next) {
+router.route('/categories/:categorie/media',passport.authenticate('jwt', { session: false})).post(function (req, res, next) {
     var token = getToken(req.headers);
     if (token) {
         var maxSize = 10 * 1000 * 1000;
@@ -238,21 +247,21 @@ router.route('/categories/:categorie/livre',passport.authenticate('jwt', { sessi
                 res.json(errors, 422);
                 return;
             }
-            var livre = new Livre(req.body);
-            livre.categorie = req.categorie;
-            livre.logo =name;
-            livre.save(function (err, livre) {
+            var media = new Media(req.body);
+            media.categorie = req.categorie;
+            media.logo =name;
+            media.save(function (err, media) {
                 if (err) {
                     return next(err);
                 }
 
-                req.categorie.livres.push(livre);
+                req.categorie.medias.push(media);
                 req.categorie.save(function (err, categorie) {
                     if (err) {
                         return next(err);
                     }
 
-                    res.json(livre);
+                    res.json(media);
                 });
             });
         })
@@ -260,7 +269,7 @@ router.route('/categories/:categorie/livre',passport.authenticate('jwt', { sessi
 
 
 });//pour l'url
-router.route('/categories/:categorie/livres',passport.authenticate('jwt', { session: false})).post(function (req, res, next) {//pour le fichier
+router.route('/categories/:categorie/Medias',passport.authenticate('jwt', { session: false})).post(function (req, res, next) {//pour le fichier
 
     var token = getToken(req.headers);
     if (token) {
@@ -313,23 +322,23 @@ router.route('/categories/:categorie/livres',passport.authenticate('jwt', { sess
                 res.json(errors, 422);
                 return;
             }
-            var livre = new Livre(req.body);
-            livre.categorie = req.categorie;
+            var media = new Media(req.body);
+            media.categorie = req.categorie;
 
-            livre.link = name["link"];
-            livre.logo = name["logo"];
-            livre.save(function (err, livre) {
+            media.link = name["link"];
+            media.logo = name["logo"];
+            media.save(function (err, media) {
                 if (err) {
                     return next(err);
                 }
 
-                req.categorie.livres.push(livre);
+                req.categorie.medias.push(media);
                 req.categorie.save(function (err, categorie) {
                     if (err) {
                         return next(err);
                     }
 
-                    res.json(livre);
+                    res.json(media);
                 });
             });
         })

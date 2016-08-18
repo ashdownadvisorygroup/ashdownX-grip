@@ -1,14 +1,14 @@
 /**
  * Created by NOUBISSI TAPAH PHOEB on 31/07/2016.
  */
+
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 var bcrypt = require('bcrypt');
 
 // Thanks to http://blog.matoski.com/articles/jwt-express-node-mongoose/
 
 // set up a mongoose model
-var UserSchema = new Schema({
+var UserSchema = new mongoose.Schema({
     name: {
         type: String,
         unique: true,
@@ -18,9 +18,12 @@ var UserSchema = new Schema({
         type: String,
         required: true
     },
-    photo: String,
-    accessLevel: Number, //it can be 1,2,3 for simple user,stagiaire and admin
-    activate: String//if the user active again
+    //photo: String,
+    //roles:[{type : mongoose.Schema.Types.ObjectId, ref : "Role"}],
+    groups:[{type : mongoose.Schema.Types.ObjectId, ref : "Group"}],
+    profil:[{type : mongoose.Schema.Types.ObjectId, ref : "Profil"}],
+    mediauser:[{ type: mongoose.Schema.Types.ObjectId, ref: 'MediaUser' }]
+
 });
 
 UserSchema.pre('save', function (next) {
@@ -51,5 +54,9 @@ UserSchema.methods.comparePassword = function (passw, cb) {
         cb(null, isMatch);
     });
 };
+UserSchema.methods.greet = function() {
+    return 'Hello, ' + this.name;
+};
 
 mongoose.model('User', UserSchema);
+

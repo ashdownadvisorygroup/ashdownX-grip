@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col col-md-2">
         <h2>{{categorie.nom}} <a ng-click="launch('confirm')" class="glyphicon glyphicon-trash"
-                                title="Supprimer le document" aria-hidden="true" >
+                                title="Supprimer le document" aria-hidden="true" permission="['admin']">
         </a></h2>
         <hr>
         <p>
@@ -48,7 +48,7 @@
                         <div class="form-group">
                             <a ui-sref="formulaireLivre">
 
-                            <span class="glyphicon glyphicon-plus cat"  title="ajouter un nouveau livre"
+                            <span class="glyphicon glyphicon-plus cat"  title="ajouter un nouveau media"
                                 aria-hidden="true"></span>
                             </a>
                         </div><!-- form group [new book] -->
@@ -69,28 +69,28 @@
     </div>
         <div class="row">
             <!--,description:search-->
-            <div class="col col-md-4 col-xs-6  col-lg-3"  dir-paginate="livre in filteredLivre=( livres
+            <div class="col col-md-4 col-xs-6  col-lg-3"  dir-paginate="media in filteredLivre=( medias
             | filterBy: ['nom', 'description']:search) | orderBy:sortorder
             |itemsPerPage: nbparpage ">
 
-                    <div class="row livre">
+                    <div class="row media">
                         <div class="col col-md-8">
                             <p>
-                                Nom du livre:  {{livre.nom}}
+                                Nom du media: {{media.nom}}
                             </p>
 
                             <p>
-                                Description:   {{livre.description}}
+                                Description: {{media.description}}
                             </p>
                             <p>
-                                Lu : {{livre.readed}}
+                                Lu : {{media.readed}}
                             </p>
                             <p>
-                                Telecharger : {{livre.downloaded}}
+                                Telecharger : {{media.downloaded}}
                             </p>
                             <p>
-                                  <a ui-sref="document({id:livre._id})"
-                                   ng-click="lire(livre._id)">{{livre.affiche}}</a>
+                                  <a ui-sref="document({id:media._id})"
+                                   ng-click="lire(media._id)">{{media.affiche}}</a>
 
                             </p>
 
@@ -98,19 +98,19 @@
                         </div>
                         <div class="col col-md-4 right">
                             <div class="row" >
-                                <img ng-src="{{livre.logo}}" alt="" >
+                                <img ng-src="{{media.logo}}" alt="" >
                                 <h5>LOGO</h5>
                                 <hr>
                             </div>
                             <div class="row">
 
-                                <a ui-sref="updateLivre({id:livre._id})" class="glyphicon glyphicon-pencil cat" title="Modifier le document">
+                                <a ui-sref="updateLivre({id:media._id})" class="glyphicon glyphicon-pencil cat" title="Modifier le document">
                                 </a>
 
-                                <a href="/download/{{livre._id}}" ng-click="telecharger(livre._id)" title="Telecharger le document"
+                                <a href="/download/{{media._id}}" ng-click="telecharger(media._id)" title="Telecharger le document"
                                    class="glyphicon glyphicon-download-alt cat">
                                 </a>
-                                <a ui-sref="deleteLivre({id:livre._id})" class="glyphicon glyphicon-trash cat" title="supprimer le document">
+                                <a ui-sref="deleteLivre({id:media._id})" class="glyphicon glyphicon-trash cat" title="supprimer le document">
                                 </a>
 
                             </div>

@@ -2,20 +2,20 @@
     <div class="row">
         <div class="col col-md-8 all">
             <p>
-                Nom du livre:  {{livre.nom}}
+                Nom du media: {{media.nom}}
             </p>
 
             <p>
-                Description:   {{livre.description}}
+                Description: {{media.description}}
             </p>
             <p>
-                Lu : {{livre.readed}}
+                Lu : {{media.readed}}
             </p>
             <p>
-                Telecharger : {{livre.downloaded}}
+                Telecharger : {{media.downloaded}}
             </p>
             <p>
-                <a href="./img/+{{livre.link}}">lien vers le document</a>
+                <a href="./img/+{{media.link}}">lien vers le document</a>
             </p>
 
             <span></span>
@@ -24,17 +24,16 @@
         </div>
         <div class="col col-md-4">
             <div class="row" style="margin-top: -12px; text-align: center;margin-right: 10px;">
-                <img ng-src="{{livre.logo}}" alt="">
+                <img ng-src="{{media.logo}}" alt="">
                 <h5>LOGO</h5>
                 <hr>
             </div>
             <div class="row" style="margin-left: -50px;">
 
-                <a ui-sref="updateLivre({id:livre._id})" class="glyphicon glyphicon-pencil cat" title="Modifier le document">
-
+                <a ui-sref="updateLivre({id:media._id})" class="glyphicon glyphicon-pencil cat" title="Modifier le document">
                 </a>
 
-                <a href="/download/{{livre._id}}" ng-click="telecharger(livre._id)" title="Telecharger le document"
+                <a href="/download/{{media._id}}" ng-click="telecharger(media._id)" title="Telecharger le document"
                    class="glyphicon glyphicon-download-alt cat">
 
 

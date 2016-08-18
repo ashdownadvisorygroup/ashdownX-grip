@@ -6,7 +6,7 @@ var mongoose     = require('mongoose');
 var CategorieSchema   = new mongoose.Schema({
     nom: String,
     description: String,
-    livres: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Livre' }]
+    medias: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Media' }]
 });
 
 mongoose.model('Categorie', CategorieSchema);

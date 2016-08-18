@@ -12,18 +12,26 @@ var expressValidator = require('express-validator');
 var app = express();
 var oembed=require("oembed-auto");
 var jwt = require('jwt-simple');
+
 //connection a la bd
 var mongoose = require('mongoose');
-require('./config/passport')(passport);
-require('./models/Categories');
-require('./models/Livres');
-require('./models/users');
 mongoose.connect('mongodb://127.0.0.1/bv');
+require('./config/passport')(passport);
+require('./models/index');
+//require('./models/profil');
+
+
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var Medias = require('./routes/medias');
 var categories = require('./routes/categories');
-var livres = require('./routes/livres');
+var groups = require('./routes/groups');
+
+var profil_medias = require('./routes/profil_medias');
+var users_medias = require('./routes/users_medias');
+var profil = require('./routes/profil');
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -45,10 +53,25 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }));
+//mustbe setup
+var mustBe = require("mustbe");
+var mustBeConfig = require("./mustbe-config");
+mustBe.configure(mustBeConfig);
+
 app.use('/', routes);
+app.use('/', Medias);
 app.use('/', categories);
-app.use('/', livres);
 app.use('/', users);
+app.use('/', groups);
+app.use('/', profil_medias);
+app.use('/', users_medias);
+app.use('/', profil);
+
+
+
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

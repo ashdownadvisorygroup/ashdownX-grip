@@ -6,7 +6,7 @@
                 <hr />
             </div>
         </div>
-        <div class="main-login main-center">
+        <div class="main-login main-center" ng-show="user" ng-cloak>
             <form class="form-horizontal" method="post" action="#">
 
 
@@ -36,31 +36,59 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="row"><label for="accessLevel" class="cols-sm-2 control-label">accessLevel</label></div>
+                <div class="form-group" permission="['admin']">
+                    <div class="row"><label for="groups" class="cols-sm-2 control-label">groups</label></div>
                     <div class="row">
                         <div class="cols-sm-10">
                             <div class="input-group">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock" aria-hidden="true"></i></span>
-                                <input type="number" class="form-control" name="accessLevel" ng-model="user.accessLevel"
-                                       id="accessLevel"  placeholder="Enter your accessLevel"/>
+                               <span class="input-group-addon"><i class="glyphicon glyphicon-user " aria-hidden="true" ></i></span>
+                                <select class="form-control" ng-model="user.groups" id="groups"  >
+                                <option value="user">stagiaire</option>
+                                <option value="admin">admin</option>
+                                </select>
+                                <!--<select class="selectpicker bootstrap-select form-control " ng-model="user.groups" id="groups"  >
+                                <option value="stagiaire" selected>stagiaire</option>
+                                <option value="admin">admin</option>
+                                </select>-->
+
+
+                                <script type="text/javascript">
+                                    $(document).ready(function() {
+
+
+                                        $('.selectpicker').selectpicker({
+                                            style: 'btn-info',
+                                            size: 4
+                                        });
+                                    });
+
+                                </script>
+
+                                <!--<input type="text" class="form-control" name="group" ng-model="user.groups"
+                                       id="groups"  placeholder="Enter the group: admin or stagiaire"/>-->
                             </div>
+                            <div>
+                                <select  ng-show="user.groups=='stagiaire'" ng-model="user.profils" >
+                                    <optgroup label="Developpeur web" data-max-options="2">
+                                        <option value="developpement web laravel">Laravel</option>
+                                        <option value="developpement web mean">Means</option>
+
+                                    </optgroup>
+                                    <optgroup label="Android" data-max-options="2">
+                                        <option value="android">Android</option>
+
+                                    </optgroup>
+                                </select>
+
+                            </div>
+
+
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="row"><label for="activate" class="cols-sm-2 control-label">activate</label></div>
-                    <div class="row">
-                        <div class="cols-sm-10">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock" aria-hidden="true"></i></span>
-                                <input type="text" class="form-control" name="activate" ng-model="user.activate"
-                                       id="activate"  placeholder="true or false"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
+
+
+                <!--<div class="form-group">
                     <div class="row"><label for="photo" class="cols-sm-2 control-label">photo</label></div>
                     <div class="row">
                         <div class="cols-sm-10">
@@ -75,7 +103,7 @@
                             <img ngf-src="user.photo" class="thumb ng-hide" style="height: 35px">
                         </div>
                     </div>
-                </div>
+                </div>-->
 
                 <div class="form-group">
                     <div class="row"><label for="confirm" class="cols-sm-2 control-label">Confirm Password</label></div>

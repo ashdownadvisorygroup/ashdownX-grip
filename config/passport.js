@@ -5,7 +5,7 @@ var JwtStrategy = require('passport-jwt').Strategy;
 var ExtractJwt = require('passport-jwt').ExtractJwt;
 
 // load up the user model
-var User = require('../models/users');
+var User = require('../models/Users');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var config = require('../config/database');
