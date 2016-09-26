@@ -5,123 +5,106 @@
 app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
         $stateProvider
-            .state('accueil', {
+            .state('axgrip',{
+                abstract:true,
+                views:{
+                    header:{
+                        templateUrl:template_url+'header.html',
+                        controller: 'HeaderCtrl'
+                    },
+                    main:{}
+                },
+                access: { requiredLogin: true }
+            })
+            .state('axgrip.accueil', {
                 url: '/accueil',
-                templateUrl: template_url+'/accueil.html',
-                access: { requiredLogin: true },
-                controller: 'AccueilCtrl'
+                views:{
+                    'main@':{
+                        templateUrl: template_url+'accueil.html',
+                        controller: 'AccueilCtrl'
+                    }
+                },
+                access: { requiredLogin: true }
             })
-            .state('developpeurWebMean', {
-                url: '/developpeurWebMean',
-                templateUrl: template_url+'/developpeurWebMean.html',
-                access: { requiredLogin: true },
-                controller: 'developpeurWebMeanCtrl'
+            .state('axgrip.profils', {
+                url: '/profils',
+                views:{
+                    'main@':{
+                        templateUrl: template_url+'profils.html',
+                        controller: 'ProfilsCtrl'
+                    }
+                },
+                access: { requiredLogin: true }
             })
-            .state('categorie', {
-                url: '/categorie/{id}',
-                templateUrl: template_url+'/categorie.html',
-                access: { requiredLogin: true },
-                controller: 'CategorieCtrl',
-                permissions: ["admin","stagiaire"]
+            .state('axgrip.mediatheque', {
+                url: '/mediatheque',
+                views:{
+                    'main@':{
+                        templateUrl: template_url+'/mediatheque.html',
+                        controller: 'MediathequeCtrl'
+                    }
+                },
+                access: { requiredLogin: true }
             })
-            .state('formulaireLivre', {
-                url: '/media/nouveau',
-                templateUrl: template_url+'/formulaireLivre.html',
-                access: { requiredLogin: true },
-                controller: 'FormulaireLivreCtrl',
-                permissions: ["admin","stagiaire"]
+            .state('axgrip.useraccount', {
+                url: '/useraccount/{id}',
+                views:{
+                    'main@':{
+                        templateUrl: template_url+'/useraccount.html',
+                        controller: 'UseraccountCtrl'
+                    }
+                },
+                access: { requiredLogin: true }
             })
-            .state('formulaireCategorie', {
-                url: '/categories/nouveau',
-                templateUrl: template_url+'/formulaireCategorie.html',
-                access: { requiredLogin: true },
-                controller: 'FormulaireCategorieCtrl',
-                permissions: ["admin"]
-            })
-            .state('updateCategorie', {
-                url: '/categories/update/{id}',
-                templateUrl: template_url+'/updateCategorie.html',
-                access: { requiredLogin: true },
-                controller: 'updateCategorieCtrl',
-                permissions: ["admin"]
-            })
-            .state('updateLivre', {
-                url: '/media/update/{id}',
-                templateUrl: template_url+'/updateLivre.html',
-                access: { requiredLogin: true },
-                controller: 'updateLivreCtrl',
-                permissions: ["admin","stagiaire"]
-            })
-            .state('deleteLivre', {
-                url: '/media/{id}',
-                templateUrl: template_url+'/deleteLivre.html',
-                access: { requiredLogin: true },
-                controller: 'deleteLivreCtrl',
-                permissions: ["admin"]
-            })
-            .state('download', {
-                url: '/download',
-                templateUrl: template_url+'/download.html',
-                access: { requiredLogin: true },
-                controller: 'downloadCtrl'
+            .state('axgrip.compte', {
+                url: '/compte/{id}',
+                views:{
+                    'main@':{
+                        templateUrl: template_url+'/compte.html',
+                        controller: 'CompteCtrl'
+                    }
+                },
+                access: { requiredLogin: true }//permissions: ["admin","stagiaire"]
             })
             .state('document', {
-                url: '/media/document/{id}',
+                url: '/document/{id}',
                 templateUrl: template_url+'/document.html',
                 access: { requiredLogin: true },
                 controller: 'documentCtrl'
             })
-            .state('login', {
-                url: '/',
-                templateUrl: template_url+'/login.html',
-                access: { requiredLogin: false },
-                controller: 'LoginCtrl'
-            })
             .state('new', {
                 url: '/new',
-                templateUrl: template_url+'/loginNew.html',
-                access: { requiredLogin: true },
-                controller: 'LoginNewCtrl'
-            })
-            .state('register', {
-                url: '/register',
-                templateUrl: template_url+'/register.html',
-                controller: 'RegisterCtrl',
-                access: { requiredLogin: true },
-                permissions: ["admin"]
-            })
-            .state('updateuser', {
-                url: '/updateuser/{id}',
-                templateUrl: template_url+'/updateuser.html',
+                templateUrl: template_url+'login/loginNew.html',
                 access: { requiredLogin: false },
-                controller: 'updateUserCtrl',
+                controller: 'LoginNewCtrl'
+
+            })
+            .state('axgrip.resultats_recherche', {
+                url: '/resultats',
+                views:{
+                    'main@':{
+                        templateUrl: template_url+'/resultats_recherche.html',
+                        controller: 'resultatsRechercheCtrl'
+                    }
+                },
+                access: { requiredLogin: true },
+
+            })
+            .state('axgrip.renewpassword', {
+                url: '/{name}/{name2}',
+                views:{
+                    'main@':{
+                        templateUrl: template_url+'login/loginNew.html'
+                    }
+                },
+                params: { name2: null,name: null },
+                access: { requiredLogin: true },
+                controller: 'LoginNewCtrl',
                 permissions: ["admin","stagiaire"]
             })
 
 
-    $urlRouterProvider.otherwise('/');
 
-    }])
-    .run(function($rootScope, $state,AuthService, isAuthenticated) {
+    $urlRouterProvider.otherwise('/new');
 
-    isAuthenticated.set(false);
-    $rootScope.$on('$stateChangeStart', function(event, nextRoute, currentRoute) {
-        console.log("Appel d'une nouvelle route");
-        //console.log(AuthService.isAuthenticated);
-        //console.log(isAuthenticated.get());
-        //console.log(AuthService.isAuthenticated.get())
-        //onsole.log(nextRoute.access.requiredLogin && !AuthService.isAuthenticated.get())
-        //AuthService.init();
-
-        if (nextRoute.access.requiredLogin && !AuthService.isAuthenticated.get()) {
-            event.preventDefault();
-            $state.go('login');
-
-            /*if (!AuthService.userHasPermissionForView(next)){
-             event.preventDefault();
-             $location.path("/login");
-             }*/
-        }
-        //AuthService.init();
-    });
-});
+    }]);

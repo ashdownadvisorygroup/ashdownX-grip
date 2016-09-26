@@ -10,10 +10,16 @@ require('./medias');
 require('./users');
 require('./groups');
 require('./profils');
-require('./profil_medias');
+require('./profil_categories');
 require('./user_medias');
-mongooseSeed()
+require('./categorie_medias');
+require('./user_profils');
+mongooseSeed()//cette fonction retourne une promesse
     .then(function () {
         console.log('Success!');
 
+    },function(err){
+        console.log(err);
+        console.log('Echec!')
     });
+

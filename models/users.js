@@ -6,23 +6,23 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 
 // Thanks to http://blog.matoski.com/articles/jwt-express-node-mongoose/
-
 // set up a mongoose model
 var UserSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        unique: true,
-        required: true
-    },
-    password: {
-        type: String,
-        required: true
-    },
-    //photo: String,
-    //roles:[{type : mongoose.Schema.Types.ObjectId, ref : "Role"}],
+    name: {type: String,unique: true},
+    password: {type: String,required: true},
+    email: { type: String,unique: true},
+    resetPasswordToken: String,
+    resetPasswordExpires: Date,
+    date: { type: Date, default: Date.now },
+    photo: String,
     groups:[{type : mongoose.Schema.Types.ObjectId, ref : "Group"}],
     profil:[{type : mongoose.Schema.Types.ObjectId, ref : "Profil"}],
-    mediauser:[{ type: mongoose.Schema.Types.ObjectId, ref: 'MediaUser' }]
+    mediauser:[{type: mongoose.Schema.Types.ObjectId, ref: 'MediaUser'}],
+    master:[{type : mongoose.Schema.Types.ObjectId, ref : "Profil"}],
+    encadreur:[{type : mongoose.Schema.Types.ObjectId, ref : "Profil"}]
+    //ensemble des profils qu'il peut noter
+    //celui qui supervise l'avancement d'un user dans un profil donne
+    //celui qui est certifié dans un profil donné et est capable de certifier un utilisateur donné dans ce profil
 
 });
 

@@ -1,0 +1,118 @@
+<div  layout="column" ng-hide="aff" flex class="accueil"  style="background-color: rgb(34,34,34);">
+
+    <div flex="10" layout="row" layout-align="center center" style="background-color: rgb(5,170,245);" >
+        <md-sidenav class="md-sidenav-right md-whiteframe-z2"
+                    md-component-id="right">
+            <md-toolbar layout="row">
+                <div class="md-toolbar-tools">
+                    <h2>
+                        <span>Side Panel</span>
+                    </h2>
+                    <span flex></span>
+                    <md-button class="md-icon-button" aria-label="Close Side Panel" ng-click="closeSideNavPanel()">
+                        <md-tooltip>Close Side Panel</md-tooltip>
+                        <md-icon class="md-default-theme" class="material-icons">&#xE5CD;</md-icon>
+                    </md-button>
+                </div>
+            </md-toolbar>
+            <md-content layout-padding="">
+                <md-list style="color:black;">
+                    <md-list-item>
+                        <md-icon class="md-default-theme" class="material-icons">&#xE851;</md-icon>
+                        <p>User</p>
+                    </md-list-item>
+                    <md-list-item>
+                        <md-icon class="md-default-theme" class="material-icons">&#xE0C9;</md-icon>
+                        <p>Messages</p>
+                    </md-list-item>
+                    <md-list-item>
+                        <md-icon class="material-icons">&#xE150;</md-icon>
+                        <p>Create Post</p>
+                    </md-list-item>
+                    <md-list-item>
+                        <md-icon class="md-default-theme" class="material-icons">&#xE8B8;</md-icon>
+                        <p>Settings</p>
+                    </md-list-item>
+                    <md-list-item>
+                        <md-icon class="material-icons">&#xE7F4;</md-icon>
+                        <p>Alerts</p>
+                    </md-list-item>
+                    <md-list-item>
+                        <md-icon class="material-icons">&#xE887;</md-icon>
+                        <p>Help</p>
+                    </md-list-item>
+                </md-list>
+            </md-content>
+        </md-sidenav>
+        <md-toolbar >
+            <div class="md-toolbar-tools" >
+                <div flex="5" layout="row" flex-xs="10">
+                    <md-button class="md-icon-button" ng-click="openSideNavPanel()"  show-xs >
+                        <md-tooltip>Menu</md-tooltip>
+                        <img src="../image/menu.png" style="width:24px;height:24px;"/>
+                    </md-button>
+                </div>
+                <div flex-xs="40" hide-gt-xs></div>
+                <div flex="15" layout="row" flex-xs="30" >
+                    <div>
+                        <img src="../../image/GRIP_Logo.png" alt="" class="accueil-img" >
+                    </div>
+                </div>
+                <div flex="5"></div>
+                <div flex="75" layout="row" layout-align="center center"  hide-xs>
+                    <div flex="90">
+                        <input class="input2" ng-model="search" type="search" style="color:black;background-color:white;">
+                    </div>
+                    <div flex="10" >
+                        <img src="../image/search.png" style="width: 34px;  height: 34px;background-color: skyblue;"/>
+                    </div>
+                </div>
+                <div flex="20"></div>
+                <div flex="55"  class="accueil-menu"  hide-xs>
+                    <md-tabs  md-selected="selectedTab" class="accueil-button" md-dynamic-height flex>
+                            <md-tab  data-ui-sref="axgrip.accueil" >
+                                <md-tab-label> accueil</md-tab-label>
+                            </md-tab>
+
+                        <md-tab data-ui-sref="axgrip.mediatheque">
+                            <md-tab-label  >mediatheque</md-tab-label>
+                        </md-tab>
+                        <md-tab data-ui-sref="axgrip.profils" >
+                            <md-tab-label  >profils</md-tab-label>
+                        </md-tab>
+                    </md-tabs>
+                </div>
+                <div flex="5">
+
+                </div>
+                <div flex="20" flex-xs="30" layout="row" layout-align="center end" >
+                    <md-menu-bar>
+                        <md-menu>
+                            <button ng-click="$mdOpenMenu()">
+                                <img ng-src="{{photo}}" alt="" class="img" style="width: 5%;height: 10%;
+                                background-color: skyblue;position: fixed;right: 0px;top: 0;">
+                            </button>
+                            <md-menu-content>
+                                <md-menu-item>
+                                    <md-button  ng-click="compteuser()">
+                                        Profil
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-divider></md-menu-divider>
+                                <md-menu-item>
+                                    <md-button ng-click="deconnexionaction('Deconnexion',$event)">
+                                        Deconnexion
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </md-menu-bar>
+
+                </div>
+
+            </div>
+
+        </md-toolbar>
+
+    </div>
+</div>

@@ -8,11 +8,13 @@ var MediaSchema   = new mongoose.Schema({
     logo: String,
     description: String,
     link: String,
+    date: { type: Date, default: Date.now },
+    creator:{type : mongoose.Schema.Types.ObjectId, ref : "User"},
+    rate:{type: Number, default: 0},
     readed: {type: Number, default: 0},
     downloaded: {type: Number, default: 0},
-    categorie : {type : mongoose.Schema.Types.ObjectId, ref : "Categorie"},
-    mediaprofil : [{type : mongoose.Schema.Types.ObjectId, ref : "MediaProfil"}],
-    mediauser : [{type : mongoose.Schema.Types.ObjectId, ref : "MediaUser"}]
+    mediauser : [{type : mongoose.Schema.Types.ObjectId, ref : "MediaUser"}],
+    categoriemedia:[{ type: mongoose.Schema.Types.ObjectId, ref: 'CategorieMedia' }]
 });
 
 MediaSchema.methods.download = function(cb) {
@@ -27,3 +29,4 @@ MediaSchema.methods.read = function(cb) {
 
 
 mongoose.model('Media', MediaSchema);
+

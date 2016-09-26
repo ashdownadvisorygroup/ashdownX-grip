@@ -6,6 +6,9 @@ require('./Medias');
 require('./Users');
 require('./Groups');
 require('./Profil');
-require('./ProfilMedias');
+require('./ProfilCategorie');
 require('./UserMedias');
+require('./CategorieMedia');
+require('./ProfilUsers');
+require('./ProfilCategorieUser');
 

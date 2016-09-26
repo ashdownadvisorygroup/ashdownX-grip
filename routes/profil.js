@@ -4,23 +4,24 @@
 var express = require('express');
 var router = express.Router();
 var multer = require('multer');
-expressValidator = require('express-validator');
+var expressValidator = require('express-validator');
 var util = require('util');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
-//var Profil = mongoose.model('Profil');
-
+var Profil = mongoose.model('Profil');
+var UserProfil = mongoose.model('UserProfil');
+var CategorieProfil = mongoose.model('CategorieProfil');
 var passport = require('passport');
 var jwt = require('jwt-simple');
 var config = require('../config/database');
 var Categorie = mongoose.model('Categorie');
 var Media = mongoose.model('Media');
+
 var path = require('path');
 var mime = require('mime');
 var fs = require('fs');
 var oembed=require("oembed-auto");
 var mustBe = require("mustbe");
-//var mustbe = require("mustbe").activities();
 var mustBeConfig = require("../mustbe-config");
 mustBe.configure(mustBeConfig);
 mustBe= mustBe.routeHelpers();
@@ -48,7 +49,7 @@ router.param('profil', function (req, res, next, id) {
             return res.json("error lor de la sauvegarde");
             return next(new Error('can\'t find profil'));
         }
-        console.log(profil);
+        //console.log(profil);
 
         req.profil = new Profil(profil);
         return next();
@@ -57,36 +58,99 @@ router.param('profil', function (req, res, next, id) {
 
 });
 
-router.get('/profils',mustBe.authorized("admin"),passport.authenticate('jwt', { session: false}), function (req, res, next) {
+router.get('/profils',passport.authenticate('jwt', { session: false}), function (req, res, next) {
     var token = getToken(req.headers);
     if (token) {
-        /*var decoded = jwt.decode(token, config.secret);
-         var ids=decoded._id;
-         console.log(decoded);*/
         Profil.find(function (err, profils) {
             if (err) {
                 return next(err);
             }
-
             res.json(profils);
         });
     }
 
 });
+router.get('/profil/:profil/categorie_profil',passport.authenticate('jwt', { session: false}), function (req, res) {
+    var token = getToken(req.headers);
+    //console.log(req.categorie_profil);
+    if (token) {
+        id=req.profil._id;
+        var query = CategorieProfil.find().where('profil').equals(id).sort("rang").populate('categorie').populate('profil');
+        query.exec(function (err, categorie_profil) {
+            if (err) {
+                console.log(err);
+                return res.json("il ya erreur dans la requete reessayer svp");
+            }
+            if (!categorie_profil) {
+                return res.json("pas de mediaprofil correspondant a la recherche");
+                return next(new Error('can\'t find categorie_profil'));
+            }
+            res.json(categorie_profil);
+        });
+    }
 
-router.get('/profil/:profil',passport.authenticate('jwt', { session: false}), function (req, res) {
+});
+router.put('/categories/:categorie/:profil/categorie_profil',passport.authenticate('jwt', { session: false}), function (req, res) {
+    var token = getToken(req.headers);
+    if (token) {
+        CategorieProfil.findOne( {categorie:req.params.categorie, profil:req.params.profil},function (err, prfcat) {
+            if (err) {
+                console.log(err);
+                return res.json("il ya erreur dans la requete reessayer svp");
+            }
+            prfcat.progression=req.body.progression;
+            prfcat.save(function(err) {
+                if(err){
+                    console.log(err);
+                    res.send(err);
+                }
+                res.json('updated');
+            });
+        });
+
+    }
+
+});
+router.get('/categories/:categorie/:profil/categorie_profil',passport.authenticate('jwt', { session: false}), function (req, res) {
 
     var token = getToken(req.headers);
-    //console.log(req.profil);
+    if (token) {
+        CategorieProfil.findOne( {categorie:req.params.categorie, profil:req.params.profil},function (err, profcat) {
+            if (err) {
+                console.log(err);
+                return res.json("il ya erreur dans la requete reessayer svp");
+
+            }
+
+            res.json(profcat);
+
+        });
+
+    }
+
+});
+router.post('/categories/:categorie/:profil/categorie_profil',passport.authenticate('jwt', { session: false}), function (req, res) {
+    var token = getToken(req.headers);
+    if (token) {
+        var profcat=new CategorieProfil();
+        profcat.categorie=req.params.categorie;
+        profcat.profil=req.params.profil;
+        profcat.progression=req.body.progression;
+        profcat.save(function(err,ProfCat) {
+            res.json(ProfCat);
+        });
+    }
+});
+
+router.get('/profil/:profil',passport.authenticate('jwt', { session: false}), function (req, res) {
+    var token = getToken(req.headers);
     if (token) {
         req.profil.populate('users', function (err, profil) {
             if (err) {
                 return next(err);
             }
-
             res.json(profil);
         });
-        //res.json(req.profil);
     }
 
 });
@@ -95,23 +159,37 @@ router.post('/profils',mustBe.authorized("admin"),passport.authenticate('jwt', {
     var token = getToken(req.headers);
     if (token) {
         req.checkBody('nom', 'Veuillez renseigne les nom').notEmpty();
-        req.checkBody('nom', 'Veuillez ajouter des caractere aux nom').len(3, 20);
-
+        req.checkBody('nom', 'Veuillez ajouter des caractere aux nom').len(10, 60);
         var errors = req.validationErrors();
         if (errors) {
             res.json(errors, 422);
             return;
         }
-        var prf = new Profil(req.body);
+        var prf = new Profil();
+        prf.nom=req.body.nom;
+        prf.description=req.body.description;
+        prf.objectifs=req.body.objectifs;
         prf.save(function (err, prf) {
             if (err) {
                 return next(err);
             }
-
-            res.json(prf);
+            /**
+             * la suite permet d'envoyer un tableau délement en une une ligne dans la base de donnée
+             */
+            var profCat = CategorieProfil.collection.initializeUnorderedBulkOp({useLegacyOps: true});
+            req.body.categorie.forEach(function(cat_id){
+                profCat.insert({profil: prf._id, categorie:cat_id, progression: '0'});
+            });
+            profCat.execute(function(er, result) {
+                if(er) {
+                    console.error(er);
+                    return res.json({success: false, msg: "Erreur d'enregistrement."});
+                } else {
+                    res.json(prf);
+                }
+            });
         });
     }
-
 });
 
 router.put('/profil/:profil',mustBe.authorized("admin"),passport.authenticate('jwt', { session: false}), function (req, res) {

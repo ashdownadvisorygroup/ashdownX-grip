@@ -1,0 +1,141 @@
+
+
+
+<div  layout="row" ng-hide="aff" flex class="accueil"  style="background-color: rgb(34,34,34);">
+    <div flex="25"  layout="column" style="background-color: rgb(51,54,64);overflow-y: auto;border-right: 2px solid rgb(5,170,245); ">
+        <div flex="100" flex-xs="100" >
+            <ul>
+                <li ng-repeat="prf in profile">
+                    {{ prf.nom }}
+                    <ul>
+                        <li  ng-repeat="cat in prf.categories"  ng-click="tri(cat,prf);" style="cursor:pointer;">
+                            <span>{{cat.nom}} &nbsp;{{cat.etat}}</span>
+                            <span>
+                                <md-checkbox id="checkbox"   aria-label="checkbox"
+                                               ng-checked="exists(cat)" ng-click="toggles(cat,prf)">
+
+                                </md-checkbox>
+                            </span>
+
+                        </li>
+                    </ul>
+                    <div layout-align="space-around">
+                        <div flex="80">
+                            <md-progress-linear md-mode="determinate" value="{{prf.progressuser}}"></md-progress-linear>
+                        </div>
+                        <div flex="20">
+                            {{prf.progressuser}}%
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div flex="5"></div>
+    <div layout="column" hide-xs hide-sm  flex="65">
+        <div flex="5" layout-margin="20"></div>
+        <div flex="10" layout="row" style="padding-top: 1em;">
+            <div flex="30">
+                <md-menu-bar>
+                    <md-menu >
+                        <button ng-click="$mdOpenMenu()" style="background-color: white;">
+                            user
+                        </button>
+                        <md-menu-content>
+                            <md-menu-item>
+                                <md-button ng-click="affiche_don()">
+                                    Données
+                                </md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                    <md-menu>
+                        <button ng-click="$mdOpenMenu()" style="background-color: white;">
+                            profils
+                        </button>
+                        <md-menu-content>
+                            <md-menu-item class="md-indent">
+                                <md-button ng-click="affiche_profter()">
+                                    profils terminés
+                                </md-button>
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                </md-menu-bar>
+            </div>
+           <!-- <div flex="10">{{longueur}}medias</div>-->
+        </div>
+        <md-divider></md-divider>
+        <div flex="75" layout="row" layout-wrap ng-if="aff_med">
+            <div ng-repeat="m in allmedias" flex="25">
+                <div layout="column"  class='md-padding pacard' flex layout-wrap>
+                    <md-card class="card" >
+                        <md-card-title  style="width: 100px;height: 100px;padding: 20px 1px;margin-left: 0em;">
+                            <md-card-title-text style="margin-right: 1em;">
+                                <span class="md-headline" style="font-size: 18px">{{m.nom}}</span>
+                                                <span class="md-subhead">
+                                                </span>
+                                <span class="md-subhead" style="font-size: 12px">Lu:{{m.readed}}</span>
+                                <span class="md-subhead" style="font-size: 12px">Telecharger:{{m.downloaded}}</span>
+                                                <span class="md-subhead" style="font-size: 12px"><a ng-click="lire(m)" ui-sref="document({id:m._id})" style="cursor:pointer;">{{m.affiche}}</a>
+                                                </span>
+                            </md-card-title-text>
+                            <md-card-title-media>
+                                <div class="md-media-lg card-media">
+                                    <img ng-src="{{m.logo}}" style="width: 30px;height: 30px" alt="" >
+                                </div>
+                            </md-card-title-media>
+                        </md-card-title>
+                        <md-card-actions layout="row" layout-align="start center" class="carda">
+
+
+                        </md-card-actions>
+                    </md-card>
+                </div>
+            </div>
+
+        </div>
+        <div flex="75" ng-if="aff_don" layout="column">
+            <div flex="10">
+                Nom:{{users.name}}
+            </div>
+            <div flex="5">
+                adresse-email:{{users.email}}
+            </div>
+            <div flex="25">
+                peut noter :
+                <div ng-repeat="u in users.master">
+                    {{u.nom}}
+                </div>
+            </div>
+            <div flex="30">
+                groups :
+                <div ng-repeat="u in users.groups">
+                    {{u.nom}}
+                </div>
+            </div>
+            <div flex="30">
+               encadreur:
+                <div ng-repeat="u in users.encadreur">
+                    {{u.nom}}
+                </div>
+            </div>
+        </div>
+        <div flex="75" ng-if="aff_profter">Profils terminés
+            <ol>
+                <li  class="un" ng-repeat="p in profter">
+                    {{p.nom}}
+                </li>
+            </ol>
+        </div>
+        <div flex="5" layout="row" ng-if="aff_med">
+            <div flex="50" flex-offset="50">
+                <wan-material-paging  wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
+                </wan-material-paging>
+            </div>
+        </div>
+
+
+    </div>
+    <div flex="5"></div>
+</div>

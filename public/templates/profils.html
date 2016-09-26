@@ -1,0 +1,104 @@
+
+<div  layout="column"  flex class="accueil"  style="background-color: rgb(34,34,34);">
+    <div flex="80"  layout="row">
+        <div flex="10"></div>
+        <div flex="90" layout="column" >
+            <div flex="5"></div>
+            <div flex="5">
+                <h1 style="font-size: 20px">Liste des profils</h1>
+            </div>
+            <div layout="row" flex="90" layout-wrap>
+                <div layout="column" ng-repeat="prf in profile" flex="50" >
+                    <md-card class="cardprofil">
+                        <md-card-title>
+                            <md-card-title-text>
+                                <span class="md-headline">Nom:{{prf.nom}}</span>
+                                <span class="md-subhead">Description:{{prf.description}}</span>
+                                    <span class="md-subhead">Objectifs du profil:
+                                        <ol>
+                                            <li  ng-repeat="ct in prf.objectifs |unique"
+                                                 ng-click="tri(ct);" style="cursor:pointer;">
+                                                {{ct}}
+                                            </li>
+                                        </ol>
+                                    </span>
+                                <span class="md-subhead">Catégories du profil</span>
+                                <div layout="row" >
+                                    <div layout="row" ng-repeat="ct in prf.categories" >
+                                        <md-card class="cardprofcat">
+                                            <md-card-title>
+                                                <md-card-title-text>
+                                                    <span class="md-subhead">Nom:{{ct.nom}}</span>
+                                                    <span class="md-subhead">Description:{{ct.description}}</span>
+                                                </md-card-title-text>
+                                            </md-card-title>
+                                        </md-card>
+                                    </div>
+
+                                    <!--<div >
+                                        <md-tooltip>Ajouter un media a la categorie</md-tooltip>
+                                        <md-icon id="leftArrow" md-svg-src="../../image/left-arrow.svg" class="card-icon"></md-icon>
+
+                                    </div>
+                                    <div id="viewContainer">
+                                        <div id="tslshow">
+                                            <div class="bktibx"> 12:00   </div>
+                                            <div class="bktibx"> 12:30   </div>
+                                            <div class="bktibx"> 13:00   </div>
+                                            <div class="bktibx"> 13:30   </div>
+                                            <div class="bktibx"> 14:00   </div>
+                                            <div class="bktibx"> 14:30   </div>
+                                            <div class="bktibx"> 15:00   </div>
+                                            <div class="bktibx"> 15:30   </div>
+                                            <div class="bktibx"> 16:00   </div>
+                                            <div class="bktibx"> 16:30   </div>
+                                            <div class="bktibx"> 17:00   </div>
+                                            <div class="bktibx"> 17:30   </div>
+                                        </div>
+                                    </div>
+
+                                    <div >
+                                        <md-tooltip>Ajouter un media a la categorie</md-tooltip>
+                                        <md-icon id="rightArrow" md-svg-src="../../image/right-arrow.svg" class="card-icon"></md-icon>
+
+                                    </div>-->
+                                </div>
+                            </md-card-title-text>
+                        </md-card-title>
+
+
+                    </md-card>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div flex="10">
+        <div flex="10" flex-offset="80">
+            <wan-material-paging wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
+            </wan-material-paging>
+
+        </div>
+    </div>
+
+</div>
+<script>
+    var view = $("#tslshow");
+    var move = "100px";
+    var sliderLimit = -750;
+
+    $("#rightArrow").click(function(){
+
+        var currentPosition = parseInt(view.css("left"));
+        if (currentPosition >= sliderLimit) view.stop(false,true).animate({left:"-="+move},{ duration: 400})
+
+    });
+
+    $("#leftArrow").click(function(){
+
+        var currentPosition = parseInt(view.css("left"));
+        if (currentPosition < 0) view.stop(false,true).animate({left:"+="+move},{ duration: 400});
+
+    });
+</script>
+

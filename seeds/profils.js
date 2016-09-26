@@ -9,29 +9,24 @@ addSeed(Profil, {
 
         return [{
             nom: "developpement web laravel",
-            description: "developpement web laravel",
-            objectifs: "developper laravel"
-            // users:users[0]
+            description: "developpement web laravel econdary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam massa quam.",
+            objectifs: "developper laravelgrip laravelgrip developpementgrip ah oui"
         }, {
             nom: "developpement web mean",
-            description: "developpement web mean",
-            objectifs: "developper mean"
-            //users:users[1]
+            description: "developpement web mean econdary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam massa quam.",
+            objectifs: "developper meangrip developper les applicationsgrip intéressantsgrip oui oui"
         }, {
             nom: "experts",
-            description: "experts",
-            objectifs: "experts"
-            // users:users[0]
+            description: "experts econdary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam massa quam.",
+            objectifs: "expertsgrip encore expertsgripet toujours expertsgrip ohhlqlqlqlqgrip oui oui"
         }, {
             nom: "android",
-            description: "ohhhhh android",
-            objectifs: "android"
-            // users:users[2]
+            description: "ohhhhh android econdary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam massa quam.",
+            objectifs: "androidgrip encore endroidgrip voilà ce que ca donnegrip toujoursgripandroid"
         }, {
-            nom: "expert",
-            description: "c'est un expert",
-            objectifs: "expert"
-            // users:users[4]
+            nom: "developpement ",
+            description: "c'est un expert econdary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam massa quam.",
+            objectifs: "expertgrip encore développemntgrip oui oiu grip développeur"
         }];
     }
 });

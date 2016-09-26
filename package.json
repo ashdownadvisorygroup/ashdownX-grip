@@ -8,6 +8,7 @@
     "dbConnect": "mongo-express -u admin -p admin -d bv"
   },
   "dependencies": {
+    "async": "^2.0.1",
     "bcrypt": "^0.8.7",
     "body-parser": "~1.15.1",
     "connect-roles": "^3.1.2",
@@ -17,6 +18,7 @@
     "debug": "~2.2.0",
     "ejs": "~2.4.1",
     "express": "~4.13.4",
+    "express-flash": "0.0.2",
     "express-session": "^1.14.0",
     "express-validator": "^2.20.8",
     "jwt-simple": "^0.5.0",
@@ -26,9 +28,12 @@
     "morgan": "~1.7.0",
     "multer": "^1.1.0",
     "mustbe": "^0.4.0",
+    "nodemailer": "^2.5.0",
+    "nodemailer-smtp-transport": "^2.6.0",
     "oembed-auto": "0.0.3",
     "passport": "^0.3.2",
     "passport-jwt": "^2.1.0",
+    "passport-local": "^1.0.0",
     "serve-favicon": "~2.3.0"
   }
 }

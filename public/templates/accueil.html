@@ -1,38 +1,140 @@
+<div  layout="column"  flex class="accueil"  style="background-color: rgb(34,34,34);">
+    <div flex="90"  layout="row" style="background-color: rgb(34,34,39);">
+            <!-- layout-wrap for the card to take the size of the div-->
 
-<div class="row">
-    <div class="col-md-3">
+                <div flex="15" layout="column" style="background-color: rgb(51,54,64);overflow: auto;border-right: 2px solid rgb(5,170,245);" hide-xs>
+                    <div flex="15">
+                        <div flex>
+                            <input ng-model="searchprofcat"  class="reduceSize" placeholder="entrer la recherche">
+                        </div>
+                    </div>
+                    <div flex="100" style=" ">
+                        Liste des profils
+                        <ul>
+                            <li style="display: block;" class="un" ng-repeat="prf in
+                            filteredprofile=( profile |filterBy: ['nom']:searchprofcat)">
+                                {{ prf.nom }}
+                                <ul>
+                                    <li  ng-repeat="ct in prf.categories"
+                                         ng-click="tri(ct);" style="cursor:pointer;">
+                                        {{ct.nom}}
+                                    </li>
+                                </ul>
+                                <div layout-align="space-around">
+                                    <div flex="80">
+                                        <md-progress-linear md-mode="determinate" value="{{prf.progressuser}}"></md-progress-linear>
 
-        <div class=" row form-group" style="padding-left: 25px;">
-            <h1>CATEGORIES
-                <a ui-sref="formulaireCategorie" permission="['admin']">
 
-                <span class="glyphicon glyphicon-plus plus"  title="ajouter une nouvelle categorie"
-                      aria-hidden="true"></span>
-                </a>
-            </h1>
+                                    </div>
+                                    <div flex="20">
+                                        {{prf.progressuser}}%
+                                    </div>
+                                </div>
+                            </li>
 
-        </div>
-        <div class="menu-categorie">
-            <table style="width: 100%">
-                <tr ng-repeat="cat in categories" title="{{cat.description}}" class="menu-categorie-moins">
-                    <td><a ui-sref="categorie({id:cat._id})">{{cat.nom}}</a></td>
-                    <td>
-                        <a ui-sref="updateCategorie({id:cat._id})" class="glyphicon glyphicon-pencil"
-                           title="modifier la categorie" aria-hidden="true" permission="['admin']">
-                        </a>
-                    </td>
-                </tr>
-            </table>
-       <!--     <input type="image" src="image/supprimer.jpg" alt="Submit" width="48" height="48" title="Supprimer le document" ng-click="launch('confirm'); deletes({id:cat._id})" >-->
-        </div>
+                        </ul>
+                        <div ></div>
+
+                    </div>
+                    <!--<div flex="85" style="color:black">
+                        <md-sidenav class="md-sidenav-left md-whiteframe-1dp" md-component-id="left"
+                                    md-is-locked-open="$mdMedia('gt-sm')" style="width:203px">
+                            <md-toolbar md-scroll-shrink>
+                                <div class="md-toolbar-tools">
+                                    <h3>My App Title</h3>
+                                </div>
+                            </md-toolbar>
+
+                            <md-content role="navigation" style="color:black;">
+                                <ul class="side-menu">
+                                    <li ng-repeat="prf in menu.profils" class="parent-list-item"
+                                        ng-class="{'parentActive' : menu.isSectionSelected(prf)}">
+                                        <h2 style="color:black;" class="menu-heading"
+                                            id="heading_{{ prf.nom | nospace }}">
+                                            PROFILS
+                                        </h2>
+
+                                        <div prf="prf" menu-toggle ></div>
+                                        <md-progress-linear md-mode="determinate" value="{{prf.progressuser}}"></md-progress-linear>
+
+                                        <div>
+                                            iiiii{{prf.progressuser}}%
+                                        </div>
+                                    </li>
+                                </ul>
+                            </md-content>
+                        </md-sidenav>
+                    </div>-->
+                </div>
+                <div layout="column"  flex="70" flex-xs="100" >
+                    <div flex="5" layout-margin="20"></div>
+                    <div flex="5" layout="row" style="padding-top: 1em;font-size: 12px">
+                        <div flex="10">{{longueur}}medias</div>
+                        <div flex="25" flex-offset="65" ng-click="aff_pop_not()" style="cursor: pointer;">populaires/mieux notes</div>
+                    </div>
+                    <div flex="5" ><hr></div>
+                    <div flex="75" layout="row" layout-wrap >
+                        <div ng-repeat="m in allmedias" flex="25">
+                            <div layout="column"  class='md-padding pacard' flex layout-wrap>
+                                <md-card class="card" >
+                                    <md-card-title  style="width: 100px;height: 100px;padding: 20px 1px;margin-left: 0em;">
+                                        <md-card-title-text style="margin-right: 1em;line-height:5px;">
+                                            <span class="md-headline" style="font-size: 15px">{{m.nom}}</span>
+                                                <span class="md-subhead">
+                                                </span>
+                                            <span class="md-subhead" style="font-size: 10px">Lu:{{m.readed}}</span>
+                                            <span class="md-subhead" style="font-size: 10px">Telecharger:{{m.downloaded}}</span>
+                                                <span class="md-subhead" style="font-size: 10px"><a ng-click="lire(m)" ui-sref="document({id:m._id})" style="cursor:pointer;">{{m.affiche}}</a>
+                                                </span>
+                                        </md-card-title-text>
+                                        <md-card-title-media>
+                                            <div class="md-media-lg card-media" style="width: 30%;height: 60%">
+                                                <img ng-src="{{m.logo}}" style="width: 40px;height: 40px"  alt="" >
+                                            </div>
+                                        </md-card-title-media>
+                                    </md-card-title>
+                                    <md-card-actions layout="row" layout-align="start center"
+                                              style="height: 20%"       class="cardi">
+                                        En cours
+                                    </md-card-actions>
+                                </md-card>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div flex="15" layout="row">
+                        <div flex="50" flex-offset="50">
+                            <wan-material-paging wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
+                            </wan-material-paging>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div flex="15" style="background-color: rgb(51,54,64);border-left: 2px solid rgb(5,170,245);" hide-xs>
+                   <div flex>
+                       <input ng-model="searchstagiaire" class="reduceSize" style="" placeholder="entrer la recherche">
+                   </div>
+                    <md-content style="background-color: rgb(51,54,64);color:white;overflow-y: auto;height:530px;" flex>
+                        <section>
+                            <md-subheader >Liste des stagiaires</md-subheader>
+                        <md-list >
+                            <md-list-item class="md-3-line" ng-repeat="item in filteredStagiaires=( stagiaires |filterBy: ['name','email']:searchstagiaire)"
+                                style="height:7%;"  >
+                                <img ng-src="{{item.photo}}?{{$index}}" class="md-avatar" alt="{{item.name}}">
+                                <div class="md-list-item-text" >
+                                    <a  ui-sref="axgrip.useraccount({id:item._id})" style="text-decoration: none;">
+                                        <h3 style="color:white;cursor:pointer;font-size: 12px">{{item.name}}</h3>
+                                    </a>
+                                </div>
+                                <md-divider md-inset ng-if="!$last"></md-divider>
+                            </md-list-item>
+                        </md-list>
+                        </section>
+                    </md-content>
+                </div>
+
     </div>
-    <div class="col-md-9" style="text-align: center">
-    <p>
-        <span class="titre">
-            <b><i>
-                BIENVENUE <br>DANS <br> LA <br>BIBLIOTHEQUE</i>
-            </b>
-        </span>
-    </p>
-    </div>
+
+
 </div>

@@ -1,0 +1,199 @@
+<div  layout="column"  flex class="accueil"  style="background-color: rgb(34,34,34);">
+    <div layout="row" flex="90"  layout-wrap>
+        <md-tabs  class="accueil-button" md-dynamic-height flex>
+            <md-tab flex style="color:white;">
+                <md-tab-label> Profils&nbsp;({{l2}})</md-tab-label>
+                <md-tab-body>
+                    <div ng-if="afficheres" layout="row" flex="90" layout-wrap>
+                        <div layout="column" ng-repeat="prf in profile" flex="50" >
+                            <md-card class="cardprofil">
+                                <md-card-title>
+                                    <md-card-title-text>
+                                        <span class="md-headline" >Nom:{{prf.nom}}</span>
+                                        <span class="md-subhead">Description:{{prf.description}}</span>
+                                    <span class="md-subhead">Objectifs du profil:
+                                        <ol>
+                                            <li  ng-repeat="ct in prf.objectifs |unique"
+                                                 ng-click="tri(ct);" style="cursor:pointer;">
+                                                {{ct}}
+                                            </li>
+                                        </ol>
+                                    </span>
+                                        <span class="md-subhead" style="cursor:pointer" ng-click="ouvrircatprof()">Catégories du profil &nbsp;{{prf.nom}}</span>
+                                        <div layout="row" ng-if="ouvrircat">
+                                            <div layout="row" ng-repeat="ct in prf.categories" >
+                                                <md-card class="cardprofcat">
+                                                    <md-card-title>
+                                                        <md-card-title-text>
+                                                            <span class="md-subhead"  style="cursor:pointer">Nom:{{ct.nom}}</span>
+                                                            <span class="md-subhead">Description:{{ct.description}}</span>
+                                                        </md-card-title-text>
+                                                    </md-card-title>
+                                                </md-card>
+                                            </div>
+                                        </div>
+                                        <span class="md-subhead" style="cursor:pointer" ng-click="ouvrircatmed()">Médias du profil &nbsp;{{prf.nom}}</span>
+                                        <div layout="row" ng-if="ouvrirmed">
+                                            <div layout="row" ng-repeat="ct in prf.categories" >
+                                                <div ng-repeat="c in ct.medias |unique" >
+                                                    <md-card class="cardcatmed">
+                                                        <md-card-title>
+                                                            <md-card-title-text layout="column" layout-align="center center">
+                                                                <span class="md-headline"></span>
+                                                <span class="md-subhead" style="font-size: 15px">{{c.nom}}
+                                                </span>
+                                                                <span class="md-subhead" style="font-size: 10px">Lu:{{c.readed}}</span>
+                                                                <span class="md-subhead" style="font-size: 10px">Telecharger:{{c.downloaded}}</span>
+                                                <span class="md-subhead" style="font-size: 10px"><a ng-click="lire(c)" ui-sref="document({id:c._id})" style="cursor:pointer;">{{c.affiche}}</a>
+                                                </span>
+                                                            </md-card-title-text>
+                                                            <md-card-title-media>
+                                                                <div class="md-media-lg card-media">
+                                                                    <img ng-src="{{c.logo}}" style="width: 50px;height: 50px" alt="" >
+                                                                </div>
+                                                            </md-card-title-media>
+                                                        </md-card-title>
+                                                    </md-card>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </md-card-title-text>
+                                </md-card-title>
+
+
+                            </md-card>
+                        </div>
+
+                    </div>
+                    <div ng-if="afficheres"  flex="15" layout="row">
+                        <wan-material-paging wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
+                        </wan-material-paging>
+                    </div>
+                </md-tab-body>
+
+            </md-tab>
+
+            <md-tab >
+                <md-tab-label> Categories &nbsp;({{l5}})</md-tab-label>
+                <md-tab-body>
+                    <md-content  class="md-padding" >
+                        <div ng-if="afficheres">
+                            <ul>
+                                <li style="display: block;cursor:pointer;" ng-click="catmed()" class="un" ng-repeat="cat in categories">
+                                    {{cat.nom}}
+                                </li>
+                            </ul>
+                        </div>
+                        <div ng-if="ouvrecatmed">
+                            <div layout="row" ng-repeat="ct in categories" >
+                                <div ng-repeat="c in ct.medias |unique" >
+                                    <md-card class="cardcatmed">
+                                        <md-card-title>
+                                            <md-card-title-text layout="column" layout-align="center center">
+                                                <span class="md-headline"></span>
+                                                <span class="md-subhead" style="font-size: 15px">{{c.nom}}
+                                                </span>
+                                                <span class="md-subhead" style="font-size: 10px">Lu:{{c.readed}}</span>
+                                                <span class="md-subhead" style="font-size: 10px">Telecharger:{{c.downloaded}}</span>
+                                                <span class="md-subhead" style="font-size: 10px"><a ng-click="lire(c)" ui-sref="document({id:c._id})" style="cursor:pointer;">{{c.affiche}}</a>
+                                                </span>
+                                            </md-card-title-text>
+                                            <md-card-title-media>
+                                                <div class="md-media-lg card-media">
+                                                    <img ng-src="{{c.logo}}" style="width: 50px;height: 50px" alt="" >
+                                                </div>
+                                            </md-card-title-media>
+                                        </md-card-title>
+                                    </md-card>
+                                </div>
+                            </div>
+                        </div>
+                    </md-content>
+                </md-tab-body>
+            </md-tab>
+            <md-tab >
+                <md-tab-label> Médias&nbsp;({{l1}})</md-tab-label>
+                <md-tab-body>
+                    <md-content  class="md-padding" ng-if="afficheres">
+                        <div flex layout="row" layout-wrap>
+                            <div  layout="column" ng-repeat="med in medias" >
+                                <div flex class='md-padding pacard'>
+                                    <md-card class="card" >
+                                        <md-card-title>
+                                            <md-card-title-text>
+                                                <span class="md-headline"></span>
+                                                <span class="md-subhead" style="font-size: 15px">{{med.nom}}
+                                                </span>
+                                                <span class="md-subhead" style="font-size: 10px">Lu:{{med.readed}}</span>
+                                                <span class="md-subhead" style="font-size: 10px">Telecharger:{{med.downloaded}}</span>
+                                                <span class="md-subhead" style="font-size: 10px"><a ng-click="lire(med)" ui-sref="document({id:med._id})" style="cursor:pointer;">{{med.affiche}}</a>
+                                                </span>
+                                            </md-card-title-text>
+                                            <md-card-title-media>
+                                                <div class="md-media-lg card-media">
+                                                    <img ng-src="{{med.logo}}" style="width: 30px;height: 30px" alt="" >
+                                                </div>
+                                            </md-card-title-media>
+                                        </md-card-title>
+                                        <md-card-actions layout="row" layout-align="start center" class="cardi">
+                                            <div ng-init="rating = star.rating + 1" ></div>
+                                            <div layout="row" class="star-rating" star-rating rating-value="rating" disable="true" readonly="true"
+                                                 data-max="5" on-rating-selected="rateFunction(rating,med)" ng-click="rate(med);" ng-model="med.rate"
+                                                 objectId="{{med._id}}" ></div>
+
+
+                                            <md-button permission="['admin']" class="card-button" ng-click="modifiermedia(med)" aria-label="a">
+                                                <md-tooltip>Modifier le média</md-tooltip>
+                                                <md-icon  md-svg-src="../../image/create-new-pencil-button.svg" class="card-icon"></md-icon>
+                                            </md-button>
+                                            <md-button permission="['admin']" class="card-button" ng-click="showConfirmdelive($event,med)" aria-label="a">
+                                                <md-tooltip>Supprimer le média</md-tooltip>
+                                                <md-icon md-svg-src="../../image/rubbish-bin-delete-button.svg" class="card-icon"></md-icon>
+                                            </md-button>
+                                            <md-button class="card-button" aria-label="a">
+                                                <md-tooltip>Télécharger le média</md-tooltip>
+                                                <md-icon  md-svg-src="../../image/download.svg" class="card-icon"></md-icon>
+                                            </md-button>
+                                        </md-card-actions>
+                                    </md-card>
+                                </div>
+
+                            </div>
+                        </div>
+                    </md-content>
+                </md-tab-body>
+
+            </md-tab>
+            <md-tab >
+                <md-tab-label> groups&nbsp;({{l3}})</md-tab-label>
+                <md-tab-body>
+                    <md-content  class="md-padding" ng-if="afficheres">
+                        <div flex="100">
+                            <ul>
+                                <li style="display: block;" class="un" ng-repeat="grp in groups">
+                                    {{grp.nom }}
+                                </li>
+                            </ul>
+                            <div ></div>
+                        </div>
+                    </md-content>
+                </md-tab-body>
+            </md-tab>
+            <md-tab >
+                <md-tab-label> Utilisateurs&nbsp;({{l4}})</md-tab-label>
+                <md-tab-body>
+                    <md-content style="height: 280px;" height class="md-padding" style="overflow: auto;" ng-if="afficheres">
+                        <div flex="100">
+                            <ul>
+                                <li style="display: block;" class="un" ng-repeat="use in users">
+                                    {{use.name}}
+                                </li>
+                            </ul>
+                            <div ></div>
+                        </div>
+                    </md-content>
+                </md-tab-body>
+            </md-tab>
+        </md-tabs>
+    </div>
+</div>

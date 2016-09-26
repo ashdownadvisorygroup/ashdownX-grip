@@ -13,6 +13,14 @@ addSeed(Group, {
             nom: "stagiaire",
             description:"stagiaire"
 
+        }, {
+            nom: "superadmin",
+            description:"superadmin"
+
+        }, {
+            nom: "encadreur",
+            description:"encadreur"
+
         }];
     }
 });

@@ -10,6 +10,7 @@ var util = require('util');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Group = mongoose.model('Group');
+var MediaUser=mongoose.model('MediaUser');
 var passport = require('passport');
 var jwt = require('jwt-simple');
 var config = require('../config/database');
@@ -20,7 +21,7 @@ var mime = require('mime');
 var fs = require('fs');
 var oembed=require("oembed-auto");
 var mustBe = require("mustbe");
-//var mustbe = require("mustbe").activities();
+require("../routes/users");
 var mustBeConfig = require("../mustbe-config");
 mustBe.configure(mustBeConfig);
 mustBe= mustBe.routeHelpers();
@@ -59,7 +60,7 @@ router.param('media', function (req, res, next, id) {
 
 });
 
-router.get('/Medias',passport.authenticate('jwt', { session: false}), function (req, res, next) {
+router.get('/medias',passport.authenticate('jwt', { session: false}), function (req, res, next) {
     var token = getToken(req.headers);
     if (token) {
         Media.find(function (err, medias) {
@@ -82,7 +83,7 @@ router.get('/media/:media',passport.authenticate('jwt', { session: false}), func
 });
 
 
-router.post('/Medias',passport.authenticate('jwt', { session: false}), function (req, res, next) {
+router.post('/medias',passport.authenticate('jwt', { session: false}), function (req, res, next) {
     var token = getToken(req.headers);
     if (token) {
         var liv = new Media(req.body);
@@ -100,6 +101,7 @@ router.post('/Medias',passport.authenticate('jwt', { session: false}), function 
 
 router.route('/media/:media',passport.authenticate('jwt', { session: false})).put(function (req, res, next) {
     var token = getToken(req.headers);
+    var mimetipe;
     if (token) {
         var maxSize = 10 * 1000 * 1000;
         const path = require('path');
@@ -109,6 +111,7 @@ router.route('/media/:media',passport.authenticate('jwt', { session: false})).pu
                 fileFilter: function (req, file, cb) {
                     var filetypes = /jpeg|jpg|pdf|mp4|png|gif|mp3/;
                     var mimetype = filetypes.test(file.mimetype);
+                    mimetipe=file.mimetype;
                     var extname = filetypes.test(path.extname(file.originalname).toLowerCase());
                     if (mimetype && extname) {
                         return cb(null, true);
@@ -131,13 +134,18 @@ router.route('/media/:media',passport.authenticate('jwt', { session: false})).pu
                 return;
             }
             var file = req.files[0];
+            console.log(req.files[0])
             var name;
             req.files.forEach(function(file) {
 
                 //Generate filepath + filename here however you want
                 var filepath = "./public/";
-                var filename = "img/" + Date.now() + "-" + file.originalname.split(' ').join('_');
+                if(["image/png","image/gif","image/jpg","image/jpeg"].indexOf(file.mimetype) > -1)
+                {
+                    var filename = "data/logos/"  + Date.now() + "-" + file.originalname.split(' ').join('_');
+                }
                 name=filename;
+                console.log(name);
                 fs.writeFile(filepath + filename, file.buffer);
             });
 
@@ -180,6 +188,7 @@ router.route('/media/:media',passport.authenticate('jwt', { session: false})).pu
                         liv.description = req.body.description;
                         liv.categorie = req.body.categorie;
                         liv.link = req.body.link;
+                        liv.rating=req.body.rating;
                         liv.logo = name;
                         liv.save(function (err, liv) {
                             if (err) {
@@ -210,7 +219,9 @@ router.route('/media/:media',passport.authenticate('jwt', { session: false})).pu
                 liv.description = req.body.description;
                 liv.categorie = req.body.categorie;
                 liv.link = req.body.link;
+                liv.rating=req.body.rating;
                 liv.logo = name;
+                if(!name)liv.logo=req.body.logo;
                 liv.save(function (err, liv) {
                     if (err) {
                         return next(err);
@@ -224,10 +235,11 @@ router.route('/media/:media',passport.authenticate('jwt', { session: false})).pu
     }
 
 });//pour l'url
-router.put('/Medias/:media',passport.authenticate('jwt', { session: false}), function (req, res, next) {
+router.put('/medias/:media',passport.authenticate('jwt', { session: false}), function (req, res, next) {
     var token = getToken(req.headers);
     if (token) {
         var maxSize = 30 * 1000 * 1000;
+        var mimetipe;
         const path = require('path');
 
         var upload = multer(
@@ -236,6 +248,7 @@ router.put('/Medias/:media',passport.authenticate('jwt', { session: false}), fun
                 fileFilter: function (req, file, cb) {
                     var filetypes = /jpeg|jpg|pdf|mp4|png|gif|mp3/;
                     var mimetype = filetypes.test(file.mimetype);
+                    mimetipe=file.mimetype;
                     var extname = filetypes.test(path.extname(file.originalname).toLowerCase());
                     if (mimetype && extname) {
                         return cb(null, true);
@@ -251,13 +264,29 @@ router.put('/Medias/:media',passport.authenticate('jwt', { session: false}), fun
             liv = req.media;
             var name = [];
             for (var index in req.files) {
-
                 var file = req.files[index][0];
+                console.log(file)
                 //Generate filepath + filename here however you want
-
                 var filepath = "./public/";
-                var filename = "img/" + index + "/" + Date.now() + "-" + file.originalname.split(' ').join('_');
+                console.log('un'+ file.mimetype);
+                if(file.mimetype=="application/pdf")
+                {
+                    var filename = "data/pdfs/" + Date.now() + "-" + file.originalname.split(' ').join('_');
+                }
+                else if(file.mimetype=="audio/mp3")
+                {
+                    var filename = "data/audios/" + Date.now() + "-" + file.originalname.split(' ').join('_');
+                }
+                else if(file.mimetype=="video/mp4")
+                {
+                    var filename = "data/videos/" + Date.now() + "-" + file.originalname.split(' ').join('_');
+                }
+                else if(["image/png","image/gif","image/jpg","image/jpeg"].indexOf(file.mimetype) > -1)
+                {
+                    var filename = "data/logos/"  + Date.now() + "-" + file.originalname.split(' ').join('_');
+                }
                 name[index] = filename;
+                console.log('filename'+name[index])
                 fs.writeFile(filepath + filename, file.buffer);
             }
             req.checkBody('nom', 'Veuillez renseigne les nom').notEmpty();
@@ -298,8 +327,11 @@ router.put('/Medias/:media',passport.authenticate('jwt', { session: false}), fun
                         liv.nom = req.body.nom;
                         liv.description = req.body.description;
                         liv.categorie = req.body.categorie;
-                        liv.link = name["link"];
+                        liv.rating=req.body.rating;
                         liv.logo = name["logo"];
+                        liv.link = name["link"];
+                        if(!name["logo"])liv.logo=req.body.logo;
+                        if(!name["link"])liv.link=req.body.link;
                         liv.save(function (err, liv) {
                             if (err) {
                                 return next(err);
@@ -325,11 +357,15 @@ router.put('/Medias/:media',passport.authenticate('jwt', { session: false}), fun
 
             }
             else{
+                console.log('else')
                 liv.nom = req.body.nom;
                 liv.description = req.body.description;
                 liv.categorie = req.body.categorie;
-                liv.link = name["link"];
+                liv.rating=req.body.rating;
                 liv.logo = name["logo"];
+                liv.link = name["link"];
+                if(!name["logo"])liv.logo=req.body.logo;
+                if(!name["link"])liv.link=req.body.link;
                 liv.save(function (err, liv) {
                     if (err) {
                         return next(err);
@@ -362,7 +398,7 @@ router.route('/media/:media',mustBe.authorized("admin"),passport.authenticate('j
 });
 
 
-router.put('/Medias/:media/downloaded',passport.authenticate('jwt', { session: false}), function (req, res, next) {
+router.put('/medias/:media/downloaded',passport.authenticate('jwt', { session: false}), function (req, res, next) {
     var token = getToken(req.headers);
     if (token) {
         req.media.download(function (err, media) {
@@ -374,7 +410,32 @@ router.put('/Medias/:media/downloaded',passport.authenticate('jwt', { session: f
     }
 
 });
-router.put('/Medias/:media/readed',passport.authenticate('jwt', { session: false}), function (req, res, next) {
+
+
+router.get('/medias/:media/media_user',passport.authenticate('jwt', { session: false}), function (req, res) {
+    var token = getToken(req.headers);
+    if (token) {
+        var decoded = jwt.decode(token, config.secret);
+        ids =decoded._id;
+        id=req.media._id;
+        var query = MediaUser.find( { media : id,user: ids} );
+        query.exec(function (err, media_user) {
+            if (err) {
+                console.log(err);
+                return res.json("il ya erreur dans la requete reessayer svp");
+
+            }
+            if (!media_user) {
+                return res.json("pas de mediaprofil correspondant a la recherche");
+                return next(new Error('can\'t find categorie_profil'));
+            }
+            res.json(media_user);
+
+        });
+    }
+
+});
+router.put('/medias/:media/readed',passport.authenticate('jwt', { session: false}), function (req, res, next) {
     var token = getToken(req.headers);
     if (token) {
         req.media.read(function (err, media) {
@@ -387,22 +448,19 @@ router.put('/Medias/:media/readed',passport.authenticate('jwt', { session: false
 
 });
 
-router.get('/download/:media',passport.authenticate('jwt', { session: false}), function (req, res) {
+router.get('/download/:media',function (req, res) {
+    var path = require('path');
+    var mime = require('mime');
     var token = getToken(req.headers);
-    if (token) {
+    if (token || true) {
         var file = 'public/' + req.media.link;
-
         var filename = path.basename(file);
         var mimetype = mime.lookup(file);
-
-        res.setHeader('Content-disposition', 'attachment; filename=' + filename);
-        res.setHeader('Content-type', mimetype);
-
+        res.setHeader('Content-disposition', 'attachment; filename=' +filename);
+        res.setHeader('Content-type',mimetype);
         var filestream = fs.createReadStream(file);
         filestream.pipe(res);
     }
-
-
 });
 
 

@@ -1,72 +1,54 @@
 <html>
 <head>
   <title>Biblioteque virtuelle!</title>
+  <meta name="viewport" content="width=device-width">
+ <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,200,500,700,400italic">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
+
+  <link href='https://fonts.googleapis.com/css?family=Lato:100italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>-->
   <link rel="shortcut icon" type="image/x-icon" href="image/favicon.ico" />
-  <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css">
-  <link rel="stylesheet" href="vendor/bootstrap-select/bootstrap-select.min.css">
+  <link rel="stylesheet" href="font-awesome-4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="vendor/jquery-ui/themes/base/jquery-ui.min.css">
+  <link rel="stylesheet" href="vendor/jquery-ui/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="vendor/jquery-multiselect/jquery.multiselect.css">
   <link rel="stylesheet" href="vendor/angular-loading-bar/build/loading-bar.min.css">
-  <link rel="stylesheet" href="vendor/angular-material/angular-material.min.css">
-  <link rel="stylesheet" href="css/style.css">
+  <link href="vendor/ng-img-crop/source/scss/ng-img-crop.scss">
+  <link rel="stylesheet" href="vendor/angular-material/angular-material.css">
+<!--  <link rel="stylesheet" href="vendor/ngPopover/js/ngPopover.min.js">-->
+
+  <link rel="stylesheet" href="vendor/angular-material-paging/src/angular-material-paging.css">
+  <link rel="stylesheet" href="css/axgrip.css">
 
 
 </head>
-<body ng-app="bv" ng-controller="AppCtrl">
-
-  <!-- Static navbar -->
-  <nav class="navbar navbar-default menu-principal"  style="background-color: ghostwhite;">
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li class="active"><a ui-sref="accueil"><span class="glyphicon glyphicon-home home"
-                                                      aria-hidden="true"></span>ACCUEIL</a></li>
-        <li class="dropdown">
-          <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-            <span class="glyphicon glyphicon-th-list home"
-                  aria-hidden="true"></span>
-            OPTIONS <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a ui-sref="formulaireLivre">Inserer media</a></li>
-            <li><a ui-sref="formulaireCategorie" permission="['admin']">Inserer Categorie</a></li>
-            <li><a ui-sref="developpeurWebMean" >developpeur</a></li>
-          </ul>
-        </li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a ui-sref="updateuser">updateuser</a></li>
-        <li permission="['admin']"><a ui-sref="register">REGISTER</a></li>
-        <li><a ui-sref="developpeurWebMean" >developpeur</a></li>
-        <li><a ui-sref="new" >LogiNew</a></li>
-        <li><a  ng-click="logout();">LOGOUT</a></li>
-      </ul>
-    </div>
-
-  </nav>
- <ui-view></ui-view>
-
-
+<body ng-app="bv"  layout="column" >
+  <div ui-view="header"></div>
+  <div ui-view="main"></div>
+  <div ui-view="footer"></div>
+  <div ui-view=""></div>
 </body>
 
-<script src="vendor/jquery/dist/jquery.js"></script>
-<script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
-<script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="vendor/bootstrap-select/bootstrap-select.min.js"></script>
-<script src="vendor/bootstrap-select/bootstrap-select.js"></script>
+<script src="vendor/jquery/dist/jquery.min.js"></script>
+
+<!--
+<script src="vendor/jquery-multiselect/jquery.multiselect.js"></script>-->
 
 <script src="vendor/angular/angular.js"></script>
-<script src="vendor/angular-bootstrap-select/build/angular-bootstrap-select.min.js"></script>
-<script src="vendor/angular-bootstrap-select/build/angular-bootstrap-select.js"></script>
-<script src="vendor/angular-animate/angular-animate.min.js"></script>
+<script src="vendor/ng-img-crop/source/js/ng-img-crop.js"></script>
 <script src="vendor/angular-loading-bar/build/loading-bar.min.js"></script>
 <script src="vendor/ng-file-upload/ng-file-upload.min.js"></script>
 <script src="vendor/ng-file-upload/ng-file-upload-shim.min.js"></script>
 <script src="vendor/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="vendor/angular-slugify/angular-slugify.js"></script>
 
-<script src="vendor/angular-utils-pagination/dirPagination.js"></script>
 <script src="vendor/angular-sanitize/angular-sanitize.js"></script>
-<script src="vendor/angular-dialog-service/dist/dialogs.js"></script>
-<script src="vendor/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-<script src="vendor/angular-aria/angular-aria.min.js"></script>
+
+<script src="vendor/angular-animate/angular-animate.js"></script>
 <script src="vendor/angular-messages/angular-messages.js"></script>
-<script src="vendor/angular-material/angular-material.min.js"></script>
+<script src="vendor/angular-material/angular-material.js"></script>
+<script src="vendor/angular-aria/angular-aria.js"></script>
+<script src="vendor/angular-material-paging/src/angular-material-paging.js"></script>
 <script src="vendor/angular-filter/dist/angular-filter.min.js"></script>
 <script src="vendor/angular-youtube-mb/src/angular-youtube-embed.js"></script>
 <script src="vendor/angular-thumbnails/dist/angular-thumbnails.min.js"></script>
@@ -77,12 +59,12 @@
 
 
 <script src="app.js"></script>
-<script src="app/service.js"></script>
+<script src="app/service2.js"></script>
 <script src="app/controller.js"></script>
 <script src="app/config.js"></script>
 <script src="app/filter.js"></script>
 <script src="app/constant.js"></script>
-
+<script src="app/directive2.js"></script>
 
 
 

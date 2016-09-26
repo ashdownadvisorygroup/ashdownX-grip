@@ -63,7 +63,7 @@ router.get('/groups',passport.authenticate('jwt', { session: false}), function (
         /*var decoded = jwt.decode(token, config.secret);
          var ids=decoded._id;
          console.log(decoded);*/
-        Group.find(function (err, groups) {
+        Group.find().where('nom').ne('superadmin').exec(function (err, groups) {
             if (err) {
                 return next(err);
             }

@@ -1,0 +1,379 @@
+<div  layout="column" ng-hide="aff" flex class="accueil"  style="background-color: rgb(34,34,34);">
+    <div flex="90" >
+        <div role="tabpanel" layout="row" flex layout-wrap>
+                <div flex="15" layout="column" style="background-color: rgb(51,54,64);overflow-y: auto;height: 600px;
+                border-right: 2px solid rgb(5,170,245);" hide-xs>
+                    <div flex="15">
+                        <div flex="80">
+
+                            <input ng-model="searchprofcat"  class="reduceSize" placeholder="entrer la recherche">
+                        </div>
+                        <div flex="20"  permission=['stagiaire']>aaaaaaaaaaaaaaaaaaaaaa</div>
+                    </div>
+                   <div flex="100">
+                        Liste des profils
+                        <ul>
+                            <li style="display: block;" class="un" ng-repeat="prf in
+                            filteredprofile=( profile |filterBy: ['nom','description','objectifs']:searchprofcat)">
+                                {{ prf.nom }}
+                                <ul>
+                                    <li  ng-repeat="ct in prf.categories"
+                                         ng-click="tri(ct);" style="cursor:pointer;">
+                                        {{ct.nom}} <br>{{ct.etat}}
+                                    </li>
+                                </ul>
+                                <div layout-align="space-around">
+                                    <div flex="80">
+                                        <md-progress-linear md-mode="determinate" value="{{prf.progressuser}}"></md-progress-linear>
+                                    </div>
+                                    <div flex="20">
+                                        {{prf.progressuser}}%
+                                    </div>
+                                </div>
+                            </li>
+
+                        </ul>
+
+                    </div>
+                </div>
+                <div flex="70"  class="accueil-menu"  >
+                    <md-tabs  class="accueil-button" md-dynamic-height flex>
+                        <md-tab flex label="Compte" style="color:white;">
+                            <md-content flex layout="row" ng-hide="modifuser" class="md-padding">
+                                <div flex="20" layout="column">
+                                    <div flex="20"></div>
+                                    <div flex="20">
+                                        <img ng-src="{{u.photo}}" alt="{{u.name}}" class="img" style="width: 5em;
+    height: 5em;">
+                                    </div>
+                                    <div flex="20">
+                                        <md-icon md-svg-src="../../image/create-new-pencil-button.svg" ng-click="modruser()"  aria-label="android " style="color: blue;cursor:pointer;" ></md-icon>
+                                    </div>
+                                </div>
+                                <div flex="80" layout="column" style="overflow:auto;">
+                                    <div flex="5">Nom:{{u.name}}</div>
+                                    <div flex="5">E-mail:{{u.email}}</div>
+                                    <md-content > <br>
+                                        <div class="md-accordion">
+                                            <md-toolbar ng-init="one = false" ng-click="one = !one">
+                                                <div class="md-toolbar-tools">
+                                                    <h2>
+                                                        <span>Groupes</span>
+                                                    </h2>
+                                                    <span flex=""></span>
+                                                    <span ng-class="{expandCollapse:true, active:one}"></span>
+                                                </div>
+                                            </md-toolbar>
+                                            <div  ng-repeat="data in u.groups" style="color:black;padding:0px"
+                                                  ng-class="{dataContent:true, activeContent:one}">{{data.nom}}</div>
+                                        </div>
+                                    </md-content>
+
+                                    <md-content > <br>
+                                        <div class="md-accordion">
+                                            <md-toolbar ng-init="two = false" ng-click="two = !two">
+                                                <div class="md-toolbar-tools">
+                                                    <h2>
+                                                        <span>Profils</span>
+                                                    </h2>
+                                                    <span flex=""></span>
+                                                    <span ng-class="{expandCollapse:true, active:two}"></span>
+                                                </div>
+                                            </md-toolbar>
+                                            <div  ng-repeat="data in u.profil" style="color:black;padding:0px"
+                                                  ng-class="{dataContent:true, activeContent:two}">{{data.nom}}</div>
+                                        </div>
+                                    </md-content>
+                                    <md-content > <br>
+                                        <div class="md-accordion">
+                                            <md-toolbar ng-init="expanded = false" ng-click="expanded = !expanded">
+                                                <div class="md-toolbar-tools">
+                                                    <h2>
+                                                        <span>Encadreur</span>
+                                                    </h2>
+                                                    <span flex=""></span>
+                                                    <span ng-class="{expandCollapse:true, active:expanded}"></span>
+                                                </div>
+                                            </md-toolbar>
+                                            <div  ng-repeat="data in u.encadreur" style="color:black;padding:0px"
+                                                    ng-class="{dataContent:true, activeContent:expanded}">{{data.nom}}</div>
+                                        </div>
+                                    </md-content>
+                                    <md-content > <br>
+                                        <div class="md-accordion">
+                                            <md-toolbar ng-init="three = false" ng-click="three = !three">
+                                                <div class="md-toolbar-tools">
+                                                    <h2>
+                                                        <span>Master</span>
+                                                    </h2>
+                                                    <span flex=""></span>
+                                                    <span ng-class="{expandCollapse:true, active:three}"></span>
+                                                </div>
+                                            </md-toolbar>
+                                            <div  ng-repeat="data in u.master" style="color:black;padding:0px"
+                                                  ng-class="{dataContent:true, activeContent:three}">{{data.nom}}</div>
+                                        </div>
+                                    </md-content>
+                                </div>
+
+                            </md-content>
+                            <md-content ng-show="modifuser" class="md-padding" >
+                                <form  name="Formuser"  ng-submit="modifieruser()" style="overflow: auto;color:white;">
+                                    <md-content class="md-no-momentum newuser">
+                                        <md-input-container  class="md-icon-float md-block">
+                                            <md-icon md-svg-src="../../image/menu-button.svg" class="name"></md-icon>
+                                            <label>Nom</label>
+                                            <input ng-model="user.name" type="text" name="name" >
+                                        </md-input-container>
+                                        <md-input-container class="md-block">
+                                            <md-icon md-svg-src="../../image/lock-and-key-icon-silhouette.svg" class="email"></md-icon>
+                                            <label>Mot de passe</label>
+                                            <input ng-model="user.password" type="password"  ng-required="true">
+                                        </md-input-container>
+                                        <md-input-container class="md-block">
+                                            <md-icon md-svg-src="../../image/email-filled-closed-envelope.svg" class="email"></md-icon>
+                                            <label>Email</label>
+                                            <input ng-model="user.email" type="email" >
+                                        </md-input-container>
+                                        <md-input-container class="md-block">
+                                            <div id="photo" name="photo" aria-label="a" value="{{user.photo}}" type="file" ngf-drop ngf-select ng-model="user.photo" class="drop-box"
+                                                   ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="false"
+                                                   accept="image/*" ngf-max-size="10MB"
+                                                   ngf-pattern="'image/*'" >Drag and Drop Selection du fichier</div>
+
+                                            <span><img ngf-src="user.photo" class="thumb ng-hide" style="height: 35px"></span>
+                                            <span ng-show="Formuser.photo.$error.pattern">Allowed formats are 'image/*' </span>
+                                            <div ng-messages="Formuser.photo.$error" ng-if="Formuser.photo.$touched" >
+                                                <p ng-message="maxSize"> File  must be lower than 10MB..</p>
+                                            </div>
+                                        </md-input-container>
+                                        <md-button class="md-raised md-primary" ng-disabled="Formuser.$invalid" type="submit">Envoyer</md-button>
+                                        <br><br>
+                                    </md-content>
+                                </form>
+                            </md-content>
+                        </md-tab>
+                        <!--ng-if="fautaff" donnee="fautaff" permission=['admin']-->
+                        <md-tab flex layout="column"  label="creer categorie">
+                            <md-content  flex-xs="100" layout-align-xs="center center" class="md-padding"  >
+                                <form  name="Formcat"  ng-submit="newcat()" style="overflow: auto;color:white;" >
+                                    <md-content class="md-no-momentum newuser">
+                                        <md-input-container  class="md-icon-float md-block">
+                                            <md-icon md-svg-src="../../image/menu-button.svg" class="name"></md-icon>
+                                            <label>nom(require)</label>
+                                            <input ng-model="catnew.nom" ng-minlength="10"
+                                                   md-maxlength="60" name="nom"
+                                                   type="text"  ng-required="true">
+                                            <div ng-messages="Formcat.nom.$error">
+                                                <div ng-message="required">le nom est obligatoire</div>
+                                                <div ng-message="md-maxlength">la taille ne doit pas depasser 60</div>
+                                                <div ng-message="md-minlength">le nom doit être au moins de 7 caracteres</div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-block">
+                                            <md-icon md-svg-src="../../image/email-filled-closed-envelope.svg" class="email"></md-icon>
+                                            <label>Description de la categorie</label>
+                                             <textarea ng-model="catnew.description" aria-label="un" name="description"
+                                                       ng-minlength="10"
+                                                       md-maxlength="150" ng-required="true">
+                                             </textarea>
+                                            <div ng-messages="Formcat.description.$error">
+                                                <div ng-message="required">le nom est obligatoire</div>
+                                                <div ng-message="md-maxlength">la taille ne doit pas depasser 150</div>
+                                                <div ng-message="md-minlength">la doit être au moins de 10 caracteres</div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-button class="md-raised md-primary" ng-disabled="Formcat.$invalid" type="submit">Envoyer</md-button>
+                                        <br><br>
+                                    </md-content>
+                                </form>
+                            </md-content>
+
+                        </md-tab>
+                       <!-- permission="['admin']"-->
+                        <md-tab   label=" creer profil">
+                            <md-content  class="md-padding" >
+                                <form  name="Formprof"  ng-submit="newprof()" style="overflow: auto;color:white;">
+                                    <md-content class="md-no-momentum newuser">
+                                        <div >
+                                            <md-icon md-svg-src="../../image/email-filled-closed-envelope.svg" class="email"></md-icon>
+                                            <label>objectifs du profil</label>
+                                            <table>
+                                                <tr ng-repeat="name in profnew.data track by $index">
+                                                    <td> <input type="text" ng-model="profnew.data[$index]"></td>
+                                                    <td><button class="remove" ng-click="addRow($index)"  ng-show="$last" >+</button></td>
+                                                    <td><button class="remove" style="background-color: #C76868;" ng-click="deleteRow($event,$index)"  ng-show="$index != 0">-</button></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <md-input-container  class="md-icon-float md-block">
+                                            <label>Nom</label>
+                                            <md-icon md-svg-src="../../image/menu-button.svg" class="name"></md-icon>
+                                            <input  type="text" ng-minlength="10"
+                                                   md-maxlength="60" name="nom" ng-model="profnew.nom"
+                                                   ng-required="true">
+                                            <div ng-messages="Formprof.nom.$error">
+                                                <div ng-message="required">le nom est obligatoire</div>
+                                                <div ng-message="md-maxlength">la taille ne doit pas depasser 60</div>
+                                                <div ng-message="md-minlength">le nom doit être au moins de 710caracteres</div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-input-container class="md-icon-float md-icon-left  md-block">
+                                            <md-icon md-svg-src="../../image/web-design.svg" style="display:inline-block;"></md-icon>
+                                            <label>catégories du profil</label>
+                                            <md-select multiple ng-model="profnew.categorie" ng-required="true">
+                                                <md-option ng-repeat="ct in categories" value="{{ct._id}}">{{ct.nom}}</md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                        <md-input-container class="md-block">
+                                            <md-icon md-svg-src="../../image/email-filled-closed-envelope.svg" class="email"></md-icon>
+                                            <label>Description du profil</label>
+                                             <textarea   ng-minlength="10" md-maxlength="150" ng-required="true"
+                                                     aria-label="deux" name="description" ng-model="profnew.description">
+                                             </textarea>
+                                            <div ng-messages="Formprof.description.$error">
+                                                <div ng-message="required">la description est obligatoire</div>
+                                                <div ng-message="md-maxlength">la taille ne doit pas depasser 150</div>
+                                                <div ng-message="md-minlength">le nom doit être au moins de 10 caracteres</div>
+                                            </div>
+                                        </md-input-container>
+                                        <md-button class="md-raised md-primary"  ng-disabled="Formprof.$invalid" type="submit">Envoyer</md-button>
+                                        <br><br>
+                                    </md-content>
+                                </form>
+                            </md-content></md-content>
+                        </md-tab>
+                        <md-tab flex label="creer user">
+                            <md-content flex layout="column">
+                                <div flex="5">Creation nouveau utilisateur</div>
+                                <div flex="85">
+                                    <!--<span><img ngf-src="userm.photo" class="thumb ng-hide" style="height: 35px"></span>-->
+                                    <form flex name="myFormnouvuser"  ng-submit="nouveauuser()" style="overflow: auto;color:white;height: 500px;" >
+                                        <md-content class="md-no-momentum newuser" style="overflow-y:auto;">
+                                            <md-icon md-svg-src="../../image/left-arrow-in-circular-button.svg" aria-label="android " style="color: blue;" ></md-icon>
+                                            <md-input-container class="md-block">
+                                                <div class="photo1" ng-init="userm.photo='image/user.png'" name="photo"  aria-label="a" value="{{userm.photo}}" type="file" ngf-drop ngf-select ng-model="userm.photo"
+                                                     ngf-drag-over-class="dragover" ngf-multiple="false" ngf-allow-dir="false"
+                                                     accept="image/*" ngf-max-size="10MB" ngf-resize="{width: 100, height: 100}"
+                                                     ngf-pattern="'image/*'" >
+                                                    <figure class="r right">
+                                                        <img  ngf-src="userm.photo" ng-class="{'thumb ng-hide' : dragover}" style="width:260px;height: 260px;" >
+                                                    </figure><!---->
+                                                </div>
+
+                                                <span ng-show="myFormnouvuser.photo.$error.pattern">Allowed formats are 'image/*' </span>
+                                                <div ng-messages="myFormnouvuser.photo.$error" ng-if="myFormnouvuser.photo.$touched" >
+                                                    <p ng-message="maxSize"> File  must be lower than 10MB..</p>
+                                                </div>
+                                            </md-input-container>
+
+                                            <md-input-container  class="md-icon-float md-block" flex="50">
+                                                <md-icon md-svg-src="../../image/menu-button.svg" class="name"></md-icon>
+                                                <label>Name</label>
+                                                <input ng-model="userm.name" ng-minlength="10" name="name"
+                                                       md-maxlength="60" type="text"  ng-required="true">
+                                                <div ng-messages="myFormnouvuser.name.$error">
+                                                    <div ng-message="required">le nom est obligatoire</div>
+                                                    <div ng-message="md-maxlength">la taille ne doit pas depasser 60</div>
+                                                    <div ng-message="md-minlength">le nom doit être au moins de 10caracteres</div>
+                                                </div>
+                                            </md-input-container>
+                                            <!--<span><img src="image/" class="thumb ng-hide" style="height: 35px"></span>-->
+                                            <md-input-container md-no-float class="md-block" flex="50">
+                                                <md-icon md-svg-src="../../image/lock-and-key-icon-silhouette.svg"></md-icon>
+                                                <label>Password(require)</label>
+                                                <input ng-model="userm.password" type="password" ng-required="true">
+                                            </md-input-container>
+                                            <md-input-container class="md-block" flex="50">
+                                                <md-icon md-svg-src="../../image/email-filled-closed-envelope.svg" class="email"></md-icon>
+                                                <label>Email (required)</label>
+                                                <input ng-model="userm.email" type="email" ng-required="true">
+                                            </md-input-container>
+                                            <md-input-container   md-no-float class="md-block">
+                                                <md-icon md-svg-src="../../image/users-group.svg" style="display:inline-block;"></md-icon>
+                                                <label>Groupe(s) de l'utilisateur</label>
+                                                <md-select multiple ng-model="userm.groups"  ng-required="true">
+                                                    <md-option ng-repeat="group in groups" value="{{group._id}}">{{group.nom}}</md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                            <md-input-container class="md-icon-float md-icon-left md-block">
+                                                <md-icon md-svg-src="../../image/web-design.svg" style="display:inline-block;"></md-icon>
+                                                <label>Profil(s) de l'utilisateur</label>
+                                                <md-select multiple ng-model="userm.profil"  ng-required="true">
+                                                    <md-option ng-repeat="profil in profils" value="{{profil._id}}">{{profil.nom}}</md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                            <md-input-container  class="md-icon-float md-icon-left md-block">
+                                                <md-icon md-svg-src="../../image/customer.svg" style="display:inline-block;"></md-icon>
+                                                <label>Role masteur d'utilisateur</label>
+                                                <md-select multiple ng-model="userm.master" >
+                                                    <md-option ng-repeat="prof in profils" value="{{prof._id}}">{{prof.nom}}</md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                            <md-input-container  class="md-icon-float md-icon-left md-block">
+                                                <md-icon md-svg-src="../../image/customer.svg" style="display:inline-block;"></md-icon>
+                                                <label>Role encadreur de l'utilisaeur</label>
+                                                <md-select multiple ng-model="userm.encadreur">
+                                                    <md-option ng-repeat="enc in profils" value="{{enc._id}}">{{enc.nom}}</md-option>
+                                                </md-select>
+                                            </md-input-container>
+
+                                            <md-button class="md-raised md-primary" type="submit" ng-disabled="myFormnouvuser.$invalid">Envoyer</md-button>
+                                            <br/><br><br><br>
+                                        </md-content>
+                                    </form>
+                                </div>
+                                <div flex="5"></div>
+
+                            </md-content>
+
+                        </md-tab>
+                    </md-tabs>
+
+                </div>
+                <div flex="15" layout="column" style="background-color: rgb(51,54,64);overflow-y: auto;border-left: 2px solid rgb(5,170,245);" hide-xs>
+                    <div flex>
+                        <input ng-model="searchstagiaire" class="reduceSize"  placeholder="entrer la recherche">
+                    </div>
+                    <md-content style="background-color: rgb(51,54,64);color:white;overflow: auto;height: 490px;" flex>
+                        <section>
+                            <md-subheader >Liste des stagiaires</md-subheader>
+                            <md-list class="make-scrollable"  >
+                                <md-list-item class="md-3-line" ng-repeat="item in filteredStagiaires=( stagiaires |filterBy: ['name']:searchstagiaire)"
+                                              style="height:7%;"  >
+                                    <img ng-src="{{item.photo}}?{{$index}}" class="md-avatar" alt="{{item.name}}">
+                                    <div class="md-list-item-text" >
+                                        <a  ui-sref="axgrip.useraccount({id:item._id})" style="text-decoration: none;">
+                                            <h3 style="color:white;cursor:pointer;font-size: 12px">{{item.name}}</h3>
+                                        </a>
+                                    </div>
+                                    <md-divider md-inset ng-if="!$last"></md-divider>
+                                </md-list-item>
+                            </md-list>
+                        </section>
+                    </md-content>
+                </div>
+        </div>
+    </div>
+</div>
+<script>
+    var left = $('.l');
+    var right = $('.r');
+
+    $('button').on('click', function() {
+        left.toggleClass('left');
+        right.toggleClass('right');
+
+        if (left.hasClass('left')) {
+            $(left).children('figcaption').text('Floating Left');
+        } else {
+            $(left).children('figcaption').text('Not Floating');
+        }
+
+        if (right.hasClass('right')) {
+            $(right).children('figcaption').text('Floating Right');
+        } else {
+            $(right).children('figcaption').text('Not Floating');
+        }
+    });
+</script>

@@ -7,11 +7,9 @@ var multer = require('multer');
 expressValidator = require('express-validator');
 var util = require('util');
 var mongoose = require('mongoose');
+var UserProfil = mongoose.model('UserProfil');
+var Profil = mongoose.model('Profil');
 var User = mongoose.model('User');
-var MediaUser = mongoose.model('MediaUser');
-//var Profil = mongoose.model('Profil');
-var User = mongoose.model('User');
-
 var passport = require('passport');
 var jwt = require('jwt-simple');
 var config = require('../config/database');
@@ -30,74 +28,65 @@ const mongooseSeed = require('mongoose-plugin-seed').seed;
 var Group = mongoose.model('Group');
 
 
-router.param('media_user', function (req, res, next, id) {
-    // console.log(id)
-
-    //console.log(req);
-
-
-    if (id == undefined) {
-        return next(new Error('media_user undifined'));
+router.param('user_profil', function (req, res, next, id) {
+     if (id == undefined) {
+        return next(new Error('user_profil undifined'));
     }
-    var query = MediaUser.findById(id)
+    var query = UserProfil.findById(id)
 
-    query.exec(function (err, media_user) {
+    query.exec(function (err, user_profil) {
         if (err) {
             return next(err);
         }
-        if (!media_user) {
+        if (!user_profil) {
             return res.json("error lor de la sauvegarde");
-            return next(new Error('can\'t find media_user'));
+            return next(new Error('can\'t find user_profil'));
         }
-        console.log(media_user);
+        console.log(user_profil);
 
-        req.media_user = new MediaUser(media_user);
+        req.user_profil = new UserProfil(user_profil);
         return next();
     });
 
 
 });
 
-router.get('/media_users',passport.authenticate('jwt', { session: false}), function (req, res, next) {
+router.get('/user_profils',passport.authenticate('jwt', { session: false}), function (req, res, next) {
     var token = getToken(req.headers);
     if (token) {
-        /*var decoded = jwt.decode(token, config.secret);
-         var ids=decoded._id;
-         console.log(decoded);*/
-        MediaUser.find(function (err, media_users) {
+        UserProfil.find(function (err, user_profils) {
             if (err) {
                 return next(err);
             }
 
-            res.json(media_users);
+            res.json(user_profils);
         });
     }
 
 });
 
-router.get('/media_user/:media_user',passport.authenticate('jwt', { session: false}), function (req, res) {
+router.get('/user_profil/:user_profil',passport.authenticate('jwt', { session: false}), function (req, res) {
 
     var token = getToken(req.headers);
-    //console.log(req.media_user);
+    //console.log(req.user_profil);
     if (token) {
-        req.media_user.populate('user')
-            .populate('media', function (err, media_user) {
-            if (err) {
-                return next(err);
-            }
+        req.user_profil.populate('user')
+            .populate('profil', function (err, user_profil) {
+                if (err) {
+                    return next(err);
+                }
 
-            res.json(media_user);
-        });
-        //res.json(req.media_user);
+                res.json(user_profil);
+            });
     }
 
 });
 
-router.post('/media_users',passport.authenticate('jwt', { session: false}), function (req, res, next) {
+router.post('/user_profils',passport.authenticate('jwt', { session: false}), function (req, res, next) {
     var token = getToken(req.headers);
     if (token) {
 
-        var md_usr = new MediaUser(req.body);
+        var md_usr = new UserProfil(req.body);
         md_usr.save(function (err, md_usr) {
             if (err) {
                 return next(err);
@@ -109,12 +98,11 @@ router.post('/media_users',passport.authenticate('jwt', { session: false}), func
 
 });
 
-router.put('/media_user/:media_user',passport.authenticate('jwt', { session: false}), function (req, res) {
+router.put('/user_profil/:user_profil',passport.authenticate('jwt', { session: false}), function (req, res) {
     var token = getToken(req.headers);
     if (token) {
-        md_usr = req.media_user;
+        md_usr = req.user_profil;
         md_usr.progression = req.body.progression;
-        md_usr.notation = req.body.notation;
         md_usr.save(function (err, md_usr) {
             if (err) {
                 return next(err);
@@ -125,12 +113,12 @@ router.put('/media_user/:media_user',passport.authenticate('jwt', { session: fal
     }
 
 });
-router.delete('/media_user/:media_user',mustBe.authorized("admin"),passport.authenticate('jwt', { session: false}), function (req, res) {
+router.delete('/user_profil/:user_profil',mustBe.authorized("admin"),passport.authenticate('jwt', { session: false}), function (req, res) {
     var token = getToken(req.headers);
     if (token) {
-        MediaUser.remove({
-            _id: req.media_user._id
-        }, function(err, media_user) {
+        UserProfil.remove({
+            _id: req.user_profil._id
+        }, function(err, user_profil) {
             if (err)
                 res.send(err);
 
