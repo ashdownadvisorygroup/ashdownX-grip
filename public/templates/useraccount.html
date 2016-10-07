@@ -1,8 +1,5 @@
-
-
-
-<div  layout="row" ng-hide="aff" flex class="accueil"  style="background-color: rgb(34,34,34);">
-    <div flex="25"  layout="column" style="background-color: rgb(51,54,64);overflow-y: auto;border-right: 2px solid rgb(5,170,245); ">
+<div  layout="row"  flex class="accueil"  style="background-color: rgb(34,34,34);">
+    <div flex="25" ng-if="aff_med" layout="column" style="background-color: rgb(51,54,64);overflow-y: auto;border-right: 2px solid rgb(5,170,245); ">
         <div flex="100" flex-xs="100" >
             <ul>
                 <li ng-repeat="prf in profile">
@@ -10,13 +7,31 @@
                     <ul>
                         <li  ng-repeat="cat in prf.categories"  ng-click="tri(cat,prf);" style="cursor:pointer;">
                             <span>{{cat.nom}} &nbsp;{{cat.etat}}</span>
-                            <span>
-                                <md-checkbox id="checkbox"   aria-label="checkbox"
-                                               ng-checked="exists(cat)" ng-click="toggles(cat,prf)">
-
-                                </md-checkbox>
+                            <span permission="['admin']">
+                                <md-checkbox id="checkbox"   aria-label="checkbox" ng-click="toggles(cat,prf)"></md-checkbox>
                             </span>
-
+                        </li>
+                    </ul>
+                    <div layout-align="space-around">
+                        <div flex="80">
+                            <md-progress-linear md-mode="determinate" value="{{prf.progressuser}}"></md-progress-linear>
+                        </div>
+                        <div flex="20">
+                            {{prf.progressuser}}%
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div flex="25" ng-if="aff_don || aff_profter "  layout="column" style="background-color: rgb(51,54,64);overflow-y: auto;border-right: 2px solid rgb(5,170,245); ">
+        <div flex="100" flex-xs="100" >
+            <ul>
+                <li ng-repeat="prf in profile">
+                    {{ prf.nom }}
+                    <ul>
+                        <li  ng-repeat="cat in prf.categories"  ng-click="tri(cat,prf);" style="cursor:pointer;">
+                            <span>{{cat.nom}} &nbsp;{{cat.etat}}</span>
                         </li>
                     </ul>
                     <div layout-align="space-around">
@@ -33,40 +48,21 @@
     </div>
     <div flex="5"></div>
     <div layout="column" hide-xs hide-sm  flex="65">
-        <div flex="5" layout-margin="20"></div>
         <div flex="10" layout="row" style="padding-top: 1em;">
-            <div flex="30">
-                <md-menu-bar>
-                    <md-menu >
-                        <button ng-click="$mdOpenMenu()" style="background-color: white;">
-                            user
-                        </button>
-                        <md-menu-content>
-                            <md-menu-item>
-                                <md-button ng-click="affiche_don()">
-                                    Données
-                                </md-button>
-                            </md-menu-item>
-                        </md-menu-content>
-                    </md-menu>
-                    <md-menu>
-                        <button ng-click="$mdOpenMenu()" style="background-color: white;">
-                            profils
-                        </button>
-                        <md-menu-content>
-                            <md-menu-item class="md-indent">
-                                <md-button ng-click="affiche_profter()">
-                                    profils terminés
-                                </md-button>
-                            </md-menu-item>
-                        </md-menu-content>
-                    </md-menu>
-                </md-menu-bar>
-            </div>
-           <!-- <div flex="10">{{longueur}}medias</div>-->
+            <md-menu-bar>
+                    <button ui-sref="axgrip.user({id:iduser})"  style="background-color: white;">
+                        user
+                    </button>
+                    <button ui-sref="axgrip.profil_termines({id:iduser})" style="background-color: white;">
+                        profils
+                    </button>
+                    <button ui-sref="axgrip.useraccount({id:iduser})" style="background-color: white;">
+                        Médias
+                    </button>
+            </md-menu-bar>
         </div>
         <md-divider></md-divider>
-        <div flex="75" layout="row" layout-wrap ng-if="aff_med">
+        <div flex="60" layout="row" layout-wrap ng-if="aff_med">
             <div ng-repeat="m in allmedias" flex="25">
                 <div layout="column"  class='md-padding pacard' flex layout-wrap>
                     <md-card class="card" >
@@ -95,7 +91,7 @@
             </div>
 
         </div>
-        <div flex="75" ng-if="aff_don" layout="column">
+        <div flex="60" ng-if="aff_don" layout="column">
             <div flex="10">
                 Nom:{{users.name}}
             </div>
@@ -104,29 +100,50 @@
             </div>
             <div flex="25">
                 peut noter :
-                <div ng-repeat="u in users.master">
-                    {{u.nom}}
+                <ol>
+                    <li ng-repeat="u in users.master">
+                        {{u.nom}}
+                    </li>
+                </ol>
+                <div ng-hide="users.master">
+                    Ne peut noter un média
                 </div>
             </div>
             <div flex="30">
                 groups :
-                <div ng-repeat="u in users.groups">
-                    {{u.nom}}
+                <ol>
+                    <li  ng-repeat="u in users.groups">
+                        {{u.nom}}
+                    </li>
+                </ol>
+                <div ng-hide="users.groups.length >0">
+                    Aucun groupe
                 </div>
             </div>
-            <div flex="30">
+            <div flex="30" ng-show="users.encadreur">
                encadreur:
-                <div ng-repeat="u in users.encadreur">
-                    {{u.nom}}
+                <ol>
+                    <li ng-repeat="u in users.encadreur">
+                        {{u.nom}}
+                    </li>
+                </ol>
+                <div ng-hide="users.encadreur.length >0">
+                    N'encadre aucun profil
                 </div>
+
             </div>
         </div>
-        <div flex="75" ng-if="aff_profter">Profils terminés
+        <div flex="60" ng-if="aff_profter">Profils terminés:
             <ol>
-                <li  class="un" ng-repeat="p in profter">
+                <li  class="un" ng-repeat="p in profile | filterBy: ['progressuser']: 100">
                     {{p.nom}}
+
                 </li>
             </ol>
+            <div  ng-show="(profile| filterBy: ['progressuser']: 100).length == 0">
+                    Aucun profil terminé
+            </div>
+
         </div>
         <div flex="5" layout="row" ng-if="aff_med">
             <div flex="50" flex-offset="50">
@@ -137,5 +154,4 @@
 
 
     </div>
-    <div flex="5"></div>
 </div>

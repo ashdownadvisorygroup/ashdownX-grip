@@ -561,6 +561,7 @@ router.post('/forgot', function(req, res, next) {
         user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
 
         user.save(function(err) {
+          console.log('erreur1')
           console.log(err);
           done(err, token, user);
         });
@@ -590,20 +591,24 @@ router.post('/forgot', function(req, res, next) {
         ]
       };
       Transport.sendMail(mailOptions, function(err) {
-        if(err){
-          console.log(err);
-          res.json('erreur')
+        if (err) {
+          res.status(500).json({msg: "erreur pas de connection"});
+          return;
         }
         if (res.headersSent) {
-          return next(err);
+            res.status(500).json({msg: "erreur pas de connection"});
+            return;
+
         }
         res.json({token: token,msg:'envoye'});
       });
     }
   ], function(err) {
-     console.log(err);
-    if (err) return next(err);
-    res.redirect('/forgot');
+    if (err) {
+      res.status(500).json({msg: "erreur lors de l'envoie"});
+      return;
+    }
+
   });
 });
 router.get('/reset/:token', function(req, res) {

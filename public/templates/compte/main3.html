@@ -1,0 +1,27 @@
+<div  layout="column"  flex class="accueil"  style="background-color: rgb(34,34,34);">
+    <div flex="90" >
+    <div ng-show="stagiaires.length >0" flex layout="column" style="background-color: rgb(51,54,64);overflow-y: auto;border-left: 2px solid rgb(5,170,245);" hide-xs>
+        <div flex>
+            <input ng-model="searchstagiaire" class="reduceSize"  placeholder="entrer la recherche">
+        </div>
+        <md-content style="background-color: rgb(51,54,64);color:white;overflow: auto;height: 528px;" flex>
+            <section>
+                <md-subheader >Liste des stagiaires</md-subheader>
+                <md-list class="make-scrollable"  >
+                    <md-list-item class="md-3-line" ng-repeat="item in filteredStagiaires=( stagiaires |filterBy: ['name']:searchstagiaire)"
+                                  style="height:7%;"  >
+                        <img ng-src="{{item.photo}}?{{$index}}" class="md-avatar" alt="{{item.name}}">
+                        <div class="md-list-item-text" >
+                            <a  ui-sref="axgrip.useraccount({id:item._id})" style="text-decoration: none;">
+                                <h3 style="color:white;cursor:pointer;font-size: 12px">{{item.name}}</h3>
+                            </a>
+                        </div>
+                        <md-divider md-inset ng-if="!$last"></md-divider>
+                    </md-list-item>
+                </md-list>
+            </section>
+        </md-content>
+    </div>
+
+    </div>
+</div>

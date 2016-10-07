@@ -1,104 +1,132 @@
 
 <div  layout="column"  flex class="accueil"  style="background-color: rgb(34,34,34);">
-    <div flex="80"  layout="row">
-        <div flex="10"></div>
-        <div flex="90" layout="column" >
+    <div flex="90"  layout="row">
+        <div flex="20" ng-if="profil" layout="column" style="background-color: rgb(51,54,64);overflow: auto;border-right: 2px solid rgb(5,170,245);" hide-xs>
             <div flex="5"></div>
-            <div flex="5">
-                <h1 style="font-size: 20px">Liste des profils</h1>
+            <div flex="10">
+                Nom:{{profil.nom}}
+                <md-divider></md-divider>
             </div>
-            <div layout="row" flex="90" layout-wrap>
-                <div layout="column" ng-repeat="prf in profile" flex="50" >
+            <div flex="40" style="overflow-y: auto;">Description:{{profil.description}}
+                <md-divider></md-divider>
+            </div>
+            <div flex="40" style="overflow-y: auto;">
+                Objectifs du profil:
+                <ol>
+                    <li  ng-repeat="ct in profil.objectifs |unique">
+                        {{ct}}
+                    </li>
+                </ol>
+                <md-divider></md-divider>
+            </div>
+            <div flex="5"> {{profil.categorieprofil.length}} &nbsp;catégories
+                <md-divider></md-divider>
+            </div>
+            <div flex="5">
+                <md-button class="md-raised md-primary" permission="['admin']" ui-sref="axgrip.modifprofil({id:profil._id})">Modifier le profil</md-button>
+            </div>
+        </div>
+        <div flex="10"></div>
+        <div flex="85" layout="column" >
+            <div flex="5"></div>
+            <div flex="5" layout="row">
+                <div flex="25" ng-if="profile">
+                    <h1 style="font-size: 20px">Liste des profils</h1>
+                </div>
+                <div flex="65" ng-show="profile">
+                    <input ng-model="searchprof"  class="reduceSize" placeholder="entrer la recherche">
+                </div>
+            </div>
+            <div flex="5" ng-if="profil"> Liste des catégories</div>
+            <div flex="5"></div>
+            <div layout="row" flex="75" layout-wrap>
+                <div layout="column" ng-repeat="prf in filteredprofile=( profile |filterBy: ['nom','description']:searchprof )">
                     <md-card class="cardprofil">
                         <md-card-title>
                             <md-card-title-text>
-                                <span class="md-headline">Nom:{{prf.nom}}</span>
+                                <span class="md-headline" style="cursor:pointer" ng-click="triscat(prf);">Nom:{{prf.nom}}</span>
                                 <span class="md-subhead">Description:{{prf.description}}</span>
-                                    <span class="md-subhead">Objectifs du profil:
-                                        <ol>
-                                            <li  ng-repeat="ct in prf.objectifs |unique"
-                                                 ng-click="tri(ct);" style="cursor:pointer;">
-                                                {{ct}}
-                                            </li>
-                                        </ol>
-                                    </span>
-                                <span class="md-subhead">Catégories du profil</span>
-                                <div layout="row" >
-                                    <div layout="row" ng-repeat="ct in prf.categories" >
-                                        <md-card class="cardprofcat">
-                                            <md-card-title>
-                                                <md-card-title-text>
-                                                    <span class="md-subhead">Nom:{{ct.nom}}</span>
-                                                    <span class="md-subhead">Description:{{ct.description}}</span>
-                                                </md-card-title-text>
-                                            </md-card-title>
-                                        </md-card>
-                                    </div>
-
-                                    <!--<div >
-                                        <md-tooltip>Ajouter un media a la categorie</md-tooltip>
-                                        <md-icon id="leftArrow" md-svg-src="../../image/left-arrow.svg" class="card-icon"></md-icon>
-
-                                    </div>
-                                    <div id="viewContainer">
-                                        <div id="tslshow">
-                                            <div class="bktibx"> 12:00   </div>
-                                            <div class="bktibx"> 12:30   </div>
-                                            <div class="bktibx"> 13:00   </div>
-                                            <div class="bktibx"> 13:30   </div>
-                                            <div class="bktibx"> 14:00   </div>
-                                            <div class="bktibx"> 14:30   </div>
-                                            <div class="bktibx"> 15:00   </div>
-                                            <div class="bktibx"> 15:30   </div>
-                                            <div class="bktibx"> 16:00   </div>
-                                            <div class="bktibx"> 16:30   </div>
-                                            <div class="bktibx"> 17:00   </div>
-                                            <div class="bktibx"> 17:30   </div>
-                                        </div>
-                                    </div>
-
-                                    <div >
-                                        <md-tooltip>Ajouter un media a la categorie</md-tooltip>
-                                        <md-icon id="rightArrow" md-svg-src="../../image/right-arrow.svg" class="card-icon"></md-icon>
-
-                                    </div>-->
-                                </div>
+                                <span>
+                                    <md-button permission="['admin']"  class="card-button" ng-click="showConfirmdelprof($event,prf)" aria-label="a">
+                                        <md-tooltip>Supprimer le profil</md-tooltip>
+                                        <md-icon md-svg-src="../../image/rubbish-bin-delete-button.svg" class="card-icon"></md-icon>
+                                    </md-button>
+                                </span>
                             </md-card-title-text>
                         </md-card-title>
-
-
                     </md-card>
+                </div>
+                <div layout="row" ng-repeat="ct in profil.categorieprofil" >
+                    <md-card class="cardprofcat">
+                        <md-card-title>
+                            <md-card-title-text>
+                                <span class="md-subhead" style="cursor:pointer" ui-sref="axgrip.categorie({id:ct._id})">Nom:{{ct.nom}}</span>
+                                <span class="md-subhead">Description:{{ct.description}}</span>
+                            </md-card-title-text>
+                        </md-card-title>
+                    </md-card>
+                </div>
+                <div ng-if="profnew" flex="80">
+                    <form  name="Formmodifprof"  style="overflow: auto;color:white;">
+                        <md-content class="md-no-momentum newuser">
+                            <div >
+                                <md-icon md-svg-src="../../image/email-filled-closed-envelope.svg" class="email"></md-icon>
+                                <label>objectifs du profil</label>
+                                <table>
+                                    <tr ng-repeat="name in profnew.data track by $index">
+                                        <td> <input type="text" ng-model="profnew.data[$index]"></td>
+                                        <td><button class="remove" ng-click="addRow($index)"  ng-show="$last" >+</button></td>
+                                        <td><button class="remove" style="background-color: #C76868;" ng-click="deleteRow($event,$index)"  ng-show="$index != 0">-</button></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <md-input-container  class="md-icon-float md-block">
+                                <label>Nom</label>
+                                <md-icon md-svg-src="../../image/menu-button.svg" class="name"></md-icon>
+                                <input  type="text" ng-minlength="10"
+                                        md-maxlength="60" name="nom" ng-model="profnew.nom">
+                                <div ng-messages="Formmodifprof.nom.$error">
+                                    <div ng-message="md-maxlength">la taille ne doit pas depasser 60</div>
+                                    <div ng-message="md-minlength">le nom doit être au moins de 710caracteres</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-icon-float md-icon-left  md-block">
+                                <md-icon md-svg-src="../../image/web-design.svg" style="display:inline-block;"></md-icon>
+                                <label>catégories du profil</label>
+                                <md-select multiple ng-model="profnew.categorie" >
+                                    <md-option ng-repeat="ct in categories" value="{{ct._id}}">{{ct.nom}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container class="md-block">
+                                <md-icon md-svg-src="../../image/email-filled-closed-envelope.svg" class="email"></md-icon>
+                                <label>Description du profil</label>
+                                             <textarea   ng-minlength="10" md-maxlength="150"
+                                                         aria-label="deux" name="description" ng-model="profnew.description">
+                                             </textarea>
+                                <div ng-messages="Formmodifprof.description.$error">
+                                    <div ng-message="required">la description est obligatoire</div>
+                                    <div ng-message="md-maxlength">la taille ne doit pas depasser 150</div>
+                                    <div ng-message="md-minlength">le nom doit être au moins de 10 caracteres</div>
+                                </div>
+                            </md-input-container>
+                            <md-button class="md-raised md-primary"  ng-disabled="Formmodifprof.$invalid" ng-click="modifprof()">Envoyer</md-button>
+                            <br><br>
+                        </md-content>
+                    </form>
                 </div>
 
             </div>
-        </div>
-    </div>
-    <div flex="10">
-        <div flex="10" flex-offset="80">
-            <wan-material-paging wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
-            </wan-material-paging>
+
+            <div flex="10" ng-hide="profnew">
+                <div flex="10" flex-offset="80">
+                    <wan-material-paging wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
+                    </wan-material-paging>
+
+                </div>
+            </div>
+
 
         </div>
     </div>
 
 </div>
-<script>
-    var view = $("#tslshow");
-    var move = "100px";
-    var sliderLimit = -750;
-
-    $("#rightArrow").click(function(){
-
-        var currentPosition = parseInt(view.css("left"));
-        if (currentPosition >= sliderLimit) view.stop(false,true).animate({left:"-="+move},{ duration: 400})
-
-    });
-
-    $("#leftArrow").click(function(){
-
-        var currentPosition = parseInt(view.css("left"));
-        if (currentPosition < 0) view.stop(false,true).animate({left:"+="+move},{ duration: 400});
-
-    });
-</script>
-

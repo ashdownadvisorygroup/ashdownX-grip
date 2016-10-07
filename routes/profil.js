@@ -145,12 +145,23 @@ router.post('/categories/:categorie/:profil/categorie_profil',passport.authentic
 router.get('/profil/:profil',passport.authenticate('jwt', { session: false}), function (req, res) {
     var token = getToken(req.headers);
     if (token) {
-        req.profil.populate('users', function (err, profil) {
-            if (err) {
-                return next(err);
-            }
-            res.json(profil);
-        });
+        var d;
+        CategorieProfil.find()
+            .where('profil').equals(req.params.profil)
+            .populate('categorie')
+            .exec(function (errmed, result){
+                if (errmed) {
+                    return next(errmed);
+                }
+
+                d = req.profil;
+                d.categorieprofil=[];
+                var taille=result.length;
+                for(var i = 0; i<taille; i++) {
+                    d.categorieprofil[i]=(result[i].categorie);
+                }
+                res.json(d);
+            });
     }
 
 });
@@ -195,16 +206,21 @@ router.post('/profils',mustBe.authorized("admin"),passport.authenticate('jwt', {
 router.put('/profil/:profil',mustBe.authorized("admin"),passport.authenticate('jwt', { session: false}), function (req, res) {
     var token = getToken(req.headers);
     if (token) {
-        prf = req.profil;
+        /*prf = req.profil;
         prf.nom = req.body.nom;
         prf.description = req.body.description;
-        prf.objectifs = req.body.objectifs;
-        prf.save(function (err, prf) {
+        prf.objectifs = req.body.objectifs;*/
+        var obj=req.body;
+
+        Profil.findByIdAndUpdate(req.params.profil,{$set: obj},function(err,prf) {
             if (err) {
                 return next(err);
             }
-
-            res.json(prf);
+            if(!prf) {
+                return next(new Error('can\'t find user'));
+            }
+            console.log(prf)
+            res.json('updated');
         });
     }
 

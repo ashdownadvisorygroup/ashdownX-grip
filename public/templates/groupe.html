@@ -1,0 +1,71 @@
+<div  layout="column"  flex class="accueil"  style="background-color: rgb(34,34,34);">
+    <div flex="90" layout="row">
+        <div flex="10"></div>
+        <div flex="70" layout="column" ng-if="g">
+            <div flex="5" >
+                    <h3>Groupe</h3>
+            </div>
+            <div flex="5">
+                <md-button permission="['admin']"  class="card-button" ng-click="modifiergroupe()" aria-label="a">
+                    <md-tooltip>Modifier le groupe</md-tooltip>
+                    <md-icon  md-svg-src="../../image/create-new-pencil-button.svg" class="card-icon"></md-icon>
+                </md-button>
+            </div>
+
+            <div flex="10">
+               Nom du Groupe: {{groupe.nom}}
+            </div>
+            <md-divider></md-divider>
+            <div flex="30">
+                Description: {{groupe.description}}
+            </div>
+            <md-divider></md-divider>
+            <div flex="50" style="overflow:auto;">
+                Utilisateurs du Groupe {{groupe.nom}}
+                <ol>
+                    <li style="cursor:pointer;" ui-sref="axgrip.user({id:ct._id})" ng-repeat="ct in groupe.users">
+                        {{ct.name}}
+                    </li>
+                </ol>
+            </div>
+            <md-divider></md-divider>
+
+        </div>
+        <div ng-if="group" flex="70" layout="column">
+            <div flex="10"></div>
+            <div flex="80">
+                <form  name="Formgrp"  ng-submit="modifiegroupe()">
+                    <md-content class="md-no-momentum newuser">
+                        <md-input-container  class="md-icon-float md-block">
+                            <label>Nom</label>
+                            <md-icon md-svg-src="../../image/menu-button.svg" class="name"></md-icon>
+                            <input ng-model="groupe.nom" ng-minlength="7"
+                                   ng-maxlength="60" name="nom"
+                                   type="text" placeholder="nom (required)" >
+                            <div ng-messages="Formgrp.nom.$error">
+                                <div ng-message="md-maxlength">la taille ne doit pas depasser 60</div>
+                                <div ng-message="md-minlength">le nom doit être au moins de 7 caracteres</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <md-icon md-svg-src="../../image/email-filled-closed-envelope.svg" class="email"></md-icon>
+                                             <textarea ng-model="groupe.description" aria-label="un" name="description"
+                                                       ng-minlength="10"
+                                                       ng-maxlength="150">
+                                             </textarea>
+                            <div ng-messages="Formgrp.description.$error">
+                                <div ng-message="md-maxlength">la taille ne doit pas depasser 150</div>
+                                <div ng-message="md-minlength">la doit être au moins de 10 caracteres</div>
+                            </div>
+                        </md-input-container>
+                        <md-button class="md-raised md-primary" type="submit">Envoyer</md-button>
+                        <md-button class="md-raised md-primary" ng-click="retour()">retour </md-button>
+                        <br><br>
+                    </md-content>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</div>

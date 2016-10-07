@@ -41,6 +41,7 @@ var profil_medias = require('./routes/profil_categories');
 var users_medias = require('./routes/users_medias');
 var profil = require('./routes/profil');
 var user_profils = require('./routes/user_profils');
+var search = require('./routes/search');
 
 
 
@@ -107,6 +108,7 @@ app.use('/', categorie_medias);
 app.use('/', users_medias);
 app.use('/', profil);
 app.use('/', user_profils);
+app.use('/', search);
 
 
 

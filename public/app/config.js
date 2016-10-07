@@ -12,7 +12,8 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                         templateUrl:template_url+'header.html',
                         controller: 'HeaderCtrl'
                     },
-                    main:{}
+                    main:{},
+                    main2:{}
                 },
                 access: { requiredLogin: true }
             })
@@ -36,35 +37,58 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                 },
                 access: { requiredLogin: true }
             })
+            .state('axgrip.modifprofil', {
+                url: '/modifier_profil/{id}',
+                views:{
+                    'main@':{
+                        templateUrl: template_url+'profils.html',
+                        controller: 'ModifierProfilsCtrl'
+                    }
+                },
+                access: { requiredLogin: true }
+            })
+            .state('axgrip.profil', {
+                url: '/profil/{id}',
+                views:{
+                    'main@':{
+                        templateUrl: template_url+'profils.html',
+                        controller: 'ProfilCtrl'
+                    }
+                },
+                access: { requiredLogin: true }
+            })
             .state('axgrip.mediatheque', {
-                url: '/mediatheque',
+                url: '/categories',
                 views:{
-                    'main@':{
-                        templateUrl: template_url+'/mediatheque.html',
-                        controller: 'MediathequeCtrl'
-                    }
+
+                        'main@':{
+                            templateUrl: template_url+'/mediatheque/mediatheque.html',
+                            controller: 'CategoriesCtrl'
+                        }
                 },
                 access: { requiredLogin: true }
             })
-            .state('axgrip.useraccount', {
-                url: '/useraccount/{id}',
+            .state('axgrip.categorie', {
+                url: '/categorie/{id}',
                 views:{
-                    'main@':{
-                        templateUrl: template_url+'/useraccount.html',
-                        controller: 'UseraccountCtrl'
-                    }
+
+                        'main@':{
+                            templateUrl: template_url+'/mediatheque/mediatheque.html',
+                            controller: 'CategorieCtrl'
+                        }
+
                 },
                 access: { requiredLogin: true }
             })
-            .state('axgrip.compte', {
-                url: '/compte/{id}',
+            .state('axgrip.groupe', {
+                url: '/groupe/{id}',
                 views:{
                     'main@':{
-                        templateUrl: template_url+'/compte.html',
-                        controller: 'CompteCtrl'
+                        templateUrl: template_url+'/groupe.html',
+                        controller: 'GroupeCtrl'
                     }
                 },
-                access: { requiredLogin: true }//permissions: ["admin","stagiaire"]
+                access: { requiredLogin: true }
             })
             .state('document', {
                 url: '/document/{id}',
@@ -77,17 +101,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                 templateUrl: template_url+'login/loginNew.html',
                 access: { requiredLogin: false },
                 controller: 'LoginNewCtrl'
-
-            })
-            .state('axgrip.resultats_recherche', {
-                url: '/resultats',
-                views:{
-                    'main@':{
-                        templateUrl: template_url+'/resultats_recherche.html',
-                        controller: 'resultatsRechercheCtrl'
-                    }
-                },
-                access: { requiredLogin: true },
 
             })
             .state('axgrip.renewpassword', {
@@ -107,4 +120,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 
     $urlRouterProvider.otherwise('/new');
 
-    }]);
+    }])
+.config(['$httpProvider',function ($httpProvider) {
+    $httpProvider.interceptors.push('AuthInterceptor');
+}]);

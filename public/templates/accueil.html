@@ -12,7 +12,7 @@
                         Liste des profils
                         <ul>
                             <li style="display: block;" class="un" ng-repeat="prf in
-                            filteredprofile=( profile |filterBy: ['nom']:searchprofcat)">
+                            filteredprofile=( profile |filterBy: ['nom','description']:searchprofcat)">
                                 {{ prf.nom }}
                                 <ul>
                                     <li  ng-repeat="ct in prf.categories"
@@ -67,12 +67,11 @@
                     </div>-->
                 </div>
                 <div layout="column"  flex="70" flex-xs="100" >
-                    <div flex="5" layout-margin="20"></div>
-                    <div flex="5" layout="row" style="padding-top: 1em;font-size: 12px">
+                    <div flex="5"  layout="row" style="padding-top: 1em;font-size: 12px">
                         <div flex="10">{{longueur}}medias</div>
                         <div flex="25" flex-offset="65" ng-click="aff_pop_not()" style="cursor: pointer;">populaires/mieux notes</div>
                     </div>
-                    <div flex="5" ><hr></div>
+                    <div flex="5" style="padding-top:4px" ><hr></div>
                     <div flex="75" layout="row" layout-wrap >
                         <div ng-repeat="m in allmedias" flex="25">
                             <div layout="column"  class='md-padding pacard' flex layout-wrap>
@@ -111,7 +110,7 @@
 
 
                 </div>
-                <div flex="15" style="background-color: rgb(51,54,64);border-left: 2px solid rgb(5,170,245);" hide-xs>
+                <div ng-show="stagiaires.length >0" flex="15" style="background-color: rgb(51,54,64);border-left: 2px solid rgb(5,170,245);" hide-xs>
                    <div flex>
                        <input ng-model="searchstagiaire" class="reduceSize" style="" placeholder="entrer la recherche">
                    </div>

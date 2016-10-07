@@ -1,0 +1,13 @@
+<div  layout="column"  flex class="accueil"  style="background-color: rgb(34,34,34);">
+<div style="height: 280px;overflow: auto;" flex="70">
+    <div flex="100">
+        <ul>
+            <li style="display: block;cursor:pointer;" ui-sref="axgrip.user({id:use._id})" class="un" ng-repeat="use in users">
+                {{use.name}}
+            </li>
+        </ul>
+        <div ></div>
+    </div>
+    <div ng-show="users.length==0">Aucun résultat</div>
+</div>
+</div>

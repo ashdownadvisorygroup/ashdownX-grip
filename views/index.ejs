@@ -22,9 +22,16 @@
 
 
 </head>
-<body ng-app="bv"  layout="column" >
+<body ng-app="bv" ng-controller="AppCtrl" layout="column" >
   <div ui-view="header"></div>
+  <div layout="row" flex>
+    <div ui-view="main1" flex="15"></div>
+    <div ui-view="main10" flex="70"></div>
+    <div ui-view="main11" flex="15"></div>
+  </div>
+
   <div ui-view="main"></div>
+  <div ui-view="main2"></div>
   <div ui-view="footer"></div>
   <div ui-view=""></div>
 </body>
@@ -61,6 +68,18 @@
 <script src="app.js"></script>
 <script src="app/service2.js"></script>
 <script src="app/controller.js"></script>
+<script src="app/controller/mediatheque.js"></script>
+<script src="app/controller/profils.js"></script>
+
+<script src="app/controller/resultat_recherche.js"></script>
+<script src="app/config/resultat_recherche.js"></script>
+
+<script src="app/controller/useraccount.js"></script>
+<script src="app/config/useraccount.js"></script>
+
+<script src="app/controller/compte.js"></script>
+<script src="app/config/compte.js"></script>
+
 <script src="app/config.js"></script>
 <script src="app/filter.js"></script>
 <script src="app/constant.js"></script>

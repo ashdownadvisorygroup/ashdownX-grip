@@ -1,5 +1,4 @@
-<div  layout="column" ng-hide="aff" flex class="accueil"  style="background-color: rgb(34,34,34);">
-
+<div  layout="column"  flex class="accueil"  style="background-color: rgb(34,34,34);">
     <div flex="10" layout="row" layout-align="center center" style="background-color: rgb(5,170,245);" >
         <md-sidenav class="md-sidenav-right md-whiteframe-z2"
                     md-component-id="right">
@@ -47,7 +46,7 @@
         <md-toolbar >
             <div class="md-toolbar-tools" >
                 <div flex="5" layout="row" flex-xs="10">
-                    <md-button class="md-icon-button" ng-click="openSideNavPanel()"  show-xs >
+                    <md-button class="md-icon-button" ng-click="openSideNavPanel()"  hide-gt-xs>
                         <md-tooltip>Menu</md-tooltip>
                         <img src="../image/menu.png" style="width:24px;height:24px;"/>
                     </md-button>
@@ -64,7 +63,7 @@
                         <input class="input2" ng-model="search" type="search" style="color:black;background-color:white;">
                     </div>
                     <div flex="10" >
-                        <img src="../image/search.png" style="width: 34px;  height: 34px;background-color: skyblue;"/>
+                        <img src="../image/search.png" ui-sref="axgrip.resultats_recherche.profil" style="width: 34px;  height: 34px;background-color: skyblue;cursor:pointer;"/>
                     </div>
                 </div>
                 <div flex="20"></div>

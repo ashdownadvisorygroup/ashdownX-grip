@@ -1,0 +1,37 @@
+<div  layout="column"  flex class="accueil"  style="background-color: rgb(34,34,34);">
+    <div flex="90" >
+            <div flex layout="column" style="background-color: rgb(51,54,64);overflow-y: auto;height: 600px;
+                        border-right: 2px solid rgb(5,170,245);" hide-xs>
+                <div flex="15">
+                    <div flex>
+                        <input ng-model="searchprofcat"  class="reduceSize" placeholder="entrer la recherche">
+                    </div>
+
+                </div>
+                <div flex="100">
+                    Liste des profils
+                    <ul>
+                        <li style="display: block;" class="un" ng-repeat="prf in filteredprofile=( profile |filterBy: ['nom','description','objectifs']:searchprofcat)">
+                            {{ prf.nom }}
+                            <ul>
+                                <li  ng-repeat="ct in prf.categories"
+                                     ng-click="tri(ct);" style="cursor:pointer;">
+                                    {{ct.nom}} <br>{{ct.etat}}
+                                </li>
+                            </ul>
+                            <div layout-align="space-around">
+                                <div flex="80">
+                                    <md-progress-linear md-mode="determinate" value="{{prf.progressuser}}"></md-progress-linear>
+                                </div>
+                                <div flex="20">
+                                    {{prf.progressuser}}%
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </div>
+            </div>
+    </div>
+</div>

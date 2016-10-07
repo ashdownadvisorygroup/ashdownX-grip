@@ -9,7 +9,6 @@ var groupeBy = function(profcat, catmed) {//fonction qui recupère les profils d
                     pc.categorie.medias.push(catmed[i].media);
                     if(allMedias.indexOf(catmed[i].media) == -1) {
                         allMedias.push(catmed[i].media);
-                        //console.log(allMedias)
                     }
                     /*catmed.splice(i,1);
                      taille--; i--;*/
@@ -18,20 +17,25 @@ var groupeBy = function(profcat, catmed) {//fonction qui recupère les profils d
         }
 
     });
-    //console.log(allMedias)
     angular.forEach(profcat, function(pc) {
         if(pc){
             if(pc.categorie){
                 var existe = -1;
                 angular.forEach(result, function (r, i) {
-                    if (r._id == pc.profil._id)
-                        existe = i;
+                    if(pc.profil){
+                        if (r._id == pc.profil._id)
+                            existe = i;
+                    }
+
                 });
                 if(existe == -1) {
                     var profil = pc.profil;
-                    pc.categorie.progression = pc.progression;
-                    profil.categories = [pc.categorie]
-                    result.push(profil);
+                    if(profil){
+                        pc.categorie.progression = pc.progression;
+                        profil.categories = [pc.categorie]
+                        result.push(profil);
+                    }
+
                 } else {
                     pc.categorie.progression = pc.progression;
                     result[existe].categories.push(pc.categorie);
@@ -43,22 +47,22 @@ var groupeBy = function(profcat, catmed) {//fonction qui recupère les profils d
     return {pc: result, alm:allMedias};
 };
 var groupmediacat=function(data){
-    angular.forEach(data.categories,function(d){
-        if(d){
-            d.medias = [];
-            var taille=data.catmedias.length;
-            for(var i = 0; i<taille; i++) {
-                if(d._id == data.catmedias[i].categorie){
-                    d.medias.push(data.catmedias[i].media);
-
-                    data.catmedias.splice(i,1);
-                    taille--; i--;
+    if(data.categories){
+        angular.forEach(data.categories,function(d){
+            if(d){
+                d.medias = [];
+                var taille=data.catmedias.length;
+                for(var i = 0; i<taille; i++) {
+                    if(d._id == data.catmedias[i].categorie){
+                        d.medias.push(data.catmedias[i].media);
+                        data.catmedias.splice(i,1);
+                        taille--; i--;
+                    }
                 }
             }
-        }
-
-    });
-    return data.categories;
+        });
+        return data.categories;
+    }
 }
 app.factory('CategorieFactory', ['$http','$q','Upload',
         'AuthService','isAuthenticated','LivreFactory',function(
@@ -110,8 +114,6 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         factory.categorie=data;
                         deferred.resolve(data);
                     }).error(function(error,status){
-
-                        //let the function caller know the error
                         deferred.reject(error);
                     });
                     return deferred.promise;
@@ -138,7 +140,6 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         method: 'POST',
                         data:media
                     }).then(function (resp) {
-                        console.log(resp.data)
                         deferred.resolve(resp.data);
 
                     },function(msg){
@@ -155,7 +156,6 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         method: 'POST',
                         data:media
                     }).then(function (resp) {
-                        console.log(resp.data)
                         deferred.resolve(resp.data);
 
                     },function(msg){
@@ -172,7 +172,6 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         url: '/media/'+media._id,
                         data:media
                     }).then(function (resp) {
-                        console.log(resp.data)
                         deferred.resolve(resp.data);
                     },function(msg){
                         deferred.reject(msg)
@@ -187,7 +186,6 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         url: '/medias/'+media._id,
                         data:media
                     }).then(function (resp) {
-                        console.log(resp.data)
                         deferred.resolve(resp.data);
                     },function(msg){
                         deferred.reject(msg)
@@ -219,7 +217,6 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         url: '/categorie/'+cat._id,
                         data:cat
                     }).then(function (resp) {
-                        console.log(resp.data)
                         deferred.resolve(resp.data);
 
                     },function(msg){
@@ -259,8 +256,49 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
 
             };
             return factory;
-        }]);
-app.factory('GroupFactory', ['$http','$q','Upload',
+        }])
+.factory('SearchFactory', ['$http','$q',
+        'AuthService','isAuthenticated','LivreFactory',function(
+        $http , $q ,AuthService,isAuthenticated,LivreFactory){
+            var factory = {
+                LOCAL_TOKEN_KEY : 'yourTokenKey',
+                authToken:'',
+                currentProf:0,
+                currentCat:0,
+                CatMedias:[],
+                useCredentials: function(token) {
+                    isAuthenticated.set(true);
+                    factory.authToken = token;
+                    // Set the token as header for your requests!
+                    $http.defaults.headers.common.Authorization = factory.authToken;
+                },
+                loadUserCredentials: function() {
+                    var token = window.localStorage.getItem(factory.LOCAL_TOKEN_KEY);
+                    if (token) {
+                        factory.useCredentials(token);
+                    }
+                },
+                x:false,
+                search: function(word){
+                    factory.loadUserCredentials();
+                    var deferred = $q.defer();
+                    $http({
+                        method: 'GET',
+                        url: '/search?word='+word
+                    }).success(function(data,status){
+                        var result=groupmediacat(data);//fonctin qui recupère le medias de chaque categorie populate
+                        deferred.resolve(result);
+                    }).error(function(error){
+                        //let the function caller know the error
+                        deferred.reject(error);
+                    });
+                    return deferred.promise;
+                },
+
+            };
+            return factory;
+        }])
+.factory('GroupFactory', ['$http','$q','Upload',
         'AuthService','isAuthenticated',function( $http , $q ,Upload,AuthService,isAuthenticated){
             var factory = {
                 LOCAL_TOKEN_KEY : 'yourTokenKey',
@@ -289,16 +327,43 @@ app.factory('GroupFactory', ['$http','$q','Upload',
                     }).success(function(data,status){
                         factory.groups=data;
                         deferred.resolve(data);
-                    }).error(function(data,status){
+                    }).error(function(error,status){
                         //let the function caller know the error
+                        deferred.reject(error);
+                    });
+                    return deferred.promise;
+                },
+                getOne: function(id){
+                    factory.loadUserCredentials();
+                    var deferred = $q.defer();
+                    $http({
+                        method: 'GET',
+                        url: '/group/'+id
+                    }).success(function(data,status){
+                        deferred.resolve(data);
+                    }).error(function(error,status){
+                        deferred.reject(error);
+                    });
+                    return deferred.promise;
+                },
+                modifiergroupe: function(group){
+                    factory.loadUserCredentials();
+                    var deferred = $q.defer();
+                    $http({
+                        method: 'PUT',
+                        url: '/group/'+group._id,
+                        data: group
+                    }).success(function(data,status){
+                        deferred.resolve(data);
+                    }).error(function(error,status){
                         deferred.reject(error);
                     });
                     return deferred.promise;
                 }
             };
             return factory;
-        }]);
-app.factory('ProfilFactory', ['$http','$q','Upload','$cookieStore',
+        }])
+.factory('ProfilFactory', ['$http','$q','Upload','$cookieStore',
         'AuthService','isAuthenticated','UserFactory',function( $http , $q ,Upload,$cookieStore,AuthService,
                                                                 isAuthenticated,UserFactory){
             var factory = {
@@ -328,10 +393,6 @@ app.factory('ProfilFactory', ['$http','$q','Upload','$cookieStore',
                         method: 'GET',
                         url: '/profils'
                     }).success(function(data,status){
-                            angular.forEach(data,function(dat){
-                                dat.objectifs=dat.objectifs.split(factory.valsplit);
-                                //ici on recupère la chaine de caractère et on la rend sous forme de tableau pour pouvoir afficher ç l'ecran
-                            })
                         factory.profils=data;
                         deferred.resolve(data);
                     }).error(function(error){
@@ -348,6 +409,8 @@ app.factory('ProfilFactory', ['$http','$q','Upload','$cookieStore',
                         method: 'GET',
                         url: '/profil/'+id
                     }).success(function(data,status){
+                            data.objectifs=data.objectifs.split(factory.valsplit);
+                            //ici on recupère la chaine de caractère et on la rend sous forme de tableau pour pouvoir afficher ç l'ecran
                         deferred.resolve(data);
                     }).error(function(error,status){
                         deferred.reject(error);
@@ -419,35 +482,19 @@ app.factory('ProfilFactory', ['$http','$q','Upload','$cookieStore',
                     });
                     return deferred.promise;
                 },
-                deletes: function(cat){
+                deletes: function(prof){
                     factory.loadUserCredentials();
                     var deferred = $q.defer();
                     $http({
                         method: 'DELETE',
-                        url: '/categorie/'+cat._id,
-                        data:cat
+                        url: '/profil/'+prof._id,
+                        data:prof
                     }).then(function (resp) {
-                        console.log(resp.data)
                         deferred.resolve(resp.data);
-
                     },function(msg){
                         deferred.reject(msg)
                     });
 
-                    return deferred.promise;
-                },
-                update: function(prof){
-                    factory.loadUserCredentials();
-                    var deferred = $q.defer();
-                    $http({
-                        method: 'PUT',
-                        url: '/profil/'+prof._id,
-                        data: prof
-                    }).success(function(data,status){
-                        deferred.resolve(data);
-                    }).error(function(error,status){
-                        deferred.reject(error);
-                    });
                     return deferred.promise;
                 },
                 ajouterProfil: function(prof){
@@ -455,8 +502,6 @@ app.factory('ProfilFactory', ['$http','$q','Upload','$cookieStore',
                     var deferred = $q.defer();
                     prof.objectifs=prof.data.join(factory.valsplit)
                     delete prof.data;
-                    console.log(prof.objectifs)
-                    console.log(prof)
                     $http({
                         method: 'POST',
                         url: '/profils',
@@ -467,11 +512,27 @@ app.factory('ProfilFactory', ['$http','$q','Upload','$cookieStore',
                         deferred.reject(error);
                     });
                     return deferred.promise;
+                },
+                modifierProfil: function(prof){
+                    factory.loadUserCredentials();
+                    var deferred = $q.defer();
+                    prof.objectifs=prof.data.join(factory.valsplit)
+                    delete prof.data;
+                    $http({
+                        method: 'PUT',
+                        url: '/profil/'+prof._id,
+                        data: prof
+                    }).success(function(data,status){
+                        deferred.resolve(data);
+                    }).error(function(error,status){
+                        deferred.reject(error);
+                    });
+                    return deferred.promise;
                 }
             };
             return factory;
-        }]);
-app.factory('UserFactory', ['$http','$q','Upload',
+        }])
+.factory('UserFactory', ['$http','$q','Upload',
         'AuthService','isAuthenticated',function( $http , $q ,Upload,AuthService,isAuthenticated){
             var factory = {
                 LOCAL_TOKEN_KEY : 'yourTokenKey',
@@ -609,9 +670,7 @@ app.factory('UserFactory', ['$http','$q','Upload',
                         url: '/user/'+user._id,
                         data:user
                     }).then(function (resp) {
-                        console.log(resp.data)
                         deferred.resolve(resp.data);
-
                     },function(msg){
                         deferred.reject(msg)
                     });
@@ -621,11 +680,10 @@ app.factory('UserFactory', ['$http','$q','Upload',
                     factory.loadUserCredentials();
                     var deferred = $q.defer();
                     $http({
-                        method: 'PUT',
+                        method: 'POST',
                         url: '/reset/'+id,
                         data:user
                     }).then(function (resp) {
-                        console.log(resp.data)
                         deferred.resolve(resp.data);
                     },function(msg){
                         deferred.reject(msg)
@@ -641,7 +699,6 @@ app.factory('UserFactory', ['$http','$q','Upload',
                         url: '/users/'+usmed.user+'/'+usmed.profil+'/user_profil',
                         data:usmed
                     }).then(function (data,status) {
-                        console.log(data)
                         deferred.resolve(data);
                     },function(msg){
                         deferred.reject(msg)
@@ -656,7 +713,6 @@ app.factory('UserFactory', ['$http','$q','Upload',
                         url: '/medias/'+usmed.user+'/'+usmed.media+'/media_user',
                         data:usmed
                     }).then(function (resp) {
-                        console.log(resp.data)
                         deferred.resolve(resp.data);
                     },function(msg){
                         deferred.reject(msg)
@@ -727,8 +783,8 @@ app.factory('UserFactory', ['$http','$q','Upload',
 
             };
             return factory;
-        }]);
-   app.factory('LivreFactory', ['$http','$q','Upload','$sce',
+        }])
+.factory('LivreFactory', ['$http','$q','Upload','$sce',
         'AuthService','isAuthenticated',function( $http , $q ,Upload,$sce,AuthService,isAuthenticated){
             var factory = {
                 LOCAL_TOKEN_KEY : 'yourTokenKey',
@@ -798,7 +854,6 @@ app.factory('UserFactory', ['$http','$q','Upload',
                     }).success(function(data,status){
                         deferred.resolve(data);
                     }).error(function(result){
-                        console.log(result)
                         deferred.reject(result);
                     });
                     return deferred.promise;
@@ -814,7 +869,6 @@ app.factory('UserFactory', ['$http','$q','Upload',
                         },
                         headers: { 'Content-Type': 'application/json' }
                     }).success(function(data){
-                        console.log(data)
                         deferred.resolve(data);
                     }).error(function(error){
                         deferred.reject(error);
@@ -825,9 +879,8 @@ app.factory('UserFactory', ['$http','$q','Upload',
 
             }
             return factory;
-        }]);
-
-    app.factory('isAuthenticated', function(){
+        }])
+.factory('isAuthenticated', function(){
         var data = false;
         function set(dataAuth){
             if(data){
@@ -842,40 +895,9 @@ app.factory('UserFactory', ['$http','$q','Upload',
             set:set,
             get:get
         }
-    });//,$window
-    app.factory('menu', ['$location','ProfilFactory','$cookieStore',function ($location,
-                          ProfilFactory,$cookieStore) {
+    })
 
-            var self;
-           //var profils = ProfilFactory.profsCats;
-           //console.log(ProfilFactory.profsCats);
-            var profils=$cookieStore.get('profsCats');
-            return self = {
-                profils:profils,
-
-                toggleSelectSection: function (section) {
-                    self.openedSection = (self.openedSection === section ? null : section);
-                },
-                isSectionSelected: function (section) {
-                    return self.openedSection === section;
-                },
-
-                selectPage: function (section, page) {
-                    page && page.url && $location.path(page.url);
-                    self.currentSection = section;
-                    self.currentPage = page;
-                }
-            };
-
-            function sortByHumanName(a, b) {
-                return (a.humanName < b.humanName) ? -1 :
-                    (a.humanName > b.humanName) ? 1 : 0;
-            }
-
-        }]);
-
-
-app.service('AuthService', function($q, $http, isAuthenticated,$cookieStore,Upload) {
+.service('AuthService', function($q, $http, isAuthenticated,$cookieStore,Upload) {
         var LOCAL_TOKEN_KEY = 'yourTokenKey';
         var authToken;
         function loadUserCredentials() {
@@ -941,8 +963,8 @@ app.service('AuthService', function($q, $http, isAuthenticated,$cookieStore,Uplo
 
 
 
-    });
-app.factory('Auth', function($resource, $rootScope, $cookieStore, $q){
+    })
+.factory('Auth', function($resource, $rootScope, $cookieStore, $q){
     var auth = {};
     auth.checkPermissionForView = function(view) {
         if (!view.requiresAuthentication) {
@@ -973,8 +995,8 @@ app.factory('Auth', function($resource, $rootScope, $cookieStore, $q){
         return found;
     };
     return auth;
-});
-    app.factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS) {
+})
+.factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS) {
         return {
             responseError: function (response) {
                 $rootScope.$broadcast({
@@ -983,12 +1005,8 @@ app.factory('Auth', function($resource, $rootScope, $cookieStore, $q){
                 return $q.reject(response);
             }
         };
-    });
-
-    app.config(function ($httpProvider) {
-        $httpProvider.interceptors.push('AuthInterceptor');
-    });
-app.service('sharedProperties', function () {
+    })
+.service('sharedProperties', function () {
     var property = 'First';
 
     return {
@@ -999,19 +1017,82 @@ app.service('sharedProperties', function () {
             property = value;
         }
     };
-});
-app.service('sharedmdtabactual', function () {
+})
+.service('sharedmdtabactual', function () {
     var property = false;
+    return {
+        get: function () {
+            return property;
+        },
+        set: function(value) {
+            property = value;
+        }
+    };
+})
+.service('sharedmdtabactual2', function () {
+    var property;
 
     return {
         get: function () {
             return property;
         },
         set: function(value) {
-            console.log(property)
             if(property)property=property;
             else property = value;
-            console.log(property)
+        }
+    };
+})
+.service('shared', function () {
+    var property=0;
+    return {
+        get: function () {
+            return property;
+        },
+        set: function(value) {
+           property = value;
+        }
+    };
+}).service('shared2', function () {
+    var property=0;
+    return {
+        get: function () {
+            return property;
+        },
+        set: function(value) {
+           property = value;
+        }
+    };
+})
+    .service('shared3', function () {
+    var property=0;
+    return {
+        get: function () {
+            return property;
+        },
+        set: function(value) {
+           property = value;
+        }
+    };
+})
+    .service('shared4', function () {
+    var property=0;
+    return {
+        get: function () {
+            return property;
+        },
+        set: function(value) {
+           property = value;
+        }
+    };
+})
+    .service('shared5', function () {
+    var property=0;
+    return {
+        get: function () {
+            return property;
+        },
+        set: function(value) {
+           property = value;
         }
     };
 });

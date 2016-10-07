@@ -564,7 +564,7 @@ button.remove{
 
 md-card._md.cardprofil {
     /*width: 50%;
-    height: 62%;*/width: 400px;height:400px;
+    height: 62%;*/width: 250px;height:150px;
 }
 md-card._md.cardprofcat {
    /* width: 80%;
@@ -600,49 +600,46 @@ figure img {
         width: 95%;
     }
 }
-.bktibx {
-
-    float:left;
-    margin:0 40px 0 0 ;
-    font-size:18px;
-    width:60px;
-    display:block;
-    background:#000;
-    color:#fff;
+.decrimedia{
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.menuHor ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: white;
+    position: fixed;
+    top: 0;
+    width: 100%;
 
 }
 
-#tslshow {
-    position:absolute;
-    left:0;
-    width:200px;
-
+.menuHor li{
+    float: left;
+    height: 21px;
+    display: block;
+    list-style-type: none;
 }
 
-#leftArrow {
-
-    width:40px;
-    height:40px;
-    background:#ff0000;
-    position:absolute;
-    left:0px;
+.menuHor a  {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
 }
 
-#rightArrow {
-
-    width:40px;
-    height:40px;
-    background:#ff0000;
-    position:absolute;
-    right:0px;
+.menuHor li a:hover:not(.active) {
+    background-color: #65fa89;
 }
 
-#viewContainer {
-    width:360px;
-    height:100%;
-    background:#00ff00;
-    position:absolute;
-    left:50%;
-    margin-left:-180px;
-    overflow:hidden;
+.active{
+    background-color: #4CAF50;
+}
+md-checkbox.md-default-theme.md-checked .md-ink-ripple, md-checkbox.md-checked .md-ink-ripple {
+    color: rgb(2,119,189);
 }

@@ -84,16 +84,25 @@ router.get('/categories', function (req, res, next) {
 router.get('/categorie/:categorie',passport.authenticate('jwt', { session: false}), function (req, res) {
 
     var token = getToken(req.headers);
-    console.log(req.categorie);
     if (token) {
-        req.categorie.populate('medias', function (err, categorie) {
-            if (err) {
-                return next(err);
-            }
+        var d;
+        CategorieMedia.find()
+                .where('categorie').equals(req.params.categorie)
+                .populate('media')
+                .exec(function (errmed, result){
+                    if (errmed) {
+                        return next(errmed);
+                    }
+                    d= req.categorie;
+                   d.medias = [];
+                    var taille=result.length;
+                    for(var i = 0; i<taille; i++) {
+                        d.medias[i]=(result[i].media);
+                        console.log(d.medias)
+                    }
 
-            res.json(categorie);
-        });
-        //res.json(req.categorie);
+                    res.json(d);
+                });
     }
 
 });

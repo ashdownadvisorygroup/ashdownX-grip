@@ -27,5 +27,6 @@ require('./medias');
 require('./categorie_medias');
 require('./user_profils');
 require('./profil_categorie_users');
+require('./search');
 
 module.exports = router;

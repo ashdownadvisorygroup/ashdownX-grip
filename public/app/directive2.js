@@ -6,9 +6,9 @@
         restrict: 'A',
 
         link: function (scope, element,attrs) {
-            console.log(attrs.permission)
+
             scope.$watch(Auth.isLoggedIn, function() {
-                console.log(Auth.userHasPermission(attrs.permission))
+
                 if (Auth.userHasPermission(attrs.permission)) {
                     scope.donnee=true;
                     element.show();
@@ -26,7 +26,6 @@ app.directive('permission', ['Auth', function(Auth) {
             permission: '='
         },
         link: function (scope, elem, attrs) {
-            console.log(scope.permission)
             scope.$watch(Auth.isLoggedIn, function() {
                 if (Auth.userHasPermission(scope.permission)) {
                     elem.show();
