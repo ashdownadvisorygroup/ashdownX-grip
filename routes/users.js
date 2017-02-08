@@ -403,7 +403,6 @@ router.post('/signup', passport.authenticate('jwt', {session: false}), function 
                                 password: req.body.password
                             };
                             var content=ejs.renderFile(__dirname + '/../emails/welcome/welcome.ejs', data, function (err, data) {
-                                console.log(data)
                                 var mailOptions = {
                                     to: newUser.email,
                                     from: 'phibi.noubissi@gmail.com',
@@ -411,9 +410,7 @@ router.post('/signup', passport.authenticate('jwt', {session: false}), function 
                                     html: data,
                                     attachments: [{
                                         filename: 'GRIP_Logo.png',
-                                        path: 'https://static.wixstatic.com/media/09d49a_9df06454e21440d69746432215cf275' +
-                                        'f~mv2.png/v1/fill/w_305,h_305,al_c,usm_0.66_1.00_0.01/09d49a_9df06454e21440d697' +
-                                        '46432215cf275f~mv2.png',
+                                        path: 'https://cask.scotch.io/2014/10/04-sample-app.png',
                                         cid: 'ashdownx_logo' //same cid value as in the html img src
                                     },{
                                         filename: 'Ashdown Advisory Group.png',
