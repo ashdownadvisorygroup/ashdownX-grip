@@ -31,16 +31,10 @@ var Group = mongoose.model('Group');
 
 
 router.param('categorie_profil', function (req, res, next, id) {
-    // console.log(id)
-
-    //console.log(req);
-
-
     if (id == undefined) {
         return next(new Error('categorie_profil undifined'));
     }
     var query = CategorieProfil.findById(id)
-
     query.exec(function (err, categorie_profil) {
         if (err) {
             return next(err);
@@ -49,13 +43,9 @@ router.param('categorie_profil', function (req, res, next, id) {
             return res.json("error lor de la sauvegarde");
             return next(new Error('can\'t find categorie_profil'));
         }
-        console.log(categorie_profil);
-
         req.categorie_profil = new CategorieProfil(categorie_profil);
         return next();
     });
-
-
 });
 /*mustBe.authorized("admin")/!**!/*/
 /**
@@ -82,14 +72,22 @@ router.post('/categorie_profils/user_master',passport.authenticate('jwt', { sess
                     }
 
                });
+                var v=[];
                 CategorieMedia.find()
-                    .where('categorie').in(list)
                     .populate('media')
                     .exec(function (errmed, ofmed){
                         if (errmed) {
                             return next(errmed);
                         }
-                        res.json({ofuser:ofuser, ofmed: ofmed});
+                        for(var i = 0; i<ofmed.length; i++) {
+
+                            if(list.indexOf(ofmed[i].categorie) == -1){
+                                if(ofmed[i].media){v.push(ofmed[i])}
+
+                            }
+
+                        }
+                        res.json({ofuser:ofuser, ofmed: v});
                     });
             });
     }
@@ -121,7 +119,6 @@ router.get('/categorie_profil/:categorie_profil',passport.authenticate('jwt', { 
 
             res.json(categorie_profil);
         });
-        //res.json(req.categorie_profil);
     }
 
 });

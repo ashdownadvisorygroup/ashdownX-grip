@@ -67,14 +67,14 @@
                     </div>-->
                 </div>
                 <div layout="column"  flex="70" flex-xs="100" >
-                    <div flex="5"  layout="row" style="padding-top: 1em;font-size: 12px">
-                        <div flex="10">{{longueur}}medias</div>
-                        <div flex="25" flex-offset="65" ng-click="aff_pop_not()" style="cursor: pointer;">populaires/mieux notes</div>
+                    <div flex="5"  layout="row" style="padding-top: 2em;font-size: 12px">
+                        <div flex="10">{{longueur}} &nbsp;médias</div>
+                        <div flex="15" flex-offset="75" ng-click="aff_pop_not()" style="cursor: pointer;">populaires/mieux notés</div>
                     </div>
                     <div flex="5" style="padding-top:4px" ><hr></div>
                     <div flex="75" layout="row" layout-wrap >
-                        <div ng-repeat="m in allmedias" flex="25">
-                            <div layout="column"  class='md-padding pacard' flex layout-wrap>
+                        <div ng-repeat="m in allmedias" flex="25" >
+                            <div layout="column"  class='pacard' flex layout-wrap style="margin-left: 20px;">
                                 <md-card class="card" >
                                     <md-card-title  style="width: 100px;height: 100px;padding: 20px 1px;margin-left: 0em;">
                                         <md-card-title-text style="margin-right: 1em;line-height:5px;">
@@ -82,7 +82,7 @@
                                                 <span class="md-subhead">
                                                 </span>
                                             <span class="md-subhead" style="font-size: 10px">Lu:{{m.readed}}</span>
-                                            <span class="md-subhead" style="font-size: 10px">Telecharger:{{m.downloaded}}</span>
+                                            <span class="md-subhead" style="font-size: 10px">Télecharger:{{m.downloaded}}</span>
                                                 <span class="md-subhead" style="font-size: 10px"><a ng-click="lire(m)" ui-sref="document({id:m._id})" style="cursor:pointer;">{{m.affiche}}</a>
                                                 </span>
                                         </md-card-title-text>

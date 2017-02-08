@@ -8,6 +8,7 @@
     "dbConnect": "mongo-express -u admin -p admin -d bv"
   },
   "dependencies": {
+    "app-root-path": "^2.0.1",
     "async": "^2.0.1",
     "bcrypt": "^0.8.7",
     "body-parser": "~1.15.1",

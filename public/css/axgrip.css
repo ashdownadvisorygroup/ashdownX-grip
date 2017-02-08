@@ -643,3 +643,10 @@ figure img {
 md-checkbox.md-default-theme.md-checked .md-ink-ripple, md-checkbox.md-checked .md-ink-ripple {
     color: rgb(2,119,189);
 }
+.result{
+    background-color: red;
+    border-radius: 50%;
+    padding: 2px 4px;
+    position: relative;
+    margin-top: 50px;
+}

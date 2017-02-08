@@ -9,24 +9,24 @@ addSeed(Profil, {
 
         return [{
             nom: "developpement web laravel",
-            description: "developpement web laravel econdary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam massa quam.",
-            objectifs: "developper laravelgrip laravelgrip developpementgrip ah oui"
+            description: "developpement web laravel ",
+            objectifs: "developper en laravelgrip grip"
         }, {
             nom: "developpement web mean",
-            description: "developpement web mean econdary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam massa quam.",
-            objectifs: "developper meangrip developper les applicationsgrip intéressantsgrip oui oui"
+            description: "developpement des applications web mean",
+            objectifs: "developper meangrip developper les applicationsgrip application RESTgrip projet means(MongodB, Express and NodeJs)"
         }, {
-            nom: "experts",
-            description: "experts econdary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam massa quam.",
-            objectifs: "expertsgrip encore expertsgripet toujours expertsgrip ohhlqlqlqlqgrip oui oui"
+            nom: "programmation orientee objet",
+            description: "programmation orientee objet ",
+            objectifs: "programmer en phpgrip programmer en laravelgripet programmer en javagrip programmer en toutgrip projet"
         }, {
             nom: "android",
-            description: "ohhhhh android econdary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam massa quam.",
-            objectifs: "androidgrip encore endroidgrip voilà ce que ca donnegrip toujoursgripandroid"
+            description: "programmation en langage android",
+            objectifs: "maitriser les bases du langagegrip savoir utiliser android studiogrip faire un programme basicgrip cas pratique developper un projetandroid"
         }, {
-            nom: "developpement ",
-            description: "c'est un expert econdary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam massa quam.",
-            objectifs: "expertgrip encore développemntgrip oui oiu grip développeur"
+            nom: "algorithmique",
+            description: "savoir écrire des algorithmes pour résoudre des problèmes donnés",
+            objectifs: "maitriser la structure d'un algorithmegrip les bouclesgrip Complexité algorithmiquegrip Approches pratiques"
         }];
     }
 });

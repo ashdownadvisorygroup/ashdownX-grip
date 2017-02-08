@@ -7,7 +7,7 @@
                     <input ng-model="searchcat"  class="reduceSize" placeholder="entrer la recherche">
                 </div>
             </div>
-                    <h5  style="font-size: 18px;cursor:pointer;" ng-click="trisgen();">Categories</h5>
+                    <h5  style="font-size: 18px;cursor:pointer;" ng-click="trisgen();">Catégories</h5>
                     <div  flex="75" style="overflow-y: auto;">
                         <ul>
                             <li ng-repeat="cat in filteredcategories=( categories |filterBy: ['nom','description']:searchcat) "  style="cursor:pointer;">
@@ -17,7 +17,7 @@
                                 </div>
                                 <div>
                                     <md-button class="card-button" ng-click="ajoutermedia(cat)" aria-label="a">
-                                        <md-tooltip>Ajouter un media a la categorie</md-tooltip>
+                                        <md-tooltip>Ajouter un média a la catégorie</md-tooltip>
                                         <md-icon  md-svg-src="../../image/add.svg" class="card-icon"></md-icon>
                                     </md-button>
                                     <md-button permission="['admin']" class="card-button" ng-click="modifiercat(cat)" aria-label="a">
@@ -49,7 +49,7 @@
         </div>
         <div flex="20" ng-if="categorie" layout="column" style="background-color: rgb(51,54,64);overflow: auto;border-right: 2px solid rgb(5,170,245);" hide-xs>
             <div flex="5"></div>
-            <div flex="10"><h3>Categorie</h3></div>
+            <div flex="10"><h3>Catégorie</h3></div>
             <div flex="5"></div>
             <div flex="10">
                 Nom:{{categorie.nom}}
@@ -67,7 +67,7 @@
             <div flex="10"></div>
             <div flex="80"  layout="row" layout-wrap >
                 <div   layout="column" ng-repeat="med in medias" >
-                    <div  class='md-padding pacard'>
+                    <div  class='md-padding pacard' style="margin-left: 20px;">
                         <md-card class="card" >
                             <md-card-title>
                                 <md-card-title-text layout="column" layout-align="center center">
@@ -75,7 +75,7 @@
                                                 <span class="md-subhead" style="font-size: 15px">{{med.nom}}
                                                 </span>
                                     <span class="md-subhead" style="font-size: 10px">Lu:{{med.readed}}</span>
-                                    <span class="md-subhead" style="font-size: 10px">Telecharger:{{med.downloaded}}</span>
+                                    <span class="md-subhead" style="font-size: 10px">Télecharger:{{med.downloaded}}</span>
                                                 <span class="md-subhead" style="font-size: 10px"><a ng-click="lire(med)" ui-sref="document({id:med._id})" style="cursor:pointer;">{{med.affiche}}</a>
                                                 </span>
                                 </md-card-title-text>
@@ -111,7 +111,7 @@
                 </div>
             </div>
             <div flex="10" ng-hide="afficheMedia || affichemodifcat" layout="row">
-                <div flex="10" flex-offset="80">
+                <div flex="5" flex-offset="85">
                     <wan-material-paging wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
                     </wan-material-paging>
                 </div>
@@ -202,8 +202,8 @@
                                type="text" placeholder="Nom (Obligatoire)" ng-required="true">
                         <div ng-messages="FormcreeMedia.nom.$error">
                             <div ng-message="required">le nom est obligatoire</div>
-                            <div ng-message="md-maxlength">la taille ne doit pas depasser 60</div>
-                            <div ng-message="md-minlength">le nom doit être au moins de 10 caracteres</div>
+                            <div ng-message="md-maxlength">la taille ne doit pas dépasser 60</div>
+                            <div ng-message="md-minlength">le nom doit être au moins de 10 caractères</div>
                         </div>
                     </md-input-container>
                     <md-input-container class="md-block">
@@ -263,8 +263,8 @@
                                md-maxlength="60" placeholder="Description (Obligatoire)" ng-required="true">
                         <div ng-messages="FormcreeMedia.nom.$error">
                             <div ng-message="required">la description est obligatoire</div>
-                            <div ng-message="md-maxlength">la taille ne doit pas depasser 60</div>
-                            <div ng-message="md-minlength">la description doit être au moins de 7 caracteres</div>
+                            <div ng-message="md-maxlength">la taille ne doit pas dépasser 60</div>
+                            <div ng-message="md-minlength">la description doit être au moins de 7 caractères</div>
                         </div>
                     </md-input-container>
                     <md-button class="btn btn-info" type="reset">Actualiser</md-button>
@@ -286,8 +286,8 @@
                                type="text" placeholder="nom (required)" ng-required="true">
                         <div ng-messages="Formcat.nom.$error">
                             <div ng-message="required">le nom est obligatoire</div>
-                            <div ng-message="md-maxlength">la taille ne doit pas depasser 60</div>
-                            <div ng-message="md-minlength">le nom doit être au moins de 7 caracteres</div>
+                            <div ng-message="md-maxlength">la taille ne doit pas dépasser 60</div>
+                            <div ng-message="md-minlength">le nom doit être au moins de 7 caractères</div>
                         </div>
                     </md-input-container>
                     <md-input-container class="md-block">
@@ -298,8 +298,8 @@
                                              </textarea>
                         <div ng-messages="Formcat.description.$error">
                             <div ng-message="required">le nom est obligatoire</div>
-                            <div ng-message="md-maxlength">la taille ne doit pas depasser 150</div>
-                            <div ng-message="md-minlength">la doit être au moins de 10 caracteres</div>
+                            <div ng-message="md-maxlength">la taille ne doit pas dépasser 150</div>
+                            <div ng-message="md-minlength">la doit être au moins de 10 caractères</div>
                         </div>
                     </md-input-container>
                     <md-button class="md-raised md-primary" type="submit">Envoyer</md-button>

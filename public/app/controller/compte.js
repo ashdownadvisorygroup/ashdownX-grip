@@ -188,7 +188,6 @@ app.controller('CompteCtrl', ['$scope','$cookieStore',
                 $scope.profnew.data.splice(index,1);
         }
         $scope.newprof=function(){
-            alert('i')
             ProfilFactory.ajouterProfil($scope.profnew).then(function(answer) {
                 text="reussi"
                 $scope.showActionToast(text);
@@ -252,7 +251,7 @@ app.controller('CompteCtrl', ['$scope','$cookieStore',
                 }
             });
         };
-        $scope.catnew=true;
+        $scope.catnew={};
         $scope.closeToast = function() {
             $mdToast.hide();
         };
@@ -323,6 +322,7 @@ app.controller('CompteCtrl', ['$scope','$cookieStore',
             });
         };
         $scope.creeuse=true;
+        $scope.utilisateur={};
         $scope.closeToast = function() {
             $mdToast.hide();
         };
@@ -341,10 +341,11 @@ app.controller('CompteCtrl', ['$scope','$cookieStore',
             $scope.groups = groups;
         });
         $scope.nouveauuser=function(){
-            AuthService.register($scope.userm).then(function(answer) {
+            AuthService.register($scope.utilisateur).then(function(answer) {
                 text="reussi";
                 $scope.showActionToast(text);
             }, function(err) {
+                console.log(err);
                 text="echec surement lutilisateur existe déjà";
                 $scope.showActionToast(text);
             });

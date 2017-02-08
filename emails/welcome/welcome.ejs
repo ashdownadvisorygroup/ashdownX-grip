@@ -1,0 +1,46 @@
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width">
+
+
+</head>
+<body layout="column">
+<div flex="20" layout="row">
+    <div><img style="float:left" src="cdi:logo_ashdown" alt=""></div>
+    <div><img style="float:right;" src="cdi:ashdownx_logo" alt=""></div>
+    <div style="padding:10px;color:white;background:blue;text-align: center;margin:0 5px">
+        <h1>Bienvenue dans la Plateforme Axgrip</h1>
+    </div>
+    <br><br>
+    <div style="padding: 15px;">
+        Bonjour Mr/Mme <strong><%= nom %></strong> &nbsp; <strong><%= prenom %></strong> <br>
+        <p>
+            Votre compte vient d'être crée dans la plateforme Axgrip. <br>
+            Cette plateforme permet de capitaliser les connaissances de l'entreprise <em>Ashdown Advisory Group</em>
+            et la formation dans
+            des profils donnés jusqu'à l'obtention complète de compétences grâce à des indicateurs de performance. <br>
+            Nous vous souhaitons la bienvenue. <br>
+            voici votre login: <br>
+        </p>
+
+        Nom: <strong><%= nom %></strong>
+        <br>
+        Mot de passe: <<strong><%= password %></strong><br>
+        <br>
+        <strong>N.B:</strong> vous pouvez changer les paramètres de login dès votre connexion.
+
+    </div>
+
+
+</div>
+<footer style="padding: 5px;background:blue;color:white">
+    <h6 style="float: right;">
+        All right reserved &copy;
+        <a style="text-decoration: none;color:white" href="http://www.ashdownx.com">
+            AshdownX
+        </a>
+    </h6>
+</footer>
+</body>
+</html>

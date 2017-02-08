@@ -25,7 +25,7 @@ MediaSchema.methods.download = function(cb) {
 MediaSchema.methods.read = function(cb) {
     this.readed += 1;
     this.save(cb);
-};
+}; 
 
 
 mongoose.model('Media', MediaSchema);

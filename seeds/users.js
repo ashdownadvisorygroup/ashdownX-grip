@@ -16,7 +16,8 @@ addSeed(User, {
             profil:[profil[2]],
             master:[profil[4],profil[0]],
             encadreur:[profil[4],profil[0],profil[1]],
-            email:"o@gmail.com"
+            email:"o@gmail.com",
+            photo:"data/photos/photo1.png"
         }, {
             name: "user",
             password:"user",
@@ -24,7 +25,7 @@ addSeed(User, {
             profil:[profil[2],profil[0],profil[4],profil[1]],
             master:[profil[3]],
             email:"user@gmail.com",
-            photo:"data/photos/photo5.png"
+            photo:"data/photos/photo2.png"
         }, {
             name: "adminUser",
             password:"adminUser",
@@ -32,7 +33,8 @@ addSeed(User, {
             profil:[profil[1]],
             encadreur:[profil[4],profil[0],profil[2]],
             master:[profil[0]],
-            email:"a@gmail.com"
+            email:"a@gmail.com",
+            photo:"data/photos/photo3.png"
 
 
         }, {
@@ -40,19 +42,22 @@ addSeed(User, {
             password:"user1",
             groups:[groups[0]],
             profil:[profil[2]],
-            email:"e@gmail.com"
+            email:"e@gmail.com",
+            photo:"data/photos/photo5.png"
         }, {
             name: "user2",
             password:"user2",
             groups:[groups[0]],
             profil:[profil[0]],
-            email:"y@gmail.com"
+            email:"y@gmail.com",
+            photo:"data/photos/photo1.png"
         }, {
             name: "user3",
             password:"user3",
             groups:[groups[1]],
             profil:[profil[0],profil[1]],
-            email:"z@gmail.com"
+            email:"z@gmail.com",
+            photo:"data/photos/photo2.png"
 
         }, {
             name: "master",
@@ -60,7 +65,8 @@ addSeed(User, {
             groups:[groups[2]],
             profil:[profil[0],profil[1],profil[2]],
             encadreur:[profil[4]],
-            email:"xtz@gmail.com"
+            email:"xtz@gmail.com",
+            photo:"data/photos/photo5.png"
 
         }, {
             name: "user4",
@@ -84,7 +90,7 @@ addSeed(User, {
             groups:[groups[0]],
             profil:[profil[0],profil[1]],
             email:"user11@gmail.com",
-            photo:"data/photos/photo0.png"
+            photo:"data/photos/photo1.png"
 
         }, {
             name: "user10",
@@ -100,7 +106,7 @@ addSeed(User, {
             groups:[groups[2]],
             profil:[profil[0],profil[1]],
             email:"user9@gmail.com",
-            photo:"data/photos/photo0.png"
+            photo:"data/photos/photo2.png"
 
         }, {
             name: "user8",
@@ -116,7 +122,7 @@ addSeed(User, {
             groups:[groups[1]],
             profil:[profil[0],profil[1]],
             email:"user7@gmail.com",
-            photo:"data/photos/photo0.png"
+            photo:"data/photos/photo3.png"
 
         }, {
             name: "user12",
@@ -132,7 +138,7 @@ addSeed(User, {
             groups:[groups[1]],
             profil:[profil[0],profil[1]],
             email:"user6@gmail.com",
-            photo:"data/photos/photo0.png"
+            photo:"data/photos/photo5.png"
 
         }];
     }

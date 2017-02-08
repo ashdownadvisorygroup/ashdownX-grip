@@ -8,18 +8,14 @@ addSeed(Group, {
     seed: function () {
         return [{
             nom: "admin",
-            description:"admin"
+            description:"c'est le groupe des administrateurs de la plateforme"
         }, {
             nom: "stagiaire",
-            description:"stagiaire"
+            description:"le groupe des stagiaires"
 
         }, {
             nom: "superadmin",
             description:"superadmin"
-
-        }, {
-            nom: "encadreur",
-            description:"encadreur"
 
         }];
     }

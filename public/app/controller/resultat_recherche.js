@@ -153,6 +153,8 @@ app.controller('resultatsRechercheCtrl', ['$scope','$cookieStore',
         };
         LivreFactory.get().then(function (medias) {
             $scope.medias = medias;
+            ProfilFactory.allMedias=medias;
+            console.log(medias);
             $scope.total = Math.ceil(medias.length/medPerPage);
             $scope.medias= medias.slice(0,medPerPage);
             $scope.gotoPage = function() {

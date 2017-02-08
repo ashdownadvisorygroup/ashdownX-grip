@@ -539,6 +539,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                 authToken:'',
                 userss: false,
                 pourToken:'',
+                Tokeni:"",
                 useCredentials: function(token) {
                     isAuthenticated.set(true);
                     factory.authToken = token;
@@ -931,6 +932,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                     if (result.data.success) {
                         resolve(result.data.msg);
                     } else {
+
                         reject(result.data.msg);
                     }
                 });
@@ -1087,6 +1089,17 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
 })
     .service('shared5', function () {
     var property=0;
+    return {
+        get: function () {
+            return property;
+        },
+        set: function(value) {
+           property = value;
+        }
+    };
+})
+    .service('shared6', function () {
+    var property="";
     return {
         get: function () {
             return property;

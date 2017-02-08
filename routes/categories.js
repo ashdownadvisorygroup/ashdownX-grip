@@ -85,11 +85,13 @@ router.get('/categorie/:categorie',passport.authenticate('jwt', { session: false
 
     var token = getToken(req.headers);
     if (token) {
-        var d;
+        var d;var j=0;
         CategorieMedia.find()
-                .where('categorie').equals(req.params.categorie)
-                .populate('media')
+            .populate('media')
+
                 .exec(function (errmed, result){
+
+
                     if (errmed) {
                         return next(errmed);
                     }
@@ -97,8 +99,16 @@ router.get('/categorie/:categorie',passport.authenticate('jwt', { session: false
                    d.medias = [];
                     var taille=result.length;
                     for(var i = 0; i<taille; i++) {
-                        d.medias[i]=(result[i].media);
-                        console.log(d.medias)
+                        console.log(result[i].categorie==req.params.categorie)
+                        if(result[i].categorie==req.params.categorie){
+                            if(result[i].media){
+                                d.medias[j]=result[i].media;
+                                j++;
+                            }
+
+                        }
+
+
                     }
 
                     res.json(d);
@@ -254,6 +264,8 @@ router.route('/categories/:categorie/media',passport.authenticate('jwt', { sessi
                         console.error(er);
                         return res.json({success: false, msg: "Erreur d'enregistrement."});
                     }
+                    console.log('result')
+                    console.log(result)
                     res.json(media);
                 });
             });

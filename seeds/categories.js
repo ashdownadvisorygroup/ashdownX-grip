@@ -14,33 +14,31 @@ addSeed(Categorie, {
     seed: function (medias) {
 
         return [{
-            nom: "musique",
-            description:"musique et musique",
-            medias:[medias[0],medias[1],medias[3],medias[5]]
-        }, {
-            nom: "art",
-            description:"art et art",
-            medias:[medias[1],medias[2],medias[3],medias[8],medias[9]]
+            nom: "html et css",
+            description:"les bases de l'html et des styles css",
 
         }, {
-            nom: "roman",
-            description:"roman et roman",
-            medias:[medias[0],medias[3],medias[5],medias[8]]
+            nom: "Git",
+            description:"comment créer son propre compte sur GIT et uploader le projet en ligne",
+
 
         }, {
-            nom: "undefined",
-            description:"undefined et undefined",
-            medias:[medias[3],medias[9],medias[5],medias[6]]
+            nom: "angularjs",
+            description:"programmer en angularjs framework javascript",
+
 
         }, {
-            nom: "dramatique",
-            description:"dramatique et dramatique",
-            medias:[medias[4],medias[0],medias[2],medias[8],medias[7]]
+            nom: "test unitaire",
+            description:"faire les tests unitaires de son programme",
+
+
+        }, {
+            nom: "angular material",
+            description:"amélioration du style grace au framework, design utilisé de google"
 
         }, {
             nom: "par defaut",
             description:"par defaut",
-            medias:[]
 
         }];
     }

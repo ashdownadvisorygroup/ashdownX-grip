@@ -6,43 +6,38 @@ var mongoose = require('mongoose');
 var Media = mongoose.model('Media');
 var Categorie = mongoose.model('Categorie');
 addSeed(Media, {
-    //dependencies: [Categorie],
     seed: function () {
 
         return [{
             nom: "livre1",
             logo: "data/logos/photo0.png",
-            description: "c'est le livre 1",
-            link: "data/pdfs/1469707829354-DEVOIR.pdf",
+            description: "c'est le livre 1 programmation en langage NodeJs",
+            link: "data/pdfs/Programmation.pdf",
             readed: "0",
             downloaded: "0"
-            //categorie : categorie[1]
         }, {
             nom: "livre2",
             logo: "data/logos/1469705001050-google.jpg",
-            description: "c'est le livre 2",
-            link: "data/pdfs/1469707829354-DEVOIR.pdf",
+            description: "c'est le livre 2 livre de programmation web débutants",
+            link: "data/pdfs/yogui-web-debutant.pdf",
             readed: "0",
             downloaded: "0"
-            //categorie : categorie[3]
 
         }, {
             nom: "livre3",
             logo:"data/logos/photo0.png",
-            description: "c'est le livre 3",
-            link: "https://www.youtube.com/watch?v=bPeGftH2ftk",
+            description: "c'est le livre 3 vidéo youtube",
+            link: "https://www.youtube.com/watch?v=zKkUN-mJtPQ",
             readed: "0",
             downloaded: "0"
-            //categorie : categorie[0]
 
         }, {
             nom: "livre4",
             logo: "data/logos/1469640726372-images.png",
             description: "c'est le livre 4",
-            link: "data/videos/VIDEO1.mp4",
+            link: "data/videos/00-Formation AngularJS _ Introduction.mp4",
             readed: "0",
             downloaded: "0"
-            //categorie : categorie[4]
 
         }, {
             nom: "livre5",
@@ -51,31 +46,28 @@ addSeed(Media, {
             link: "data/videos/VIDEO1.mp4",
             readed: "0",
             downloaded: "0"
-            //categorie : categorie[5]
 
         }, {
             nom: "livre6",
             logo: "data/logos/1469640726372-images.png",
             description: "c'est le livre 6",
-            link: "data/pdfs/1469707829354-DEVOIR.pdf",
+            link: "data/pdfs/Programmation.pdf",
             readed: "0",
             downloaded: "0"
-            //categorie : categorie[5]
 
         }, {
             nom: "livre7",
             logo: "data/logos/1469640726372-images.png",
             description: "c'est le livre 7",
-            link: "data/pdfs/1469707829354-DEVOIR.pdf",
+            link: "data/pdfs/assembleur-intel-nasm.pdf",
             readed: "0",
             downloaded: "0"
-            //categorie : categorie[5]
 
         }, {
             nom: "livre8",
             logo: "data/logos/1469640726372-images.png",
             description: "c'est le livre 8",
-            link: "data/videos/VIDEO1.mp4",
+            link: "data/videos/00-Formation AngularJS _ Introduction.mp4",
             readed: "0",
             downloaded: "0"
             //categorie : categorie[5]
@@ -84,7 +76,7 @@ addSeed(Media, {
             nom: "livre9",
             logo: "data/logos/1469640726372-images.png",
             description: "c'est le livre 9",
-            link: "data/pdfs/1469707829354-DEVOIR.pdf",
+            link: "https://www.youtube.com/watch?v=GJmFG4ffJZU",
             readed: "0",
             downloaded: "0"
             //categorie : categorie[5]
@@ -93,28 +85,25 @@ addSeed(Media, {
             nom: "livre10",
             logo: "data/logos/1469640726372-images.png",
             description: "c'est le livre 10",
-            link: "data/videos/VIDEO1.mp4",
+            link: "data/videos/00-Formation AngularJS _ Introduction.mp4",
             readed: "0",
             downloaded: "0"
-            //categorie : categorie[5]
 
         }, {
             nom: "livre11",
             logo: "data/logos/1469640726372-images.png",
             description: "c'est le livre 11",
-            link: "data/pdfs/1469707829354-DEVOIR.pdf",
+            link: "data/pdfs/android-debuter.pdf",
             readed: "0",
             downloaded: "0"
-            //categorie : categorie[5]
 
         }, {
             nom: "livre12",
             logo: "data/logos/1469640726372-images.png",
-            description: "c'est le livre 12",
-            link: "data/videos/VIDEO1.mp4",
+            description: "c'est le livre 12 livre de programmation en angularjs",
+            link: "data/videos/00-Formation AngularJS _ Introduction.mp4",
             readed: "0",
             downloaded: "0"
-            //categorie : categorie[5]
 
         }];
     }

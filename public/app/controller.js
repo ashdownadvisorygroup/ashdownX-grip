@@ -49,7 +49,7 @@ text_truncate = function(str, length, ending) {
         return str.substring(0, length - ending.length) + ending;
     } else {
         return str;
-    }
+    }d
 };
 app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupFactory,ProfilFactory,LivreFactory,
                                    AuthService,youtubeEmbedUtils, $state,$q,$mdDialog,$cookieStore,$filter,
@@ -100,8 +100,8 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
             $mdDialog.alert()
                 .clickOutsideToClose(true)
                 .title(name)
-                .textContent('You triggered the "' + name + '" action')
-                .ok('Great')
+                .textContent('vous avez choisi la ' + name )
+                .ok('OK')
                 .targetEvent(ev)
         );
          AuthService.logout();
@@ -286,7 +286,7 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
 
 
 
-    .controller('LoginNewCtrl', function($scope, AuthService,UserFactory, $state,$stateParams,$http,$mdToast) {
+    .controller('LoginNewCtrl', function($scope, AuthService,UserFactory, $state,$stateParams,$http,$mdToast,shared6,$cookieStore) {
         /***
          *
          *partie des toast pour les notification
@@ -338,37 +338,8 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
         $scope.closeToast = function() {
             $mdToast.hide();
         };
-        var pourToken;
-        $http.get('/check-reset').then(function(data){
-           var data=data.data;
-            if(data){
-                text="vous êtes autorisés à modifier le mot de passe";
-                $scope.showActionToast(text);
-                $scope.affiche=false;
-                $scope.affiche2=false;
-                $scope.affiche3=true;
-                UserFactory.getToken(UserFactory.pourToken).then(function(response){
-                    console.log(response)
-                    $scope.updatespassword=function(){
-                        UserFactory.updatepassword($scope.user,UserFactory.pourToken).then(function(msg) {
-                            text="mot de passe reinitialisé";
-                            $scope.showActionToast(text);
-                            $scope.affiche= true;
-                            $scope.affiche3= false;
-                        }, function(errMsg) {
-                            alert('mauvais');
-                        });
-                    }
-                });
-            }
-            else{
-                text="désolé email incorrect";
-                $scope.showActionToast(text);
-                $scope.affiche=true;
-                $scope.affiche2=false;
-                $scope.affiche3=false;
-            }
-        });
+
+
         $scope.affiche=true;
         $scope.affiche2=false;
         $scope.affiche3=false;
@@ -392,10 +363,11 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
             $scope.affiche3= false;
 
         };
+        var pourToken;
         $scope.forgot=function(){
             UserFactory.forgot($scope.user).then(function(msg) {
-                UserFactory.pourToken=msg.token;
-                pourToken=msg.token;
+                $cookieStore.put('moment',msg.token);
+                //alert($cookieStore.get('moment'))
                 text="vous avez recu un email de verification"
                 $scope.showActionToast(text);
                 $scope.newUser2();
@@ -405,6 +377,36 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
                 $scope.newUser2();
             });
         };
+        $http.get('/check-reset').then(function(data){
+            var data=data.data;
+            if(data){
+                text="vous êtes autorisés à modifier le mot de passe";
+                $scope.showActionToast(text);
+                $scope.affiche=false;
+                $scope.affiche2=false;
+                $scope.affiche3=true;
+                UserFactory.getToken($cookieStore.get('moment')).then(function(response){
+                    $scope.updatespassword=function(){
+                        UserFactory.updatepassword($scope.user,$cookieStore.get('moment')).then(function(msg) {
+                            text="mot de passe reinitialisé";
+                            $scope.showActionToast(text);
+                            $scope.affiche= true;
+                            $scope.affiche3= false;
+                        }, function(errMsg) {
+                            alert('mauvais');
+                        });
+                    }
+                });
+            }
+            else{
+                text="désolé email incorrect";
+                $scope.showActionToast(text);
+                $scope.affiche=true;
+                $scope.affiche2=false;
+                $scope.affiche3=false;
+            }
+        });
+
 });
 
 

@@ -103,6 +103,7 @@ app.controller('ProfilsCtrl', ['$scope','$cookieStore',
         function ($scope,$cookieStore, CategorieFactory,LivreFactory,ProfilFactory, $stateParams, $state, AuthService,$mdToast) {
             var tab =[],iduser,medPerPage=5;$scope.currentPage=1;$scope.step=5;
             ProfilFactory.getOne($stateParams.id).then(function (profils) {
+
                 $scope.profil = profils;
                     $scope.total = Math.ceil(profils.categorieprofil.length/medPerPage);
                     $scope.profil.categorieprofil= profils.categorieprofil.slice(0,medPerPage);
@@ -180,7 +181,13 @@ app.controller('ProfilsCtrl', ['$scope','$cookieStore',
                 if($event.which == 1)
                     $scope.profnew.data.splice(index,1);
             }
+            ProfilFactory.getOne($stateParams.id).then(function (profils) {
+
+                $scope.profnew = profils;
+
+            });
             $scope.modifprof=function(){
+
                 ProfilFactory.modifierProfil($scope.profnew).then(function(answer) {
                     text="reussi"
                     $scope.showActionToast(text);

@@ -15,7 +15,9 @@ app.controller('UseraccountCtrl', ['$scope','$cookieStore',
         var medPerPage=8;
         var tabprog=[];
         var tabprog2=[];
-        LivreFactory.get().then(function (medias) {});
+        LivreFactory.get().then(function (medias) {
+            ProfilFactory.allMedias=medias;
+        });
         var tab=[];
         var tabmaster=[];
         UserFactory.getOne($stateParams.id).then(function (us) {

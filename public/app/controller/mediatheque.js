@@ -285,6 +285,7 @@ app.controller('CategoriesCtrl', ['$scope','$cookieStore',
             }
         }
         $scope.creationmedia= function () {
+
             if(!$scope.mediai.logo)$scope.mediai.logo="data/logos/photo0.png";
             $scope.mediai.categorie=indik;
             console.log($scope.mediai)
@@ -296,6 +297,7 @@ app.controller('CategoriesCtrl', ['$scope','$cookieStore',
             }
             else{
                 CategorieFactory.ajouterlivres($scope.mediai).then(function (media) {
+                    console.log('media crée');
                     text="reussi media crée";
                     $scope.showActionToast(text);
                 });
