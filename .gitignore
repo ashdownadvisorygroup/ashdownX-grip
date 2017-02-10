@@ -38,5 +38,4 @@ jspm_packages
 
 .idea/
 public/vendor/
-public/data/
 exportToHTML/
