@@ -75,8 +75,9 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
     $scope.newUser=function(){
         $scope.affiche= !$scope.affiche;
     };
-    var id=$cookieStore.get('user').id;
-    UserFactory.getOne(id).then(function(msg) {
+
+    UserFactory.getOne($cookieStore.get('user').id).then(function(msg) {
+
         if(msg.photo == null){
             $scope.photo =  "../../image/user.png";
         }

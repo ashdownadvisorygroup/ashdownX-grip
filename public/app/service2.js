@@ -93,11 +93,11 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                     $http({
                         method: 'GET',
                         url: '/categories'
-                    }).success(function(data,status){
-                        var result=groupmediacat(data);//fonctin qui recupère le medias de chaque categorie populate
+                    }).then(function(success){
+                        var result=groupmediacat(success);//fonctin qui recupère le medias de chaque categorie populate
                         factory.categories=result;
                         deferred.resolve(result);
-                    }).error(function(error){
+                    },function(error){
                         //let the function caller know the error
                         deferred.reject(error);
                     });
@@ -570,6 +570,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                     });
                     return deferred.promise;
                 },
+
                 getOne: function(id){
                     factory.loadUserCredentials();
                     var categorie;
@@ -577,9 +578,10 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                     $http({
                         method: 'GET',
                         url: '/user/'+id
-                    }).success(function(data,status){
-                        deferred.resolve(data);
-                    }).error(function(error,status){
+                    }).then(function(success){
+                        console.log(success)
+                        deferred.resolve(success);
+                    },function(error){
                         //let the function caller know the error
                         deferred.reject(error);
                     });
