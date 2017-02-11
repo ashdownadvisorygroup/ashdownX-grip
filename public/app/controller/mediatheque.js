@@ -86,7 +86,7 @@ app.controller('CategoriesCtrl', ['$scope','$cookieStore',
         $scope.showActionToast = function() {
             var pinTo = $scope.getToastPosition();
             var toast = $mdToast.simple()
-                .textContent(text)
+                .content(text)
                 .action('ANNULER')
                 .highlightAction(true)
                 .highlightClass('md-accent')// Accent is used by default, this just demonstrates the usage.
@@ -141,7 +141,7 @@ app.controller('CategoriesCtrl', ['$scope','$cookieStore',
         $scope.showConfirmdelive = function(ev,med) {
             var confirm = $mdDialog.confirm()
                 .title('voulez vous supprimer ce media?')
-                .textContent('vous etes sur le point de supprimer le media')
+                .content('vous etes sur le point de supprimer le media')
                 .ariaLabel('bonne chance')
                 .targetEvent(ev)
                 .ok('Oui!')
@@ -160,7 +160,7 @@ app.controller('CategoriesCtrl', ['$scope','$cookieStore',
         $scope.showConfirmdecat = function(ev,cat) {
             var confirm = $mdDialog.confirm()
                 .title('voulez vous supprimer cette categorie?')
-                .textContent('vous etes sur le point de supprimer la categorie et ses medias seront envoyes dans ' +
+                .content('vous etes sur le point de supprimer la categorie et ses medias seront envoyes dans ' +
                     'la categorie par defaut')
                 .ariaLabel('bonne chance')
                 .targetEvent(ev)

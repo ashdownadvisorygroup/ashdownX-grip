@@ -38,10 +38,6 @@ app.controller('resultatsRechercheCtrl', ['$scope','$cookieStore',
     function ($scope,$cookieStore, CategorieFactory,LivreFactory,UserFactory,ProfilFactory, $stateParams,
               $state, AuthService,youtubeEmbedUtils,$sce,$mdToast,$filter,
               sharedProperties,GroupFactory,sharedmdtabactual,shared) {
-        /*SearchFactory.search(word).then(function(result){//service qui permet de filtrer dans le backend
-         console.log(result)
-         $scope.result=result;
-         });*/
         if(sharedmdtabactual.get()==1)$state.go('axgrip.resultats_recherche.categorie')
         if(sharedmdtabactual.get()==2)$state.go('axgrip.resultats_recherche.media')
         if(sharedmdtabactual.get()==3)$state.go('axgrip.resultats_recherche.groupe')
@@ -187,7 +183,6 @@ app.controller('resultatsRechercheCtrl', ['$scope','$cookieStore',
         if(sharedmdtabactual.get()==3)$state.go('axgrip.resultats_recherche.groupe')
         if(sharedmdtabactual.get()==0)$state.go('axgrip.resultats_recherche.profil')
         UserFactory.get().then(function (users) {
-            alert(JSON.stringify(users))
             $scope.users = users;
             $scope.$watch('users', function(newVal){
                 if(UserFactory.userss){
@@ -196,7 +191,6 @@ app.controller('resultatsRechercheCtrl', ['$scope','$cookieStore',
                     if(sharedProperties.getProperty()){
                         $scope.users= $filter('filter')($scope.users,sharedProperties.getProperty());
                         var property=shared5.get();
-                        alert(JSON.stringify($scope.users))
                         property=$scope.users.length;
                         shared5.set(property);
                     }

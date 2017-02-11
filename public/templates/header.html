@@ -5,28 +5,28 @@
             <md-toolbar layout="row">
                 <div class="md-toolbar-tools">
                     <h2>
-                        <span>Side Panel</span>
+                        <span>Menus</span>
                     </h2>
                     <span flex></span>
                     <md-button class="md-icon-button" aria-label="Close Side Panel" ng-click="closeSideNavPanel()">
-                        <md-tooltip>Close Side Panel</md-tooltip>
-                        <md-icon class="md-default-theme" class="material-icons">&#xE5CD;</md-icon>
+                        <md-tooltip>Fermer le Menu</md-tooltip>
+                        <md-icon md-svg-src="../../image/close-button.svg"></md-icon>
                     </md-button>
                 </div>
             </md-toolbar>
             <md-content layout-padding="">
-                <md-list style="color:black;">
+                <md-list style="cursor:pointer;">
                     <md-list-item ui-sref="axgrip.accueil">
-                        <md-icon class="md-default-theme" class="material-icons">&#xE851;</md-icon>
-                        <p>Accueil</p>
+                        <md-icon md-svg-src="../../image/home.svg" style="color:black;cursor:pointer;"></md-icon>
+                        <p style="color:black;">Accueil</p>
                     </md-list-item>
                     <md-list-item ui-sref="axgrip.mediatheque">
-                        <md-icon class="md-default-theme" class="material-icons">&#xE0C9;</md-icon>
-                        <p>Médiathèque</p>
+                        <md-icon md-svg-src="../../image/library.svg" style="color:black;cursor:pointer;"></md-icon>
+                        <p style="color:black;">Médiathèque</p>
                     </md-list-item>
                     <md-list-item ui-sref="axgrip.profils">
-                        <md-icon class="material-icons">&#xE150;</md-icon>
-                        <p>Profils</p>
+                        <md-icon md-svg-src="../../image/list.svg" style="color:black;cursor:pointer;"></md-icon>
+                        <p style="color:black;">Profils</p>
                     </md-list-item>
                 </md-list>
             </md-content>
@@ -39,8 +39,21 @@
                         <img src="../image/menu.png" style="width:24px;height:24px;"/>
                     </md-button>
                 </div>
-                <div flex-xs="40" hide-gt-xs></div>
-                <div flex="15" layout="row" flex-xs="30" >
+                <div flex-xs="40" hide-gt-xs>koi koiiiii</div>
+                <div flex-xs="30">ohlalalalalalal</div>
+                <div flex="10">mdrrrrrrrrrr</div>
+                <div flex-sm="5">tu vas où</div>
+                <div flex-md="5">à la maison</div>
+                <div flex-xl="5">dieffy peut tout faire</div>
+                <div flex-lg="5">heye</div>
+                <div flex="15" flex-offset="10">revenu de loin</div>
+                <div flex="5">bonsoir</div>
+                <div flex="5"></div>
+                <div flex="5">drevenueeeee</div>
+                <div flex="5" hide-sm>repartie</div>
+                <div flex="5"  hide-md>mon euil</div>
+                <div flex="5"   hide-gt-xs>éléna tomato</div>
+              <!--  <div flex="15" layout="row"  >
                     <div>
                         <img src="../../image/GRIP_Logo.png" alt="" class="accueil-img" >
                     </div>
@@ -71,7 +84,7 @@
                 </div>
                 <div flex="5">
 
-                </div>
+                </div>-->
                 <div flex="20" flex-xs="30" layout="row" layout-align="center end" >
                     <md-menu-bar>
                         <md-menu>

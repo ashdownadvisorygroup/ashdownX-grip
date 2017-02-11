@@ -91,7 +91,7 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
             $mdDialog.alert()
                 .clickOutsideToClose(true)
                 .title(name)
-                .textContent('You triggered the "' + name + '" action')
+                .content('You triggered the "' + name + '" action')
                 .ok('Great')
                 .targetEvent(ev)
         );
@@ -101,7 +101,7 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
             $mdDialog.alert()
                 .clickOutsideToClose(true)
                 .title(name)
-                .textContent('vous avez choisi la ' + name )
+                .content('vous avez choisi la ' + name )
                 .ok('OK')
                 .targetEvent(ev)
         );
@@ -160,7 +160,7 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
                 console.log(text)
                 var pinTo = $scope.getToastPosition();
                 var toast = $mdToast.simple()
-                    .textContent(text)
+                    .content(text)
                     .action('OK')
                     .highlightAction(true)
                     .highlightClass('md-accent')// Accent is used by default, this just demonstrates the usage.
@@ -323,7 +323,7 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
             console.log(text)
             var pinTo = $scope.getToastPosition();
             var toast = $mdToast.simple()
-                .textContent(text)
+                .content(text)
                 .action('OK')
                 .highlightAction(true)
                 .highlightClass('md-accent')// Accent is used by default, this just demonstrates the usage.

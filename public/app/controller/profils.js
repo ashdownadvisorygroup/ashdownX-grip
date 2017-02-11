@@ -39,7 +39,7 @@ app.controller('ProfilsCtrl', ['$scope','$cookieStore',
         $scope.showActionToast = function() {
             var pinTo = $scope.getToastPosition();
             var toast = $mdToast.simple()
-                .textContent(text)
+                .content(text)
                 .action('ANNULER')
                 .highlightAction(true)
                 .highlightClass('md-accent')// Accent is used by default, this just demonstrates the usage.
@@ -78,7 +78,7 @@ app.controller('ProfilsCtrl', ['$scope','$cookieStore',
         $scope.showConfirmdelprof = function(ev,prf) {
             var confirm = $mdDialog.confirm()
                 .title('voulez vous supprimer ce profil?')
-                .textContent('vous etes sur le point de supprimer le profil')
+                .content('vous etes sur le point de supprimer le profil')
                 .ariaLabel('bonne chance')
                 .targetEvent(ev)
                 .ok('Oui!')
@@ -155,7 +155,7 @@ app.controller('ProfilsCtrl', ['$scope','$cookieStore',
             $scope.showActionToast = function() {
                 var pinTo = $scope.getToastPosition();
                 var toast = $mdToast.simple()
-                    .textContent(text)
+                    .content(text)
                     .action('ANNULER')
                     .highlightAction(true)
                     .highlightClass('md-accent')// Accent is used by default, this just demonstrates the usage.

@@ -80,7 +80,7 @@ app.controller('CompteCtrl', ['$scope','$cookieStore',
         $scope.showActionToast = function() {
             var pinTo = $scope.getToastPosition();
             var toast = $mdToast.simple()
-                .textContent(text)
+                .content(text)
                 .action('ANNULER')
                 .highlightAction(true)
                 .highlightClass('md-accent')// Accent is used by default, this just demonstrates the usage.
@@ -158,7 +158,7 @@ app.controller('CompteCtrl', ['$scope','$cookieStore',
         $scope.showActionToast = function() {
             var pinTo = $scope.getToastPosition();
             var toast = $mdToast.simple()
-                .textContent(text)
+                .content(text)
                 .action('ANNULER')
                 .highlightAction(true)
                 .highlightClass('md-accent')// Accent is used by default, this just demonstrates the usage.
@@ -239,7 +239,7 @@ app.controller('CompteCtrl', ['$scope','$cookieStore',
         $scope.showActionToast = function() {
             var pinTo = $scope.getToastPosition();
             var toast = $mdToast.simple()
-                .textContent(text)
+                .content(text)
                 .action('ANNULER')
                 .highlightAction(true)
                 .highlightClass('md-accent')// Accent is used by default, this just demonstrates the usage.
@@ -309,7 +309,7 @@ app.controller('CompteCtrl', ['$scope','$cookieStore',
         $scope.showActionToast = function() {
             var pinTo = $scope.getToastPosition();
             var toast = $mdToast.simple()
-                .textContent(text)
+                .content(text)
                 .action('ANNULER')
                 .highlightAction(true)
                 .highlightClass('md-accent')// Accent is used by default, this just demonstrates the usage.
