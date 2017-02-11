@@ -72,7 +72,7 @@
                         </div>
 
                     </div>
-                    <div flex="15" layout="row">
+                    <div flex="10" layout="row">
                         <div flex="50"></div>
                         <div flex="50" >
                             <wan-material-paging wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
@@ -114,7 +114,7 @@
             <div flex="75" layout="row" layout-wrap >
                 <div ng-repeat="m in allmedias" flex="25" >
                     <div layout="column"  class='pacard' flex layout-wrap style="margin-left: 50px;">
-                        <md-card class="card" >
+                        <md-card class="card" style="color:black;">
                             <md-card-title  style="width: 100px;height: 100px;padding: 20px 1px;margin-left: 0em;">
                                 <md-card-title-text style="margin-right: 1em;line-height:5px;">
                                     <span class="md-headline" style="font-size: 15px">{{m.nom}}</span>
@@ -131,8 +131,7 @@
                                     </div>
                                 </md-card-title-media>
                             </md-card-title>
-                            <md-card-actions layout="row" layout-align="start center"
-                                             style="height: 20%"       class="cardi">
+                            <md-card-actions layout="row" layout-align="start center" class="cardi">
                                 En cours
                             </md-card-actions>
                         </md-card>
@@ -140,10 +139,10 @@
                 </div>
 
             </div>
-            <div flex="15" layout="row">
+            <div flex="10" layout="row">
                 <div flex="50"></div>
                 <div flex="50" >
-                    <wan-material-paging wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
+                    <wan-material-paging style="background-color: transparent;color:white;" wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
                     </wan-material-paging>
                 </div>
             </div>

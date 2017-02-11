@@ -33,7 +33,7 @@
         </md-sidenav>
         <md-toolbar >
             <div class="md-toolbar-tools" >
-                <div flex="5" layout="row" flex-xs="10" hide-md hide-sm hide-gt-xs>
+                <div flex="5" layout="row" hide-gt-sm="">
                     <md-button class="md-icon-button" ng-click="openSideNavPanel()"  >
                         <md-tooltip>Menu</md-tooltip>
                         <img src="../image/menu.png" style="width:24px;height:24px;"/>
@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div flex="5"></div>
-                <div flex="75" layout="row" layout-align="center center"  >
+                <div flex="25" layout="row" layout-align="center center"  >
                     <div flex="90">
                         <input class="input2" ng-model="search" type="search" style="color:black;background-color:white;">
                     </div>
@@ -54,7 +54,7 @@
                     </div>
                 </div>
                 <div flex="20"></div>
-                <div flex="55"  class="accueil-menu" >
+                <div flex="35"  class="accueil-menu" >
                     <md-tabs  md-selected="selectedTab" class="accueil-button" md-dynamic-height flex>
                             <md-tab  data-ui-sref="axgrip.accueil" >
                                 <md-tab-label> accueil</md-tab-label>

@@ -129,7 +129,7 @@
                         <md-icon md-svg-src="../../image/menu-button.svg" class="name"></md-icon>
                         <input ng-model="mediae.nom" type="text" placeholder="Nom (Obligatoire)" ng-required="true">
                     </md-input-container>
-                    <md-input-container class="md-block">
+                    <md-input-container class="md-icon-float md-block">
                         <md-icon md-svg-src="../../image/photo-camera.svg" class="email"></md-icon>
                         <div id="logo" name="logo" aria-label="a" value="{{mediae.logo}}" type="file" ngf-drop ngf-select ng-model="mediae.logo" class="drop-box"
                                ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="false"
@@ -141,7 +141,7 @@
                             <p ng-message="maxSize"> File  must be lower than 10MB..</p>
                         </div>
                     </md-input-container>
-                    <md-input-container class="md-block">
+                    <md-input-container class="md-icon-float md-block">
                         <md-icon md-svg-src="../../image/menu-button.svg" class="name"></md-icon>
                         <div ng-disabled="isShow" ng-click="isShow=false" aria-label="b" id="link" name="link" type="file" ngf-drop ngf-select ng-model="mediae.link" class="drop-box"
                                ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="false"
@@ -167,14 +167,14 @@
                             <p ng-message="maxSize"> File  must be lower than 30MB..</p>
                         </div>
                     </md-input-container>
-                    <md-input-container class="md-block">
+                    <md-input-container class="md-icon-float md-block">
                         <label>Url</label>
                         <md-icon md-svg-src="../../image/menu-button.svg" class="name"></md-icon>
                         <input ng-model="mediae.link" aria-label="c"   class="form-control" accept="text/plain"
                                ngf-pattern="'text/plain'" ng-click="isShow=true" ng-disabled="isShow == false" >
                         <div ng-bind-html="response_data" ng-show="isShow"></div>
                     </md-input-container>
-                    <md-input-container  ng-hide="modifiera" md-no-float class="md-block">
+                    <md-input-container  ng-hide="modifiera"  class="md-icon-float md-block">
                         <md-select multiple ng-model="mediae.categorie" placeholder="sélectionner catégorie" disabled>
                             <md-option ng-selected="categorie._id === mediae.categorie " ng-repeat="categorie in categories " value="{{categorie._id}}">{{categorie.nom}}</md-option>
                         </md-select>
@@ -206,7 +206,7 @@
                             <div ng-message="md-minlength">le nom doit être au moins de 10 caractères</div>
                         </div>
                     </md-input-container>
-                    <md-input-container class="md-block">
+                    <md-input-container class="md-icon-float md-block">
                         <md-icon md-svg-src="../../image/photo-camera.svg" class="email"></md-icon>
                         <div  name="logo" aria-label="a" value="{{mediai.logo}}" type="file" ngf-drop ngf-select ng-model="mediai.logo" class="drop-box"
                                 ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="false"
@@ -218,7 +218,7 @@
                             <p ng-message="maxSize"> File  must be lower than 10MB..</p>
                         </div>
                     </md-input-container>
-                    <md-input-container class="md-block">
+                    <md-input-container class="md-icon-float md-block">
                         <md-icon md-svg-src="../../image/menu-button.svg" class="name"></md-icon>
                         <div ng-disabled="isShow" ng-click="isShow=false" aria-label="b"  name="link" type="file" ngf-drop ngf-select ng-model="mediai.link" class="drop-box"
                                ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="false"
@@ -244,14 +244,14 @@
                             <p ng-message="maxSize"> File  must be lower than 30MB..</p>
                         </div>
                     </md-input-container>
-                    <md-input-container class="md-block">
+                    <md-input-container class="md-icon-float md-block">
                         <label>Url</label>
                         <md-icon md-svg-src="../../image/menu-button.svg" class="name"></md-icon>
                         <input ng-model="mediai.link" aria-label="c"   class="form-control" accept="text/plain"
                                ngf-pattern="'text/plain'" ng-click="isShow=true" ng-disabled="isShow == false" >
                         <div ng-bind-html="response_data" ng-show="isShow"></div>
                     </md-input-container>
-                    <md-input-container  md-no-float class="md-block">
+                    <md-input-container  md-no-float class="md-icon-float md-block">
                         <md-select multiple ng-model="mediai.categorie" placeholder="sélectionner catégorie" disabled>
                             <md-option  ng-repeat="categorie in categories" value="{{categorie._id}}">{{categorie.nom}}</md-option>
                         </md-select>
@@ -290,7 +290,7 @@
                             <div ng-message="md-minlength">le nom doit être au moins de 7 caractères</div>
                         </div>
                     </md-input-container>
-                    <md-input-container class="md-block">
+                    <md-input-container class="md-icon-float md-block">
                         <md-icon md-svg-src="../../image/email-filled-closed-envelope.svg" class="email"></md-icon>
                                              <textarea ng-model="c.description" aria-label="un" name="description"
                                                        ng-minlength="10"

@@ -633,7 +633,7 @@ figure img {
 }
 
 .menuHor li a:hover:not(.active) {
-    background-color: #65fa89;
+    background-color: blue;
 }
 
 .active{
