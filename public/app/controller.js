@@ -217,7 +217,6 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
             $scope.quantity = 1;
             $scope.aff=false;
             $scope.determinateValue=40;
-            iduser=$cookieStore.get('user').id;
             //incremente readed lors d'un lecture ie lien vers le document
             $scope.lire = function(med){
                 LivreFactory.readed(med._id).then(function(up){//permet d'incrementer automatiquement le champ lu

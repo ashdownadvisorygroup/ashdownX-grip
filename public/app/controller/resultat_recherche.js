@@ -154,7 +154,6 @@ app.controller('resultatsRechercheCtrl', ['$scope','$cookieStore',
         LivreFactory.get().then(function (medias) {
             $scope.medias = medias;
             ProfilFactory.allMedias=medias;
-            console.log(medias);
             $scope.total = Math.ceil(medias.length/medPerPage);
             $scope.medias= medias.slice(0,medPerPage);
             $scope.gotoPage = function() {
@@ -188,32 +187,28 @@ app.controller('resultatsRechercheCtrl', ['$scope','$cookieStore',
         if(sharedmdtabactual.get()==3)$state.go('axgrip.resultats_recherche.groupe')
         if(sharedmdtabactual.get()==0)$state.go('axgrip.resultats_recherche.profil')
         UserFactory.get().then(function (users) {
+            alert(JSON.stringify(users))
             $scope.users = users;
+            $scope.$watch('users', function(newVal){
+                if(UserFactory.userss){
+                    $scope.afficheres=true;
+                    $scope.groups=UserFactory.userss;
+                    if(sharedProperties.getProperty()){
+                        $scope.users= $filter('filter')($scope.users,sharedProperties.getProperty());
+                        var property=shared5.get();
+                        alert(JSON.stringify($scope.users))
+                        property=$scope.users.length;
+                        shared5.set(property);
+                    }
+
+                }
+            }, true);
         });
         $scope.step=6;
         $scope.afficheres=false;
         $scope.sharedProperties = sharedProperties;
-        /*$scope.$watch('sharedProperties.getProperty()', function(newVal){
-            $scope.afficheres=true;
-            if(newVal != 'First'){
-                if(UserFactory.userss)
-                    $scope.users=UserFactory.userss;
-                $scope.users= $filter('filter')($scope.users,newVal);
-            }
-        }, true);*/
-        $scope.$watch('users', function(newVal){
-            if(UserFactory.userss){
-                $scope.afficheres=true;
-                $scope.groups=UserFactory.userss;
-                if(sharedProperties.getProperty()){
-                    $scope.users= $filter('filter')($scope.users,sharedProperties.getProperty());
-                    var property=shared5.get();
-                    property=$scope.users.length;
-                    shared5.set(property);
-                }
 
-            }
-        }, true);
+
     }])
     .controller('ResultatGroupeCtrl', ['$scope','$cookieStore',
     'CategorieFactory','LivreFactory','UserFactory','ProfilFactory', '$stateParams', '$state','AuthService',

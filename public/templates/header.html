@@ -16,37 +16,25 @@
             </md-toolbar>
             <md-content layout-padding="">
                 <md-list style="color:black;">
-                    <md-list-item>
+                    <md-list-item ui-sref="axgrip.accueil">
                         <md-icon class="md-default-theme" class="material-icons">&#xE851;</md-icon>
-                        <p>User</p>
+                        <p>Accueil</p>
                     </md-list-item>
-                    <md-list-item>
+                    <md-list-item ui-sref="axgrip.mediatheque">
                         <md-icon class="md-default-theme" class="material-icons">&#xE0C9;</md-icon>
-                        <p>Messages</p>
+                        <p>Médiathèque</p>
                     </md-list-item>
-                    <md-list-item>
+                    <md-list-item ui-sref="axgrip.profils">
                         <md-icon class="material-icons">&#xE150;</md-icon>
-                        <p>Create Post</p>
-                    </md-list-item>
-                    <md-list-item>
-                        <md-icon class="md-default-theme" class="material-icons">&#xE8B8;</md-icon>
-                        <p>Settings</p>
-                    </md-list-item>
-                    <md-list-item>
-                        <md-icon class="material-icons">&#xE7F4;</md-icon>
-                        <p>Alerts</p>
-                    </md-list-item>
-                    <md-list-item>
-                        <md-icon class="material-icons">&#xE887;</md-icon>
-                        <p>Help</p>
+                        <p>Profils</p>
                     </md-list-item>
                 </md-list>
             </md-content>
         </md-sidenav>
         <md-toolbar >
             <div class="md-toolbar-tools" >
-                <div flex="5" layout="row" flex-xs="10">
-                    <md-button class="md-icon-button" ng-click="openSideNavPanel()"  hide-gt-xs>
+                <div flex="5" layout="row" flex-xs="10" hide-md hide-sm hide-gt-xs>
+                    <md-button class="md-icon-button" ng-click="openSideNavPanel()"  >
                         <md-tooltip>Menu</md-tooltip>
                         <img src="../image/menu.png" style="width:24px;height:24px;"/>
                     </md-button>
@@ -58,7 +46,7 @@
                     </div>
                 </div>
                 <div flex="5"></div>
-                <div flex="75" layout="row" layout-align="center center"  hide-xs>
+                <div flex="75" layout="row" layout-align="center center"  >
                     <div flex="90">
                         <input class="input2" ng-model="search" type="search" style="color:black;background-color:white;">
                     </div>
@@ -67,7 +55,7 @@
                     </div>
                 </div>
                 <div flex="20"></div>
-                <div flex="55"  class="accueil-menu"  hide-xs>
+                <div flex="55"  class="accueil-menu" >
                     <md-tabs  md-selected="selectedTab" class="accueil-button" md-dynamic-height flex>
                             <md-tab  data-ui-sref="axgrip.accueil" >
                                 <md-tab-label> accueil</md-tab-label>

@@ -1,5 +1,5 @@
 var groupeBy = function(profcat, catmed) {//fonction qui recupère les profils dun user avec leurs categorie populate
-    var taille = catmed.length, result = [], allMedias = [];
+    if(catmed) var taille = catmed.length, result = [], allMedias = [];
 
     angular.forEach(profcat,function(pc){
         if(pc.categorie){
@@ -94,7 +94,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         method: 'GET',
                         url: '/categories'
                     }).then(function(success){
-                        var result=groupmediacat(success);//fonctin qui recupère le medias de chaque categorie populate
+                        var result=groupmediacat(success.data);//fonctin qui recupère le medias de chaque categorie populate
                         factory.categories=result;
                         deferred.resolve(result);
                     },function(error){
@@ -111,8 +111,8 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         method: 'GET',
                         url: '/categorie/'+id
                     }).then(function(success){
-                        factory.categorie=success;
-                        deferred.resolve(success);
+                        factory.categorie=success.data;
+                        deferred.resolve(success.data);
                     },function(error,status){
                         deferred.reject(error);
                     });
@@ -126,7 +126,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         method: 'GET',
                         url: '/media/'+id
                     }).then(function(success){
-                        deferred.resolve(success);
+                        deferred.resolve(success.data);
                     },function(error,status){
                         deferred.reject(error);
                     });
@@ -325,8 +325,8 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         method: 'GET',
                         url: '/groups'
                     }).then(function(success){
-                        factory.groups=success;
-                        deferred.resolve(data);
+                        factory.groups=success.data;
+                        deferred.resolve(success.data);
                     },function(error,status){
                         //let the function caller know the error
                         deferred.reject(error);
@@ -393,8 +393,8 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         method: 'GET',
                         url: '/profils'
                     }).then(function(success){
-                        factory.profils=success;
-                        deferred.resolve(success);
+                        factory.profils=success.data;
+                        deferred.resolve(success.data);
                     },function(error){
                         //let the function caller know the error
                         deferred.reject(error);
@@ -409,9 +409,9 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         method: 'GET',
                         url: '/profil/'+id
                     }).then(function(success){
-                        success.objectifs=success.objectifs.split(factory.valsplit);
+                        success.data.objectifs=success.data.objectifs.split(factory.valsplit);
                             //ici on recupère la chaine de caractère et on la rend sous forme de tableau pour pouvoir afficher ç l'ecran
-                        deferred.resolve(success);
+                        deferred.resolve(success.data);
                     },function(error,status){
                         deferred.reject(error);
                     });
@@ -440,8 +440,8 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         factory.allMedias=[];
                         //$cookieStore.put('profsCats',0);
                         var usemed={},use={};
-                        factory.allMedias=groupeBy(success.ofuser,success.ofmed).alm;
-                        factory.profsCats=groupeBy(success.ofuser,success.ofmed).pc;
+                        factory.allMedias=groupeBy(success.data.ofuser,success.data.ofmed).alm;
+                        factory.profsCats=groupeBy(success.data.ofuser,success.data.ofmed).pc;
                         angular.forEach(factory.profsCats,function(dat){
                             dat.objectifs=dat.objectifs.split(factory.valsplit);
                             //ici on recupère la chaine de caractère et on la rend sous forme de tableau pour pouvoir afficher ç l'ecran
@@ -562,8 +562,8 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         method: 'GET',
                         url: '/users'
                     }).then(function(success){
-                        factory.userss=success;
-                        deferred.resolve(success);
+                        factory.userss=success.data;
+                        deferred.resolve(success.data);
                     },function(error){
                         //let the function caller know the error
                         deferred.reject(error);
@@ -579,8 +579,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         method: 'GET',
                         url: '/user/'+id
                     }).then(function(success){
-                        console.log(success)
-                        deferred.resolve(success);
+                        deferred.resolve(success.data);
                     },function(error){
                         //let the function caller know the error
                         deferred.reject(error);
@@ -595,7 +594,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         method: 'GET',
                         url: '/users/'+usmed.user+'/'+usmed.profil+'/user_profil'
                     }).then(function(success){
-                        deferred.resolve(success);
+                        deferred.resolve(success.data);
                     },function(error){
                         //let the function caller know the error
                         deferred.reject(error);
@@ -609,7 +608,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         method: 'GET',
                         url: '/users/'+usmed.user+'/'+usmed.profil+'/'+usmed.categorie+'/user_profil_categorie'
                     }).then(function(success){
-                        deferred.resolve(success);
+                        deferred.resolve(success.data);
                     },function(error,status){
                         deferred.reject(error);
                     });
@@ -622,7 +621,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         method: 'GET',
                         url: '/profil_users'
                     }).then(function(success){
-                        deferred.resolve(success);
+                        deferred.resolve(success.data);
                     },function(error,status){
                         deferred.reject(error);
                     });
@@ -635,7 +634,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         method: 'GET',
                         url: '/medias'+'/'+usmed.user+'/'+usmed.media+'/media_user',
                     }).then(function(success){
-                        deferred.resolve(success);
+                        deferred.resolve(success.data);
                     },function(error,status){
                         deferred.reject(error);
                     });
@@ -647,7 +646,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         method: 'GET',
                         url: '/media/'+id+'/media_user',
                     }).then(function(success){
-                        deferred.resolve(success);
+                        deferred.resolve(success.data);
                     },function(error,status){
                         deferred.reject(error);
                     });
@@ -659,7 +658,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         method: 'GET',
                         url: '/reset/'+id,
                     }).then(function(success){
-                        deferred.resolve(success);
+                        deferred.resolve(success.data);
                     },function(error,status){
                         deferred.reject(error);
                     });
@@ -702,7 +701,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         url: '/users/'+usmed.user+'/'+usmed.profil+'/user_profil',
                         data:usmed
                     }).then(function (data,status) {
-                        deferred.resolve(data);
+                        deferred.resolve(data.data);
                     },function(msg){
                         deferred.reject(msg)
                     });
@@ -745,7 +744,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         url: '/users/'+usmed.user+'/'+usmed.profil+'/user_profil',
                         data: usmed
                     }).then(function(success){
-                        deferred.resolve(success);
+                        deferred.resolve(success.data);
                     },function(error,status){
 
                         //let the function caller know the error
@@ -761,7 +760,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         url: '/medias/'+usmed.user+'/'+usmed.media+'/media_user',
                         data: usmed
                     }).then(function(success){
-                        deferred.resolve(success);
+                        deferred.resolve(success.data);
                     },function(error,status){
                         //let the function caller know the error
                         deferred.reject(error);
@@ -811,8 +810,8 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         method: 'GET',
                         url: '/medias'
                     }).then(function(success){
-                        factory.medias=success;
-                        deferred.resolve(success);
+                        factory.medias=success.data;
+                        deferred.resolve(success.data);
                     },function(error){
                         deferred.reject(error);
                     });
@@ -841,7 +840,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         url:' /medias/'+id+'/downloaded',
 
                     }).then(function(success){
-                        deferred.resolve(success);
+                        deferred.resolve(success.data);
                     },function(error){
                         //let the function caller know the error
                         deferred.reject(error);
@@ -855,7 +854,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         method: 'PUT',
                         url:' /medias/'+id+'/readed',
                     }).then(function(success){
-                        deferred.resolve(success);
+                        deferred.resolve(success.data);
                     },function(result){
                         deferred.reject(result);
                     });
@@ -872,7 +871,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         },
                         headers: { 'Content-Type': 'application/json' }
                     }).then(function(success){
-                        deferred.resolve(success);
+                        deferred.resolve(success.data);
                     },function(error){
                         deferred.reject(error);
                     });

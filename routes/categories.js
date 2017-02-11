@@ -99,7 +99,6 @@ router.get('/categorie/:categorie',passport.authenticate('jwt', { session: false
                    d.medias = [];
                     var taille=result.length;
                     for(var i = 0; i<taille; i++) {
-                        console.log(result[i].categorie==req.params.categorie)
                         if(result[i].categorie==req.params.categorie){
                             if(result[i].media){
                                 d.medias[j]=result[i].media;

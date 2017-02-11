@@ -36,37 +36,8 @@
                         <div ></div>
 
                     </div>
-                    <!--<div flex="85" style="color:black">
-                        <md-sidenav class="md-sidenav-left md-whiteframe-1dp" md-component-id="left"
-                                    md-is-locked-open="$mdMedia('gt-sm')" style="width:203px">
-                            <md-toolbar md-scroll-shrink>
-                                <div class="md-toolbar-tools">
-                                    <h3>My App Title</h3>
-                                </div>
-                            </md-toolbar>
-
-                            <md-content role="navigation" style="color:black;">
-                                <ul class="side-menu">
-                                    <li ng-repeat="prf in menu.profils" class="parent-list-item"
-                                        ng-class="{'parentActive' : menu.isSectionSelected(prf)}">
-                                        <h2 style="color:black;" class="menu-heading"
-                                            id="heading_{{ prf.nom | nospace }}">
-                                            PROFILS
-                                        </h2>
-
-                                        <div prf="prf" menu-toggle ></div>
-                                        <md-progress-linear md-mode="determinate" value="{{prf.progressuser}}"></md-progress-linear>
-
-                                        <div>
-                                            iiiii{{prf.progressuser}}%
-                                        </div>
-                                    </li>
-                                </ul>
-                            </md-content>
-                        </md-sidenav>
-                    </div>-->
                 </div>
-                <div layout="column"  flex="70" flex-xs="100" >
+                <div layout="column" ng-show="stagiaires.length >0" flex="70" flex-xs="100" >
                     <div flex="5"  layout="row" style="padding-top: 2em;font-size: 12px">
                         <div flex="10">{{longueur}} &nbsp;médias</div>
                         <div flex="15" flex-offset="75" ng-click="aff_pop_not()" style="cursor: pointer;">populaires/mieux notés</div>
@@ -132,6 +103,50 @@
                         </section>
                     </md-content>
                 </div>
+        <div layout="column" ng-show="stagiaires.length == 0" flex="85" flex-xs="100" >
+            <div flex="5"  layout="row" style="padding-top: 2em;font-size: 12px">
+                <div flex="10">&nbsp;&nbsp;{{longueur}} &nbsp;médias</div>
+                <div flex="15" flex-offset="75" ng-click="aff_pop_not()" style="cursor: pointer;">populaires/mieux notés</div>
+            </div>
+            <div flex="5" style="padding-top:4px" ><hr></div>
+            <div flex="75" layout="row" layout-wrap >
+                <div ng-repeat="m in allmedias" flex="25" >
+                    <div layout="column"  class='pacard' flex layout-wrap style="margin-left: 50px;">
+                        <md-card class="card" >
+                            <md-card-title  style="width: 100px;height: 100px;padding: 20px 1px;margin-left: 0em;">
+                                <md-card-title-text style="margin-right: 1em;line-height:5px;">
+                                    <span class="md-headline" style="font-size: 15px">{{m.nom}}</span>
+                                                <span class="md-subhead">
+                                                </span>
+                                    <span class="md-subhead" style="font-size: 10px">Lu:{{m.readed}}</span>
+                                    <span class="md-subhead" style="font-size: 10px">Télecharger:{{m.downloaded}}</span>
+                                                <span class="md-subhead" style="font-size: 10px"><a ng-click="lire(m)" ui-sref="document({id:m._id})" style="cursor:pointer;">{{m.affiche}}</a>
+                                                </span>
+                                </md-card-title-text>
+                                <md-card-title-media>
+                                    <div class="md-media-lg card-media" style="width: 30%;height: 60%">
+                                        <img ng-src="{{m.logo}}" style="width: 40px;height: 40px"  alt="" >
+                                    </div>
+                                </md-card-title-media>
+                            </md-card-title>
+                            <md-card-actions layout="row" layout-align="start center"
+                                             style="height: 20%"       class="cardi">
+                                En cours
+                            </md-card-actions>
+                        </md-card>
+                    </div>
+                </div>
+
+            </div>
+            <div flex="15" layout="row">
+                <div flex="50" flex-offset="50">
+                    <wan-material-paging wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
+                    </wan-material-paging>
+                </div>
+            </div>
+
+
+        </div>
 
     </div>
 
