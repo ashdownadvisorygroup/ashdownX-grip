@@ -82,15 +82,12 @@ router.get('/categories', function (req, res, next) {
 });
 
 router.get('/categorie/:categorie',passport.authenticate('jwt', { session: false}), function (req, res) {
-
     var token = getToken(req.headers);
     if (token) {
         var d;var j=0;
         CategorieMedia.find()
             .populate('media')
-
-                .exec(function (errmed, result){
-
+            .exec(function (errmed, result){
 
                     if (errmed) {
                         return next(errmed);
@@ -104,12 +101,8 @@ router.get('/categorie/:categorie',passport.authenticate('jwt', { session: false
                                 d.medias[j]=result[i].media;
                                 j++;
                             }
-
                         }
-
-
                     }
-
                     res.json(d);
                 });
     }

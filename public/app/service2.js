@@ -232,7 +232,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         url: '/categorie/'+categorie._id,
                         data: categorie
                     }).then(function(success){
-                        deferred.resolve(success);
+                        deferred.resolve(success.data);
                     },function(error,status){
                         deferred.reject(error);
                     });
@@ -246,7 +246,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         url: '/categories',
                         data: cat
                     }).then(function(success){
-                        deferred.resolve(success);
+                        deferred.resolve(success.data);
                     },function(error,status){
                         //let the function caller know the error
                         deferred.reject(error);
@@ -286,7 +286,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         method: 'GET',
                         url: '/search?word='+word
                     }).then(function(success){
-                        var result=groupmediacat(success);//fonctin qui recupère le medias de chaque categorie populate
+                        var result=groupmediacat(success.data);//fonctin qui recupère le medias de chaque categorie populate
                         deferred.resolve(result);
                     },function(error){
                         //let the function caller know the error
@@ -340,7 +340,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         method: 'GET',
                         url: '/group/'+id
                     }).then(function(success){
-                        deferred.resolve(success);
+                        deferred.resolve(success.data);
                     },function(error,status){
                         deferred.reject(error);
                     });
@@ -354,7 +354,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         url: '/group/'+group._id,
                         data: group
                     }).then(function(success){
-                        deferred.resolve(success);
+                        deferred.resolve(success.data);
                     },function(error,status){
                         deferred.reject(error);
                     });
@@ -507,7 +507,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         url: '/profils',
                         data: prof
                     }).then(function(success){
-                        deferred.resolve(success);
+                        deferred.resolve(success.data);
                     },function(error){
                         deferred.reject(error);
                     });
@@ -523,7 +523,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         url: '/profil/'+prof._id,
                         data: prof
                     }).then(function(success){
-                        deferred.resolve(success);
+                        deferred.resolve(success.data);
                     },function(error){
                         deferred.reject(error);
                     });
@@ -775,8 +775,9 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         url: '/forgot',
                         data: user
                     }).then(function(success){
-                        deferred.resolve(success);
+                        deferred.resolve(success.data);
                     },function(error,status){
+                        console.log(error);
                         //let the function caller know the error
                         deferred.reject(error);
                     });
@@ -825,7 +826,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         url: '/download/'+id
 
                     }).then(function(success){
-                        deferred.resolve(success);
+                        deferred.resolve(success.data);
                     },function(error){
                         //let the function caller know the error
                         deferred.reject(error);
