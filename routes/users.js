@@ -669,13 +669,13 @@ router.post('/forgot', function (req, res, next) {
                 if (err) {
                     console.log('erreur de connection1')
                     console.log(err)
-                    res.status(500).json({msg: "erreur pas de connection"});
+                    res.status(500).json({msg: "erreur pas de connection1"});
                     return;
                 }
                 if (res.headersSent) {
                     console.log(res.headersSent)
                     console.log('erreur de connexion2')
-                    res.status(500).json({msg: "erreur pas de connection"});
+                    res.status(500).json({msg: "erreur pas de connection2"});
                     return;
 
                 }

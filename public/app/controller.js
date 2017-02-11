@@ -160,7 +160,7 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
                 console.log(text)
                 var pinTo = $scope.getToastPosition();
                 var toast = $mdToast.simple()
-                    .content(text)
+                    .textContent(text)
                     .action('OK')
                     .highlightAction(true)
                     .highlightClass('md-accent')// Accent is used by default, this just demonstrates the usage.
@@ -323,7 +323,7 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
             console.log(text)
             var pinTo = $scope.getToastPosition();
             var toast = $mdToast.simple()
-                .content(text)
+                .textContent(text)
                 .action('OK')
                 .highlightAction(true)
                 .highlightClass('md-accent')// Accent is used by default, this just demonstrates the usage.

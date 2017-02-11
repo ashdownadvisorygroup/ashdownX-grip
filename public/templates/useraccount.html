@@ -16,7 +16,9 @@
                         <div flex="80">
                             <md-progress-linear md-mode="determinate" value="{{prf.progressuser}}"></md-progress-linear>
                         </div>
-                        <div flex="20">
+                        <div flex="5"></div>
+                        <br>
+                        <div flex="15">
                             {{prf.progressuser}}%
                         </div>
                     </div>
@@ -65,7 +67,7 @@
         <div flex="60" layout="row" layout-wrap ng-if="aff_med">
             <div ng-repeat="m in allmedias" flex="25">
                 <div layout="column"  class='md-padding pacard' flex layout-wrap>
-                    <md-card class="card" >
+                    <md-card class="card" style="color:black;">
                         <md-card-title  style="width: 100px;height: 100px;padding: 20px 1px;margin-left: 0em;">
                             <md-card-title-text style="margin-right: 1em;">
                                 <span class="md-headline" style="font-size: 18px">{{m.nom}}</span>

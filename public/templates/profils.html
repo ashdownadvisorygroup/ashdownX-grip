@@ -41,7 +41,7 @@
             <div flex="5"></div>
             <div layout="row" flex="75" layout-wrap>
                 <div layout="column" ng-repeat="prf in filteredprofile=( profile |filterBy: ['nom','description']:searchprof )">
-                    <md-card class="cardprofil">
+                    <md-card class="cardprofil" style="color:black;">
                         <md-card-title>
                             <md-card-title-text>
                                 <span class="md-headline" style="cursor:pointer" ng-click="triscat(prf);">Nom:{{prf.nom}}</span>
@@ -57,7 +57,7 @@
                     </md-card>
                 </div>
                 <div layout="row" ng-repeat="ct in profil.categorieprofil" >
-                    <md-card class="cardprofcat">
+                    <md-card class="cardprofcat" style="color:black;">
                         <md-card-title>
                             <md-card-title-text>
                                 <span class="md-subhead" style="cursor:pointer" ui-sref="axgrip.categorie({id:ct._id})">Nom:{{ct.nom}}</span>
@@ -70,8 +70,9 @@
                     <form  name="Formmodifprof"  style="overflow: auto;color:white;">
                         <md-content class="md-no-momentum newuser">
                             <div >
-                                <md-icon md-svg-src="../../image/email-filled-closed-envelope.svg" class="email"></md-icon>
+
                                 <label>objectifs du profil</label>
+                                <md-icon md-svg-src="../../image/email-filled-closed-envelope.svg" class="email"></md-icon>
                                 <table>
                                     <tr ng-repeat="name in profnew.data track by $index">
                                         <td> <input type="text" ng-model="profnew.data[$index]"></td>
@@ -90,16 +91,16 @@
                                     <div ng-message="md-minlength">le nom doit être au moins de 710caracteres</div>
                                 </div>
                             </md-input-container>
-                            <md-input-container class="md-icon-float md-icon-left  md-block">
-                                <md-icon md-svg-src="../../image/web-design.svg" style="display:inline-block;"></md-icon>
+                            <md-input-container class="md-icon-float md-block">
                                 <label>catégories du profil</label>
+                                <md-icon md-svg-src="../../image/web-design.svg" style="display:inline-block;"></md-icon>
                                 <md-select multiple ng-model="profnew.categorie" >
                                     <md-option ng-repeat="ct in categories" value="{{ct._id}}">{{ct.nom}}</md-option>
                                 </md-select>
                             </md-input-container>
-                            <md-input-container class="md-block">
-                                <md-icon md-svg-src="../../image/email-filled-closed-envelope.svg" class="email"></md-icon>
+                            <md-input-container class="md-icon-float md-block">
                                 <label>Description du profil</label>
+                                <md-icon md-svg-src="../../image/email-filled-closed-envelope.svg" class="email"></md-icon>
                                              <textarea   ng-minlength="10" md-maxlength="150"
                                                          aria-label="deux" name="description" ng-model="profnew.description">
                                              </textarea>
