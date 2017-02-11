@@ -49,21 +49,27 @@
                         <div ng-repeat="m in allmedias" flex="25" >
                             <div layout="column"  class='pacard' flex layout-wrap style="margin-left: 20px;">
                                 <md-card class="card" style="color:black;" >
-                                    <md-card-title  style="width: 100px;height: 100px;padding: 20px 1px;margin-left: 0em;">
-                                        <md-card-title-text style="margin-right: 1em;line-height:5px;">
-                                            <span class="md-headline" style="font-size: 15px">{{m.nom}}</span>
-                                                <span class="md-subhead">
-                                                </span>
-                                            <span class="md-subhead" style="font-size: 10px">Lu:{{m.readed}}</span>
-                                            <span class="md-subhead" style="font-size: 10px">Télecharger:{{m.downloaded}}</span>
+                                    <md-card-title  style="width: 100px;height: 100px;padding: 0px 1px;margin-left: 0em;">
+                                        <md-card-title-text style="margin-right: 1em;line-height:5px;" layout="column">
+                                            <div flex="30" layout="row">
+                                                <div flex="25">
+                                                    <span class="md-headline" style="font-size: 15px">{{m.nom}}</span>
+                                                </div>
+                                                <div flex="70"></div>
+                                                <div flex="5">
+                                                    <img ng-src="{{m.logo}}" style="width: 40px;height: 40px"  alt="" >
+
+                                                </div>
+                                            </div>
+                                            <div flex="70" style="width:140px">
+                                                <span class="md-subhead" style="font-size: 10px">Lu:{{m.readed}}</span>
+                                                <br><br>
+                                                <span class="md-subhead" style="font-size: 10px">Télecharger:{{m.downloaded}}</span>
+                                                <br><br><br>
                                                 <span class="md-subhead" style="font-size: 10px"><a ng-click="lire(m)" ui-sref="document({id:m._id})" style="cursor:pointer;">{{m.affiche}}</a>
                                                 </span>
-                                        </md-card-title-text>
-                                        <md-card-title-media>
-                                            <div class="md-media-lg card-media" style="width: 30%;height: 60%">
-                                                <img ng-src="{{m.logo}}" style="width: 40px;height: 40px"  alt="" >
                                             </div>
-                                        </md-card-title-media>
+                                        </md-card-title-text>
                                     </md-card-title>
                                     <md-card-actions layout="row" layout-align="start center" class="cardi">
                                         En cours
@@ -135,7 +141,6 @@
                                         <br><br><br>
                                                 <span class="md-subhead" style="font-size: 10px"><a ng-click="lire(m)" ui-sref="document({id:m._id})" style="cursor:pointer;">{{m.affiche}}</a>
                                                 </span>
-                                        <br><br><br>
                                     </div>
 
                                 </md-card-title-text>

@@ -69,21 +69,26 @@
                 <div   layout="column" ng-repeat="med in medias" >
                     <div  class='md-padding pacard' style="margin-left: 20px;">
                         <md-card class="card" style="color:black;">
-                            <md-card-title>
-                                <md-card-title-text layout="column" layout-align="center center">
-                                    <span class="md-headline"></span>
-                                                <span class="md-subhead" style="font-size: 15px">{{med.nom}}
-                                                </span>
-                                    <span class="md-subhead" style="font-size: 10px">Lu:{{med.readed}}</span>
-                                    <span class="md-subhead" style="font-size: 10px">Télecharger:{{med.downloaded}}</span>
-                                                <span class="md-subhead" style="font-size: 10px"><a ng-click="lire(med)" ui-sref="document({id:med._id})" style="cursor:pointer;">{{med.affiche}}</a>
-                                                </span>
-                                </md-card-title-text>
-                                <md-card-title-media>
-                                    <div class="md-media-lg card-media">
-                                        <img ng-src="{{med.logo}}" style="width: 50px;height: 50px" alt="" >
+                            <md-card-title style="width: 100px;height: 100px;padding: 0px 1px;margin-left: 0em;">
+                                <md-card-title-text layout="column"  >
+                                    <div flex="30" layout="row">
+                                        <div flex="25">
+                                            <span class="md-headline" style="font-size: 15px">{{med.nom}}</span>
+                                        </div>
+                                        <div flex="70"></div>
+                                        <div flex="5">
+                                            <img ng-src="{{med.logo}}" style="width: 40px;height: 40px"  alt="" >
+                                        </div>
                                     </div>
-                                </md-card-title-media>
+                                    <div flex="70" style="width:140px">
+                                        <span class="md-subhead" style="font-size: 10px">Lu:{{med.readed}}</span>
+                                        <br><br>
+                                        <span class="md-subhead" style="font-size: 10px">Télecharger:{{med.downloaded}}</span>
+                                        <br><br>
+                                                <span class="md-subhead" style="font-size: 10px"><a ng-click="lire(m)" ui-sref="document({id:med._id})" style="cursor:pointer;">{{med.affiche}}</a>
+                                                </span>
+                                    </div>
+                                </md-card-title-text>
                             </md-card-title>
                             <md-card-actions layout="row" layout-align="start center" class="cardi">
                                 <div ng-init="rating = star.rating + 1" ></div>

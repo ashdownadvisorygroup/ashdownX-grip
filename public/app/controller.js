@@ -160,11 +160,9 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
                 console.log(text)
                 var pinTo = $scope.getToastPosition();
                 var toast = $mdToast.simple()
-                    .textContent(text)
-                    .action('OK')
-                    .highlightAction(true)
-                    .highlightClass('md-accent')// Accent is used by default, this just demonstrates the usage.
-                    .position(pinTo);
+                    .content(text)
+                    .position(pinTo)
+                    .action('OK');
 
                 $mdToast.show(toast).then(function(response) {
                     if ( response == 'ok' ) {
@@ -322,11 +320,10 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
         $scope.showActionToast = function(text) {
             console.log(text)
             var pinTo = $scope.getToastPosition();
+
             var toast = $mdToast.simple()
-                .textContent(text)
+                .content(text)
                 .action('OK')
-                .highlightAction(true)
-                .highlightClass('md-accent')// Accent is used by default, this just demonstrates the usage.
                 .position(pinTo);
 
             $mdToast.show(toast).then(function(response) {

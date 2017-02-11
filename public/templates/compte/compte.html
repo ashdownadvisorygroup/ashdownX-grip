@@ -185,16 +185,16 @@
                                             <div ng-message="md-minlength">le nom doit être au moins de 710caracteres</div>
                                         </div>
                                     </md-input-container>
-                                    <md-input-container class="md-icon-float md-block">
-                                        <label>catégories du profil</label>
+                                    <md-input-container class="md-block">
                                         <md-icon md-svg-src="../../image/web-design.svg" style="display:inline-block;"></md-icon>
+                                        <label>catégories du profil</label>
                                         <md-select multiple ng-model="profnew.categorie" ng-required="true">
                                             <md-option ng-repeat="ct in categories" value="{{ct._id}}">{{ct.nom}}</md-option>
                                         </md-select>
                                     </md-input-container>
-                                    <md-input-container class="md-icon-float md-block">
-                                        <label>Description du profil</label>
+                                    <md-input-container class="md-block">
                                         <md-icon md-svg-src="../../image/email-filled-closed-envelope.svg" class="email"></md-icon>
+                                        <label>Description du profil</label>
                                              <textarea   ng-minlength="10" md-maxlength="150" ng-required="true"
                                                          aria-label="deux" name="description" ng-model="profnew.description">
                                              </textarea>
@@ -229,7 +229,7 @@
                                             </div>
                                         </md-input-container>
 
-                                        <md-input-container  class="md-icon-float md-block" flex="50" layout="row">
+                                        <md-input-container  class="md-icon-float md-block" flex="50" >
                                             <label>Nom de l'utilisateur</label>
                                             <md-icon md-svg-src="../../image/menu-button.svg" class="name"></md-icon>
                                                 <input ng-model="utilisateur.name" ng-minlength="5" name="name"
@@ -246,33 +246,33 @@
                                             <md-icon md-svg-src="../../image/lock-and-key-icon-silhouette.svg"></md-icon>
                                             <input ng-model="utilisateur.password" type="password" ng-required="true">
                                         </md-input-container>
-                                        <md-input-container class=" md-block" flex="50">
+                                        <md-input-container class="md-icon-float md-block" flex="50">
                                             <label>Email (obligatoire)</label>
                                             <md-icon md-svg-src="../../image/email-filled-closed-envelope.svg" class="email"></md-icon>
                                             <input ng-model="utilisateur.email" type="email" ng-required="true">
                                         </md-input-container>
-                                        <md-input-container   class="md-icon-float md-block" flex="50" >
-                                            <label>Groupe(s) de l'utilisateur</label>
+                                        <md-input-container   class=" md-block" flex="50" >
                                             <md-icon md-svg-src="../../image/users-group.svg" style="display:inline-block;"></md-icon>
+                                            <label>Groupe(s) de l'utilisateur</label>
                                             <md-select multiple ng-model="utilisateur.groups"  ng-required="true">
                                                 <md-option ng-repeat="group in groups" value="{{group._id}}">{{group.nom}}</md-option>
                                             </md-select>
                                         </md-input-container>
-                                        <md-input-container class="md-icon-float md-block">
-                                            <label>Profil(s) de l'utilisateur</label>
+                                        <md-input-container class="md-block">
                                             <md-icon md-svg-src="../../image/web-design.svg" style="display:inline-block;"></md-icon>
+                                            <label>Profil(s) de l'utilisateur</label>
                                             <md-select multiple ng-model="utilisateur.profil"  ng-required="true">
                                                 <md-option ng-repeat="profil in profils" value="{{profil._id}}">{{profil.nom}}</md-option>
                                             </md-select>
                                         </md-input-container>
-                                        <md-input-container  class="md-icon-float md-block">
-                                            <label>Rôle masteur d'utilisateur</label>
+                                        <md-input-container  class="md-block">
                                             <md-icon md-svg-src="../../image/customer.svg" style="display:inline-block;"></md-icon>
+                                            <label>Rôle masteur d'utilisateur</label>
                                             <md-select multiple ng-model="utilisateur.master" >
                                                 <md-option ng-repeat="prof in profils" value="{{prof._id}}">{{prof.nom}}</md-option>
                                             </md-select>
                                         </md-input-container>
-                                        <md-input-container  class="md-icon-float md-block">
+                                        <md-input-container  class=" md-block">
                                             <md-icon md-svg-src="../../image/customer.svg" style="display:inline-block;"></md-icon>
                                             <label>Rôle encadreur de l'utilisaeur</label>
                                             <md-select multiple ng-model="utilisateur.encadreur">
