@@ -87,14 +87,12 @@ app.controller('CategoriesCtrl', ['$scope','$cookieStore',
             var pinTo = $scope.getToastPosition();
             var toast = $mdToast.simple()
                 .content(text)
-                .action('ANNULER')
-                .highlightAction(true)
-                .highlightClass('md-accent')// Accent is used by default, this just demonstrates the usage.
-                .position(pinTo);
+                .position(pinTo)
+                .action('OK');
 
             $mdToast.show(toast).then(function(response) {
                 if ( response == 'ok' ) {
-                    alert('ok');
+
                 }
             });
         };

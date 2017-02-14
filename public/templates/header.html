@@ -15,7 +15,7 @@
                 </div>
             </md-toolbar>
             <md-content layout-padding="">
-                <md-list style="cursor:pointer;">
+                <md-list style="cursor:pointer;color:black">
                     <md-list-item ui-sref="axgrip.accueil">
                         <md-icon md-svg-src="../../image/home.svg" style="color:black;cursor:pointer;"></md-icon>
                         <p >Accueil</p>
@@ -33,19 +33,19 @@
         </md-sidenav>
         <md-toolbar >
             <div class="md-toolbar-tools" >
-                <div flex="5" layout="row" hide-gt-sm="">
+                <div flex="5" flex-xs="15" layout="row" hide-gt-sm="">
                     <md-button class="md-icon-button" ng-click="openSideNavPanel()"  >
                         <md-tooltip>Menu</md-tooltip>
                         <img src="../image/menu.png" style="width:24px;height:24px;"/>
                     </md-button>
                 </div>
-              <div flex="15" layout="row"  >
-                    <div>
+              <div flex="15" layout="row" hide-xs >
+                    <div ui-sref="axgrip.accueil" style="cursor:pointer;">
                         <img src="../../image/GRIP_Logo.png" alt="" class="accueil-img" >
                     </div>
                 </div>
                 <div flex="5"></div>
-                <div flex="35" layout="row" layout-align="center center"  >
+                <div flex="35" flex-xs="60" layout="row" layout-align="center center"  >
                     <div flex="90">
                         <input class="input2" ng-model="search" type="search" style="color:black;background-color:white;">
                     </div>
@@ -54,7 +54,7 @@
                     </div>
                 </div>
                 <div flex="10"></div>
-                <div flex="35"  class="accueil-menu" >
+                <div flex="35"  class="accueil-menu" hide-xs>
                     <md-tabs  md-selected="selectedTab" class="accueil-button" md-dynamic-height flex>
                             <md-tab  data-ui-sref="axgrip.accueil" >
                                 <md-tab-label> accueil</md-tab-label>

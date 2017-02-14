@@ -97,14 +97,6 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
         );
     };
     $scope.deconnexionaction = function(name, ev) {
-        $mdDialog.show(
-            $mdDialog.alert()
-                .clickOutsideToClose(true)
-                .title(name)
-                .content('vous avez choisi la ' + name )
-                .ok('OK')
-                .targetEvent(ev)
-        );
          AuthService.logout();
             $state.go('new');
     };
@@ -166,7 +158,6 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
 
                 $mdToast.show(toast).then(function(response) {
                     if ( response == 'ok' ) {
-                        alert('vous avez cliqué sur annuler');
                     }
                 });
             };
@@ -203,6 +194,14 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
         'youtubeEmbedUtils','$sce','$mdToast','$filter',
         function ($scope,$cookieStore, CategorieFactory,LivreFactory,UserFactory,ProfilFactory, $stateParams,
                   $state, AuthService,youtubeEmbedUtils,$sce,$mdToast,$filter) {
+            $scope.hide1=false;
+            $scope.hide2=false;
+            $scope.afficher_cacher=function(){
+                $scope.hide1=!$scope.hide1;
+            }
+            $scope.afficher_cacher2=function(){
+                $scope.hide2=!$scope.hide2;
+            }
 
             /*** partie pour les profils donc l'accueil de l'utilisateur***/
             var profilActuel=$cookieStore.get('user').profilActuel;
@@ -328,7 +327,6 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
 
             $mdToast.show(toast).then(function(response) {
                 if ( response == 'ok' ) {
-                    alert('vous avez cliqué sur annuler');
                 }
             });
         };
@@ -336,7 +334,32 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
             $mdToast.hide();
         };
 
-
+        $scope.dataArray = [
+            {
+                src: "Des milliers d'utilisateurs classés selon les profils  et les motivations communes..."
+            },
+            {
+                src: "Des milliers d'utilisateurs classés selon les profils  et les motivations communes..."
+            },
+            {
+                src: "Des milliers d'utilisateurs classés selon les profils  et les motivations communes..."
+            },
+            {
+                src: "Des milliers d'utilisateurs classés selon les profils  et les motivations communes..."
+            },
+            {
+                src: "Des milliers d'utilisateurs classés selon les profils  et les motivations communes..."
+            },
+            {
+                src: "Des milliers d'utilisateurs classés selon les profils  et les motivations communes..."
+            },
+            {
+                src: "Des milliers d'utilisateurs classés selon les profils  et les motivations communes..."
+            },
+            {
+                src: "Des milliers d'utilisateurs classés selon les profils  et les motivations communes..."
+            }
+        ];
         $scope.affiche=true;
         $scope.affiche2=false;
         $scope.affiche3=false;

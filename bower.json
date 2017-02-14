@@ -38,6 +38,8 @@
     "angular-sanitize": "^1.5.8",
     "angular-material-paging": "^0.0.4",
     "ngPopover": "^0.0.19",
-    "ng-img-crop": "ngImgCrop#^0.3.2"
+    "ng-img-crop": "ngImgCrop#^0.3.2",
+    "jquery": "^3.1.1",
+    "angular-jk-carousel": "^0.1.9"
   }
 }

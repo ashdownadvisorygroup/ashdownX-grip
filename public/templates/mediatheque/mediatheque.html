@@ -64,27 +64,29 @@
 
         </div>
         <div  layout="column" flex="80" flex-xs="100" ng-hide="afficheMedia || affichemodifcat || affichecreeMedia"  >
-            <div flex="10"></div>
+            <div flex="10">
+                <div flex >
+                    <input ng-model="searchmed"  class="reduceSize" style="text-align: center"  placeholder="entrer la recherche">
+                </div>
+            </div>
             <div flex="80"  layout="row" layout-wrap >
-                <div   layout="column" ng-repeat="med in medias" >
+                <div   layout="column" ng-repeat="med in medias|filterBy: ['nom','description']:searchmed" >
                     <div  class='md-padding pacard' style="margin-left: 20px;">
                         <md-card class="card" style="color:black;">
-                            <md-card-title style="width: 100px;height: 100px;padding: 0px 1px;margin-left: 0em;">
+                            <md-card-title style="width: 100px;height: 100px;padding: 0px 14px;margin-left: 0em;">
                                 <md-card-title-text layout="column"  >
                                     <div flex="30" layout="row">
                                         <div flex="25">
                                             <span class="md-headline" style="font-size: 15px">{{med.nom}}</span>
                                         </div>
                                         <div flex="70"></div>
-                                        <div flex="5">
+                                        <div flex="10">
                                             <img ng-src="{{med.logo}}" style="width: 40px;height: 40px"  alt="" >
                                         </div>
                                     </div>
                                     <div flex="70" style="width:140px">
                                         <span class="md-subhead" style="font-size: 10px">Lu:{{med.readed}}</span>
-                                        <br><br>
                                         <span class="md-subhead" style="font-size: 10px">Télecharger:{{med.downloaded}}</span>
-                                        <br><br>
                                                 <span class="md-subhead" style="font-size: 10px"><a ng-click="lire(m)" ui-sref="document({id:med._id})" style="cursor:pointer;">{{med.affiche}}</a>
                                                 </span>
                                     </div>

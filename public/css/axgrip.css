@@ -28,6 +28,23 @@
     background-color:rgb(0,0,0);
 }
 
+@media only screen and (max-width: 600px) {
+    .Login-axgrip{
+        font-size: 65px!important;
+    }
+    .Login-above-content{
+        min-height: 120px;
+    }
+    .stage_list{
+        height:300px!important;
+    }
+    .med_xs{
+        overflow-x: auto;
+    }
+    .accueil{
+        overflow-y:auto;
+    }
+}
 .Login-axgrip{
     margin-bottom: 40px;
     margin-top: 40px;
@@ -39,6 +56,7 @@
 .Login-content{
     background-color:rgba(0,0,0,0.88);
     padding-top: 4%;
+    overflow-y:auto;min-height:600px
 }
 
 .Login-description{
@@ -96,7 +114,7 @@
     border-radius: 2px;
     margin: 16px;
 }
-@media (max-width: 800px) {
+@media (min-width: 610px)and (max-width: 700px) {
     /* CSS that should be displayed if width is equal to or less than 800px goes here */
     .Login-above-content{
         padding-left: 38px;
@@ -105,6 +123,7 @@
         width: 10%
     }
 }
+
 .accueil-nav{
     background-color: rgb(5,170,245);
 }
@@ -565,7 +584,7 @@ md-card._md.cardprofil {
 }
 md-card._md.cardprofcat {
    /* width: 80%;
-    height: 40%;*/width:150px;height:100px;
+    height: 40%;*/width:200px;height:100px;
 }md-card._md.cardcatmed {
    /* width: 80%;
     height: 40%;*/width:150px;height:150px;
@@ -646,4 +665,28 @@ md-checkbox.md-default-theme.md-checked .md-ink-ripple, md-checkbox.md-checked .
     padding: 2px 4px;
     position: relative;
     margin-top: 50px;
+}
+.flex-container {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    height: 580px;
+
+    -ms-box-orient: horizontal;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: flex;
+   flex-direction: column;
+
+}
+
+
+.flex-end { -webkit-align-self: flex-end; align-self: flex-end; justify-self: end;float:left;}
+
+
+md-button.flex-item {
+
 }

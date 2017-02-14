@@ -4,7 +4,7 @@
 var app = angular.module('bv', ['ui.router','ngFileUpload','angular-loading-bar',
 'ngSanitize','ngMessages','youtube-embed','slugifier','ngAria',
     'angular.filter','angular-thumbnails','ngAnimate','ngResource','ngStorage','fc.paging',
-    'ngCookies','ngMaterial','ngImgCrop']);
+    'ngCookies','ngMaterial','ngImgCrop','jkAngularCarousel']);
 
 var template_url="templates/";
 

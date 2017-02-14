@@ -1,8 +1,8 @@
 <div  layout="column"  flex class="accueil"  style="background-color: rgb(34,34,34);">
-    <div flex="15" style="background-color: rgb(5,170,245);" layout="row">
+    <div flex="15" flex-xs="15" style="background-color: rgb(5,170,245);" layout="row">
         <div flex="40"></div>
         <div flex="20"  layout="row" flex-xs="30" >
-            <div>
+            <div ui-sref="axgrip.accueil" style="cursor:pointer;">
                 <img src="../../image/GRIP_Logo.png" alt="" class="accueil-img" >
             </div>
         </div>
@@ -27,7 +27,7 @@
                 <md-divider></md-divider>
             </div>
         </div>
-        <div flex="85">
+        <div flex="85" flex-xs="85" style="text-align: center;">
             <div ng-if="affiche == 'video'" flex class="accueil"  style="color:white;background-color: rgb(34,34,34);" layout="column">
                 <div flex="80" layout-align="center">
                     <video width="800px" height="500px" class="youtube" controls>
@@ -39,7 +39,7 @@
             </div>
 
             <div ng-if="affiche == 'audio'" flex class="accueil"  style="color:white;background-color: rgb(34,34,34);" layout="column">
-                <div flex="80" layout-align="center">
+                <div flex="80" layout-align="center" style="text-align: center;">
                     <audio class="youtube" controls>
                         <source ng-src="{{media.link}}" type="audio/mp3">
                         Your browser does not support the audio element.
@@ -50,13 +50,13 @@
             </div>
 
             <div ng-if="affiche == 'pdf'" flex class="accueil"  style="color:white;background-color: rgb(34,34,34);" layout="column">
-                <div flex>
+                <div flex style="text-align: center;">
                     <iframe ng-src="{{media.link}}" width="100%" height="100%"></iframe>
                 </div>
 
             </div>
             <div ng-if="affiche == 'youtube'" flex class="accueil"  style="color:white;background-color: rgb(34,34,34);" layout="column">
-                <div flex="80" layout-align="center">
+                <div flex="80" layout-align="center" style="text-align: center;">
                     <youtube-video video-id="theBestVideo" player="bestPlayer" class="youtube"
                                    player-width="'50%'" player-height="'500px'"></youtube-video>
                     <br>

@@ -40,14 +40,12 @@ app.controller('ProfilsCtrl', ['$scope','$cookieStore',
             var pinTo = $scope.getToastPosition();
             var toast = $mdToast.simple()
                 .content(text)
-                .action('ANNULER')
-                .highlightAction(true)
-                .highlightClass('md-accent')// Accent is used by default, this just demonstrates the usage.
-                .position(pinTo);
+                .position(pinTo)
+                .action('OK');
 
             $mdToast.show(toast).then(function(response) {
                 if ( response == 'ok' ) {
-                    alert('ok');
+
                 }
             });
         };
@@ -68,7 +66,6 @@ app.controller('ProfilsCtrl', ['$scope','$cookieStore',
                 $scope.gotoPage = function() {
                     var i=$scope.currentPage;
                     $scope.profile=ProfilFactory.profsCats.slice(medPerPage*i-medPerPage,medPerPage*i);
-                    console.log($scope.profile)
                 };
             });
         });
@@ -77,8 +74,8 @@ app.controller('ProfilsCtrl', ['$scope','$cookieStore',
         };
         $scope.showConfirmdelprof = function(ev,prf) {
             var confirm = $mdDialog.confirm()
-                .title('voulez vous supprimer ce profil?')
-                .content('vous etes sur le point de supprimer le profil')
+                .title('voulez-vous supprimer ce profil?')
+                .content('vous êtes sur le point de supprimer le profil')
                 .ariaLabel('bonne chance')
                 .targetEvent(ev)
                 .ok('Oui!')
@@ -90,7 +87,7 @@ app.controller('ProfilsCtrl', ['$scope','$cookieStore',
                     $scope.showActionToast(text)
                 });
             }, function(msg) {
-                text="erreur survenue"
+                text="suppression annulée"
                 $scope.showActionToast(text);
             });
         };
@@ -105,6 +102,9 @@ app.controller('ProfilsCtrl', ['$scope','$cookieStore',
             ProfilFactory.getOne($stateParams.id).then(function (profils) {
 
                 $scope.profil = profils;
+                angular.forEach($scope.profil.categorieprofil,function(dat){
+                    dat.description=text_truncate(dat.description,46);
+                })
                     $scope.total = Math.ceil(profils.categorieprofil.length/medPerPage);
                     $scope.profil.categorieprofil= profils.categorieprofil.slice(0,medPerPage);
                     $scope.gotoPage = function() {
@@ -156,14 +156,11 @@ app.controller('ProfilsCtrl', ['$scope','$cookieStore',
                 var pinTo = $scope.getToastPosition();
                 var toast = $mdToast.simple()
                     .content(text)
-                    .action('ANNULER')
-                    .highlightAction(true)
-                    .highlightClass('md-accent')// Accent is used by default, this just demonstrates the usage.
-                    .position(pinTo);
+                    .position(pinTo)
+                    .action('OK');
 
                 $mdToast.show(toast).then(function(response) {
                     if ( response == 'ok' ) {
-                        alert('ok');
                     }
                 });
             };

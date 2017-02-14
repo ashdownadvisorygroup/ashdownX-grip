@@ -1,14 +1,19 @@
 <div  layout="column"  flex class="accueil"  style="background-color: rgb(34,34,34);">
-    <div flex="90"  layout="row" style="background-color: rgb(34,34,39);">
+    <div flex="90" id="sidebar" layout="row" flex-xs="90" layout-xs="column" style="background-color: rgb(34,34,39);">
             <!-- layout-wrap for the card to take the size of the div-->
 
-                <div flex="15" layout="column" style="background-color: rgb(51,54,64);overflow: auto;border-right: 2px solid rgb(5,170,245);" hide-xs>
-                    <div flex="15">
-                        <div flex>
+                <div flex="15" flex-xs="20" flex-order-xs="1" ng-hide="hide1" class="flex-container" layout="column" style="background-color: rgb(51,54,64);overflow: auto;border-right: 2px solid rgb(5,170,245);height: 600px" >
+                    <!--<section id="three" resizable r-directions="['bottom']" r-flex="true" style="height: 20px;background-color: #00A000;">
+                        irennenenenene
+                    </section>-->
+
+                    <div flex="15" flex-xs="20" layout="column">
+                        <div flex="90">
                             <input ng-model="searchprofcat"  class="reduceSize" placeholder="entrer la recherche">
                         </div>
+                        <div flex="10"></div>
                     </div>
-                    <div flex="100" style=" ">
+                    <div flex="100" flex-xs="70" style=" ">
                         Liste des profils
                         <ul>
                             <li style="display: block;" class="un" ng-repeat="prf in
@@ -16,7 +21,7 @@
                                 {{ prf.nom }}
                                 <ul>
                                     <li  ng-repeat="ct in prf.categories"
-                                         ng-click="tri(ct);" style="cursor:pointer;">
+                                         ng-click="tri(ct);" style="cursor:pointer;margin-bottom:22px">
                                         {{ct.nom}}
                                     </li>
                                 </ul>
@@ -36,20 +41,48 @@
                         </ul>
                         <div ></div>
 
+
                     </div>
                 </div>
-                <div layout="column" ng-show="stagiaires.length >0" flex="70" flex-xs="100" >
-                    <div flex="5"  layout="row" style="padding-top: 2em;font-size: 12px">
+
+
+                <div flex="70" flex-xs="40" flex-order-xs="3" layout="column"  id="main"  ng-show="stagiaires.length >0" ng-class="{'flex-85': hide1||hide2,'flex-100':hide1 && hide2}" >
+                    <div flex="5"  layout="row" style="padding-top: 2em;font-size: 12px" hide-xs>
+                        <div class="flex-container" flex="5" layout="row" style="padding: 16px 20px;">
+                            <div class="flex-item flex-end" flex="">
+                                <md-button aria-label="a" class="card-button">
+                                    <md-tooltip>Réduire ou agrandir</md-tooltip>
+                                    <md-icon md-svg-src="../../image/hide-show.svg" class="card-icon" ng-click="afficher_cacher()" style="cursor:pointer"></md-icon>
+                                </md-button>
+
+                            </div>
+
+                        </div>
                         <div flex="10">{{longueur}} &nbsp;médias</div>
-                        <div flex="75"></div>
+
+                        <div flex="65"></div>
+
+
                         <div flex="15"  ng-click="aff_pop_not()" style="cursor: pointer;">populaires/mieux notés</div>
+                        <div class="flex-container" flex="10" layout="row" style=" float: right;padding: 16px 20px;">
+                            <div class="flex-item flex-end" flex="5">
+                                <md-button class="card-button" aria-label="a">
+                                    <md-tooltip>Réduire ou agrandir</md-tooltip>
+                                    <md-icon md-svg-src="../../image/hide-show.svg" ng-click="afficher_cacher2()" class="card-icon" style="cursor:pointer"></md-icon>
+                                </md-button>
+
+
+                            </div>
+
+                        </div>
                     </div>
                     <div flex="5" style="padding-top:4px" ><hr></div>
-                    <div flex="75" layout="row" layout-wrap >
+
+                    <div flex="75" flex-xs="75" layout-xs="column" class="med_xs" layout="row" layout-wrap >
                         <div ng-repeat="m in allmedias" flex="25" >
                             <div layout="column"  class='pacard' flex layout-wrap style="margin-left: 20px;">
                                 <md-card class="card" style="color:black;" >
-                                    <md-card-title  style="width: 100px;height: 100px;padding: 0px 1px;margin-left: 0em;">
+                                    <md-card-title  style="text-align:center;width: 100px;height: 100px;padding: 22px 1px;margin-left: 0em;">
                                         <md-card-title-text style="margin-right: 1em;line-height:5px;" layout="column">
                                             <div flex="30" layout="row">
                                                 <div flex="25">
@@ -89,39 +122,18 @@
 
 
                 </div>
-                <div ng-show="stagiaires.length >0" flex="15" style="background-color: rgb(51,54,64);border-left: 2px solid rgb(5,170,245);" hide-xs>
-                   <div flex>
-                       <input ng-model="searchstagiaire" class="reduceSize" style="" placeholder="entrer la recherche">
-                   </div>
-                    <md-content style="background-color: rgb(51,54,64);color:white;overflow-y: auto;height:530px;" flex>
-                        <section>
-                            <md-subheader >Liste des stagiaires</md-subheader>
-                        <md-list >
-                            <md-list-item class="md-3-line" ng-repeat="item in filteredStagiaires=( stagiaires |filterBy: ['name','email']:searchstagiaire)"
-                                style="height:7%;"  >
-                                <img ng-src="{{item.photo}}?{{$index}}" class="md-avatar" alt="{{item.name}}">
-                                <div class="md-list-item-text" >
-                                    <a  ui-sref="axgrip.useraccount({id:item._id})" style="text-decoration: none;">
-                                        <h3 style="color:white;cursor:pointer;font-size: 12px">{{item.name}}</h3>
-                                    </a>
-                                </div>
-                                <md-divider md-inset ng-if="!$last"></md-divider>
-                            </md-list-item>
-                        </md-list>
-                        </section>
-                    </md-content>
-                </div>
-        <div layout="column" ng-show="stagiaires.length == 0" flex="85" flex-xs="100" >
-            <div flex="5"  layout="row" style="padding-top: 2em;font-size: 12px">
+
+        <div layout="column"  ng-show="stagiaires.length == 0" id="corpus" flex="85" flex-xs="40" flex-order-xs="3">
+            <div flex="5"  layout="row" style="padding-top: 2em;font-size: 12px" hide-xs>
                 <div flex="10">&nbsp;&nbsp;{{longueur}} &nbsp;médias</div>
                 <div flex="75"></div>
                 <div flex="15"  ng-click="aff_pop_not()" style="cursor: pointer;">populaires/mieux notés</div>
             </div>
             <div flex="5" style="padding-top:4px" ><hr></div>
-            <div flex="75" layout="row" layout-wrap >
+            <div flex="75" flex-xs="75" layout-xs="column" class="med_xs" layout="row" layout-wrap >
                 <div ng-repeat="m in allmedias" flex="25" >
                     <div layout="column"  class='pacard' flex layout-wrap style="margin-left: 50px;">
-                        <md-card class="card" style="color:black;">
+                        <md-card  style="color:black;">
                             <md-card-title  style="width: 100px;height: 100px;padding: 0px 1px;margin-left: 0em;">
                                 <md-card-title-text style="margin-right: 1em;line-height:5px;" layout="column">
                                     <div flex="30" layout="row">
@@ -154,7 +166,7 @@
                 </div>
 
             </div>
-            <div flex="10" layout="row">
+            <div flex="10" flex-xs="10" flex-order-xs="4" layout="row">
                 <div flex="50"></div>
                 <div flex="50" >
                     <wan-material-paging style="background-color: transparent;color:white;" wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
@@ -164,8 +176,32 @@
 
 
         </div>
+        <div  flex="15" flex-xs="70" flex-order-xs="2"   ng-hide="hide2 || stagiaires.length==0"   style="background-color: rgb(51,54,64);border-left: 2px solid rgb(5,170,245);" >
+            <div flex>
+                <input ng-model="searchstagiaire" class="reduceSize" style="" placeholder="entrer la recherche">
+            </div>
+            <md-content style="background-color: rgb(51,54,64);color:white;overflow-y: auto;height:530px;" class="stage_list" flex>
+                <section>
+                    <md-subheader >Liste des stagiaires</md-subheader>
+
+                    <md-list >
+                        <md-list-item class="md-3-line" ng-repeat="item in filteredStagiaires=( stagiaires |filterBy: ['name','email']:searchstagiaire)"
+                                      style="height:7%;"  >
+                            <img ng-src="{{item.photo}}?{{$index}}" class="md-avatar" alt="{{item.name}}">
+                            <div class="md-list-item-text" >
+                                <a  ui-sref="axgrip.useraccount({id:item._id})" style="text-decoration: none;">
+                                    <h3 style="color:white;cursor:pointer;font-size: 12px">{{item.name}}</h3>
+                                </a>
+                            </div>
+                            <md-divider md-inset ng-if="!$last"></md-divider>
+                        </md-list-item>
+                    </md-list>
+                </section>
+            </md-content>
+        </div>
 
     </div>
 
 
 </div>
+

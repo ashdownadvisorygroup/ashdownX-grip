@@ -34,18 +34,18 @@
                     <h1 style="font-size: 20px">Liste des profils</h1>
                 </div>
                 <div flex="65" ng-show="profile">
-                    <input ng-model="searchprof"  class="reduceSize" placeholder="entrer la recherche">
+                    <input ng-model="searchprof"  class="reduceSize" style="text-align: center;" placeholder="entrer la recherche">
                 </div>
             </div>
             <div flex="5" ng-if="profil"> Liste des catégories</div>
             <div flex="5"></div>
-            <div layout="row" flex="75" layout-wrap>
+            <div layout="row" flex="75" layout-xs="column" class="med_xs" layout-wrap>
                 <div layout="column" ng-repeat="prf in filteredprofile=( profile |filterBy: ['nom','description']:searchprof )">
                     <md-card class="cardprofil" style="color:black;">
                         <md-card-title>
-                            <md-card-title-text>
-                                <span class="md-headline" style="cursor:pointer" ng-click="triscat(prf);">Nom:{{prf.nom}}</span>
-                                <span class="md-subhead">Description:{{prf.description}}</span>
+                            <md-card-title-text  style="cursor:pointer">
+                                <span class="md-headline" ng-click="triscat(prf);">Nom:{{prf.nom}}</span>
+                                <span class="md-subhead" ng-click="triscat(prf);">Description:{{prf.description}}</span>
                                 <span>
                                     <md-button permission="['admin']"  class="card-button" ng-click="showConfirmdelprof($event,prf)" aria-label="a">
                                         <md-tooltip>Supprimer le profil</md-tooltip>
@@ -59,9 +59,9 @@
                 <div layout="row" ng-repeat="ct in profil.categorieprofil" >
                     <md-card class="cardprofcat" style="color:black;">
                         <md-card-title>
-                            <md-card-title-text>
-                                <span class="md-subhead" style="cursor:pointer" ui-sref="axgrip.categorie({id:ct._id})">Nom:{{ct.nom}}</span>
-                                <span class="md-subhead">Description:{{ct.description}}</span>
+                            <md-card-title-text style="cursor:pointer">
+                                <span class="md-subhead"  ui-sref="axgrip.categorie({id:ct._id})">Nom:{{ct.nom}}</span>
+                                <span class="md-subhead" ui-sref="axgrip.categorie({id:ct._id})">Description:{{ct.description}}</span>
                             </md-card-title-text>
                         </md-card-title>
                     </md-card>
@@ -118,7 +118,7 @@
 
             </div>
 
-            <div flex="10" ng-hide="profnew">
+            <div flex="10" layout="row" ng-hide="profnew">
                 <div flex="80"></div>
                 <div flex="10" >
                     <wan-material-paging wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">

@@ -1,25 +1,31 @@
 <div layout="column"  flex class="Login">
-   <div flex="95" layout="row" class="Login-content">
-       <div flex="10" flex-sm="20"></div>
-       <div  flex="60"   flex-sm="50"  class="tehc"   hide-xs >
+   <div flex="95" layout="row" layout-xs="column" layout-sm="column" layout-md="column" layout-align-sm="center center" layout-align-md="center center" layout-align-xs="center center" class="Login-content">
+       <div flex="10" flex-xs="10" flex-order-xs="1"></div>
+       <div  flex="60"  flex-xs="40" flex-sm="50" flex-md="50"  style="overflow-y: auto;min-height: 120px" layout="column"   flex-order-xs="2" class="tehc"   >
            <h5  class="Login-axgrip">
                AXGRIP
            </h5>
-           <p class="Login-description">
-               Des milliers d'utilisateurs <br> classés selon les profils <br> et les motivations communes...
-           </p>
-       </div>
-       <div   flex="25"   flex-sm="35" flex-xs="100" layout="column" ng-show="affiche" class="Login-above-content">
+           <div hide-xs hide-sm hide-md>
+               <jk-carousel
+                       data="dataArray"
+                       item-template-url="'templates/login/item-template.html'"
+                       max-width="500"
+                       max-height="250"
+                       auto-slide="true"
+                       auto-slide-time="2000" >
+               </jk-carousel>
+           </div>
 
-               <div flex="20"  class="header"  layout="row" layout-align="center center">
+       </div>
+       <div  flex-md="5"  flex-sm="5"></div>
+       <div   flex="25"   flex-sm="100"  flex-xs="100" flex-md="95"  flex-order-xs="4"  style="overflow-y: auto;padding: 3px 22px;" layout="column" ng-show="affiche" class="Login-above-content">
+
+               <div flex="20" flex-xs="50" flex-sm="30" class="header"  layout="row" layout-align="center center">
                    <div  ><img src="../../image/GRIP_Logo.png" alt="" class="Login-image" ></div>
                </div>
-           <div flex="60"  class="content"  >
+           <div flex="80" flex-xs="50" flex-sm="70" class="content"  >
                    <form  name="myForm"  ng-submit="logino()">
-
                        <input ng-model="user.name" type="text" placeholder="Compte utilisateur">
-
-
                        <input ng-model="user.password" type="password" placeholder="Mot de passe">
 
                             <md-checkbox ng-model="user.cb1"  style="margin: 15px;" >
@@ -30,12 +36,10 @@
                            </md-button>
                        <p><a  layout="row" ng-click="newUser();" layout-align="center center" style="color:black;text-decoration:underline;
                        font-size: small;text-align: center;cursor:pointer;">Mot de passe ou compte utilisateur oublié?</a></p>
-
-
                    </form>
                </div>
        </div>
-       <div   flex="25"  flex-sm="100" flex-xs="100" layout="column" ng-show="affiche2" class="Login-above-content">
+       <div   flex="25"  flex-sm="100" flex-xs="100" flex-md="100" flex-order-xs="3"  style="min-height: 120px;overflow-y: auto;padding: 10px 22px;" layout="column" ng-show="affiche2" class="Login-above-content">
 
            <div flex="20"  class="header"  layout="row" layout-align="center center">
                <div  ><img src="../../image/GRIP_Logo.png" alt="" class="Login-image" ></div>
@@ -55,7 +59,7 @@
                </form>
            </div>
        </div>
-       <div   flex="25" flex-sm="100" flex-xs="100" layout="column" ng-show="affiche3" class="Login-above-content">
+       <div   flex="25" flex-sm="100" flex-xs="100" flex-md="100" flex-order-xs="3"  style="min-height: 120px;overflow-y: auto;padding: 10px 22px;" layout="column" ng-show="affiche3" class="Login-above-content">
 
            <div flex="20"  class="header"  layout="row" layout-align="center center">
                <div  ><img src="../../image/GRIP_Logo.png" alt="" class="Login-image" ></div>
@@ -78,21 +82,23 @@
                </form>
            </div>
        </div>
+       <div flex-md="5" flex-sm="5" flex-xs="5" flex-order-xs="4"></div>
    </div>
     <footer flex="5" class="footer">
         <div flex class="Login-footer" layout="row">
-            <span flex="25"  >
+            <span flex="25"  flex-sm="50"  hide-xs >
              Suivez nous
                     <md-icon md-svg-src="../../image/linkedin-logo.svg" aria-label="android " class="Login-footer-icon1" style="color: deepskyblue;"></md-icon>
                     <md-icon md-svg-src="../../image/twitter-logo-on-black-background.svg" aria-label="android " class="Login-footer-icon1"style="color: deepskyblue;"></md-icon>
                     <md-icon md-svg-src="../../image/facebook-logo.svg" aria-label="android " style="color: deepskyblue;" class="Login-footer-icon1"></md-icon>
                     <md-icon md-svg-src="../../image/google-plus-logo-on-black-background.svg" aria-label="android " style="color: deepskyblue;" class="Login-footer-icon1"></md-icon>
             </span>
-            <span flex="50"></span>
-            <span flex="25"  style="text-align-last: right;">
+            <span flex="50" hide-xs></span>
+            <span flex="25" flex-xs="100" flex-sm="50" style="text-align-last: right;">
                 All right reserved &copy; AshdownX
             </span>
         </div>
     </footer>
 </div>
+
 
