@@ -49,22 +49,21 @@ text_truncate = function(str, length, ending) {
         return str.substring(0, length - ending.length) + ending;
     } else {
         return str;
-    }d
+    }
 };
 app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupFactory,ProfilFactory,LivreFactory,
                                    AuthService,youtubeEmbedUtils, $state,$q,$mdDialog,$cookieStore,$filter,
-                                      $sce,$mdSidenav,$mdToast,sharedProperties,isAuthenticated,sharedmdtabactual2) {
+                                      $sce,$mdSidenav,$mdToast,sharedProperties,isAuthenticated,sharedmdtabactual2,SearchFactory,
+ $rootScope) {
 
-        $scope.$watch('search', function () {
-            if($scope.search){
-                sharedProperties.setProperty($scope.search);
-                $state.go('axgrip.resultats_recherche.profil');
-            }
-        });
-        $scope.selectedTab=sharedmdtabactual2.get();
-        $scope.$watch('selectedTab', function(newVal){
-            sharedmdtabactual2.set(newVal);
-        }, true);
+
+       $scope.rechercher= function(){
+           SearchFactory.searchengine($scope.search).then(function(results){
+               $rootScope.Results = results;
+               $state.go('axgrip.resultats_recherche.profil');
+           },function(err){
+           })
+       }
 
     $scope.openSideNavPanel = function() {
         $mdSidenav('right').open();
@@ -208,9 +207,9 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
             var iduser=$cookieStore.get('user').id;
             var tab =[];
             var sat=[];
-            $scope.currentPage=1;
-            $scope.step=5;
-            var medPerPage=8;
+            $scope.currentPage= $scope.currentPageProf=1;
+            $scope.step=$scope.stepProf=2;
+            var medPerPage= 8,medPerPage_prof=3;
             $scope.quantity = 1;
             $scope.aff=false;
             $scope.determinateValue=40;
@@ -235,7 +234,15 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
             var vm = this;
              ProfilFactory.getcategorieProfils(tab,iduser).then(function () {
 
+             $scope.profiles= ProfilFactory.profsCats;
              $scope.profile= ProfilFactory.profsCats;
+                 $scope.tatol= Math.ceil(ProfilFactory.profsCats.length/medPerPage_prof);
+                 $scope.profile= ProfilFactory.profsCats.slice(0,medPerPage_prof);
+                 $scope.gotoPageProf = function() {
+                     var j= $scope.currentPageProf;
+                     $scope.profile= ProfilFactory.profsCats.slice(medPerPage_prof*j-medPerPage_prof,medPerPage_prof*j);
+
+                 };
              $scope.allmedias=ProfilFactory.allMedias;//tous les medias des profils de l'utilisateur
              $scope.total = Math.ceil(ProfilFactory.allMedias.length/medPerPage);
              $scope.allmedias= ProfilFactory.allMedias.slice(0,medPerPage);

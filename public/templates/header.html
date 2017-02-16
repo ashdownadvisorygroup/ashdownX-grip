@@ -47,14 +47,14 @@
                 <div flex="5"></div>
                 <div flex="35" flex-xs="60" layout="row" layout-align="center center"  >
                     <div flex="90">
-                        <input class="input2" ng-model="search" type="search" style="color:black;background-color:white;">
+                        <input class="input2" ng-model="search" ng-change="rechercher()" type="search" style="color:black;background-color:white;">
                     </div>
                     <div flex="10" >
                         <img src="../image/search.png" ui-sref="axgrip.resultats_recherche.profil" style="width: 34px;  height: 34px;background-color: skyblue;cursor:pointer;"/>
                     </div>
                 </div>
                 <div flex="10"></div>
-                <div flex="35"  class="accueil-menu" hide-xs>
+                <div flex="45"  class="accueil-menu" hide-xs>
                     <md-tabs  md-selected="selectedTab" class="accueil-button" md-dynamic-height flex>
                             <md-tab  data-ui-sref="axgrip.accueil" >
                                 <md-tab-label> accueil</md-tab-label>

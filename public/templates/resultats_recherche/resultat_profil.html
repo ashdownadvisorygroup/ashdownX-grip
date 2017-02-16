@@ -1,11 +1,11 @@
 <div  layout="column"  flex class="accueil"  style="background-color: rgb(34,34,34);">
 
-        <div  layout="row" flex="60" layout-wrap>
+        <div  layout="row" flex="60" layout-wrap style="margin-left: 20px;" class="med_xs">
             <div layout="column" ng-repeat="prf in profile">
                 <md-card class="cardprofil">
                     <md-card-title>
-                        <md-card-title-text>
-                            <span class="md-headline" style="color:black;cursor:pointer" ui-sref="axgrip.profil({id:prf._id})">Nom:{{prf.nom}}</span>
+                        <md-card-title-text style="cursor:pointer;" ui-sref="axgrip.profil({id:prf._id})">
+                            <span class="md-headline" style="color:black;cursor:pointer" >Nom:{{prf.nom}}</span>
                             <span class="md-subhead" style="color:black;">Description:{{prf.description}}</span>
                         </md-card-title-text>
                     </md-card-title>
@@ -13,7 +13,7 @@
             </div>
             <div ng-show="profile.length==0">Aucun résultat</div>
         </div>
-    <div  flex="10" ng-if="profile" layout="row">
+    <div  flex="10"  layout="row" layout-align="end end">
         <wan-material-paging wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
         </wan-material-paging>
     </div>

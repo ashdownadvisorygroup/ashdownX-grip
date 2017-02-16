@@ -1,16 +1,16 @@
 
 <div  layout="column"  flex class="accueil"  style="background-color: rgb(34,34,34);">
     <div flex="90"  layout="row">
-        <div flex="20" ng-if="profil" layout="column" style="background-color: rgb(51,54,64);overflow: auto;border-right: 2px solid rgb(5,170,245);" hide-xs>
+        <div flex="20" flex-sm="50" flex-md="50" flex-xs="100" ng-if="profil" layout="column" layout-xs="column" class="prof" style="background-color: rgb(51,54,64);overflow: auto;border-right: 2px solid rgb(5,170,245);" >
             <div flex="5"></div>
             <div flex="10">
                 Nom:{{profil.nom}}
                 <md-divider></md-divider>
             </div>
-            <div flex="40" style="overflow-y: auto;">Description:{{profil.description}}
+            <div flex="40" >Description:{{profil.description}}
                 <md-divider></md-divider>
             </div>
-            <div flex="40" style="overflow-y: auto;">
+            <div flex="40" >
                 Objectifs du profil:
                 <ol>
                     <li  ng-repeat="ct in profil.objectifs |unique">
@@ -29,8 +29,8 @@
         <div flex="10"></div>
         <div flex="85" layout="column" >
             <div flex="5"></div>
-            <div flex="5" layout="row">
-                <div flex="25" ng-if="profile">
+            <div flex="5" layout="row" flex-xs="25">
+                <div flex="25"  ng-if="profile">
                     <h1 style="font-size: 20px">Liste des profils</h1>
                 </div>
                 <div flex="65" ng-show="profile">
@@ -39,8 +39,8 @@
             </div>
             <div flex="5" ng-if="profil"> Liste des catégories</div>
             <div flex="5"></div>
-            <div layout="row" flex="75" layout-xs="column" class="med_xs" layout-wrap>
-                <div layout="column" ng-repeat="prf in filteredprofile=( profile |filterBy: ['nom','description']:searchprof )">
+            <div layout="row" flex="75"  flex-xs="100" flex-sm="75" flex-md="75" class="med_xs" layout-wrap>
+                <div layout="column" ng-repeat="prf in filteredprofile=( profile |filterBy: ['nom','description']:searchprof )"  >
                     <md-card class="cardprofil" style="color:black;">
                         <md-card-title>
                             <md-card-title-text  style="cursor:pointer">
@@ -118,9 +118,9 @@
 
             </div>
 
-            <div flex="10" layout="row" ng-hide="profnew">
-                <div flex="80"></div>
-                <div flex="10" >
+            <div flex="10"  layout="row" ng-hide="profnew">
+                <div flex="80" hide-xs></div>
+                <div flex="10" flex-xs="100" >
                     <wan-material-paging wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
                     </wan-material-paging>
 

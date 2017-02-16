@@ -1,12 +1,11 @@
 <div  layout="column"  flex class="accueil"  style="background-color: rgb(34,34,34);">
 
-    <div flex="60" layout="row" layout-wrap>
+    <div flex="60" layout="row" layout-wrap style="margin-left: 20px;" class="med_xs" >
         <div  layout="column" ng-repeat="med in medias" >
             <md-card style="width:200px;height:70px;">
                     <md-card-title>
-                        <md-card-title-text>
-                            <span class="md-headline"></span>
-                            <span class="md-subhead" ui-sref="document({id:med._id})" ng-click="lire(med)" style="font-size: 15px;cursor:pointer;color:black;">{{med.nom}}</span>
+                        <md-card-title-text style="cursor:pointer;" ui-sref="document({id:med._id})" ng-click="lire(med)">
+                            <span class="md-subhead" style="font-size: 15px;cursor:pointer;color:black;">{{med.nom}}</span>
                             <span class="md-subhead decrimedia" style="font-size: 13px;color:black;">Description:{{med.description}}</span>
                         </md-card-title-text>
                     </md-card-title>
@@ -14,7 +13,7 @@
         </div>
         <div ng-show="medias.length==0">Aucun résultat</div>
     </div>
-    <div  flex="10" layout="row">
+    <div  flex="10" layout="row" layout-align="end end">
         <wan-material-paging wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
         </wan-material-paging>
     </div>

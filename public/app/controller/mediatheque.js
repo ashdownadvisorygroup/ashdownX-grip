@@ -34,13 +34,15 @@ function afficher_ecran(str) {
     }
     return str;
 }
+
+
 app.controller('CategoriesCtrl', ['$scope','$cookieStore',
     'CategorieFactory','LivreFactory','UserFactory','ProfilFactory', '$stateParams', '$state','AuthService'
     ,'youtubeEmbedUtils','$mdDialog','$sce','$rootScope',
-    '$log', '$timeout', '$location','$mdToast',
+    '$log', '$timeout', '$location','$mdToast','$filter',
     function ($scope,$cookieStore, CategorieFactory,LivreFactory,UserFactory,ProfilFactory, $stateParams,
               $state, AuthService,youtubeEmbedUtils,$mdDialog,$sce,$rootScope,
-              $log, $timeout, $location,$mdToast) {
+              $log, $timeout, $location,$mdToast,$filter) {
        // alert('b')
         CategorieFactory.get().then(function (categories) {//obtention de toutes les categories
             $scope.categories = categories;
@@ -119,6 +121,29 @@ app.controller('CategoriesCtrl', ['$scope','$cookieStore',
             };
 
             afficher_ecran($scope.medias);
+            $scope.$watch('searchmed', function(newVal){
+                if(newVal){
+                    $scope.medias=$filter('filter')(medias,newVal)
+                    $scope.total = Math.ceil($scope.medias.length/medPerPage);
+                    afficher_ecran($scope.medias);
+                    $scope.medias=  $scope.medias.slice(0,medPerPage);
+                    $scope.gotoPage = function() {
+                        var i=$scope.currentPage;
+                        $scope.medias= $scope.medias.slice(medPerPage*i-medPerPage,medPerPage*i);
+                    };
+                }
+                else{
+                    $scope.medias = medias;
+                    $scope.total = Math.ceil(medias.length/medPerPage);
+                    $scope.medias= medias.slice(0,medPerPage);
+                    $scope.gotoPage = function() {
+                        var i=$scope.currentPage;
+                        $scope.medias=medias.slice(medPerPage*i-medPerPage,medPerPage*i);
+                        afficher_ecran($scope.medias);
+                    };
+                }
+            }, true);
+
         });
         //incremente readed lors d'un lecture ie lien vers le document
         $scope.lire = function(med){
@@ -138,8 +163,8 @@ app.controller('CategoriesCtrl', ['$scope','$cookieStore',
          */
         $scope.showConfirmdelive = function(ev,med) {
             var confirm = $mdDialog.confirm()
-                .title('voulez vous supprimer ce media?')
-                .content('vous etes sur le point de supprimer le media')
+                .title('voulez-vous supprimer ce media?')
+                .content('vous êtes sur le point de supprimer le media')
                 .ariaLabel('bonne chance')
                 .targetEvent(ev)
                 .ok('Oui!')
@@ -331,6 +356,7 @@ app.controller('CategoriesCtrl', ['$scope','$cookieStore',
                 }
             });
         };
+
     }])
 
 .controller('CategorieCtrl', ['$scope','$cookieStore',

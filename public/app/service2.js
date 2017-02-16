@@ -294,6 +294,23 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                     });
                     return deferred.promise;
                 },
+                results: false,
+                searchengine: function(word){
+                    factory.loadUserCredentials();
+                    var deferred = $q.defer();
+                    $http({
+                        method: 'GET',
+                        url: '/search',
+                        params:{search:word}
+                    }).then(function(success){
+                        factory.results =success.data;
+                        deferred.resolve(success.data);
+                    },function(error){
+                        //let the function caller know the error
+                        deferred.reject(error);
+                    });
+                    return deferred.promise;
+                },
 
             };
             return factory;
@@ -1000,6 +1017,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
     };
     return auth;
 })
+
 .factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS) {
         return {
             responseError: function (response) {

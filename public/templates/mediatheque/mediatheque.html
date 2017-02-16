@@ -1,7 +1,7 @@
 <div  layout="column" flex class="accueil"  style="background-color: rgb(34,34,34);">
-    <div layout="row" flex="90"  layout-wrap>
+    <div layout="row" flex="90"  layout-wrap style="overflow-y: auto;min-height:50px;max-height:530px;">
 
-        <div  ng-if="categories" flex="20" layout="column" style="background-color: rgb(51,54,64);overflow-y: auto;border-right: 2px solid rgb(5,170,245);" hide-xs>
+        <div  ng-if="categories" flex="20" flex-xs="100" layout="column" style="background-color: rgb(51,54,64);overflow-y: auto;min-height:20px;max-height:530px;border-right: 2px solid rgb(5,170,245);" >
             <div flex="15">
                 <div flex>
                     <input ng-model="searchcat"  class="reduceSize" placeholder="entrer la recherche">
@@ -47,7 +47,7 @@
                 </div>
             </div>
         </div>
-        <div flex="20" ng-if="categorie" layout="column" style="background-color: rgb(51,54,64);overflow: auto;border-right: 2px solid rgb(5,170,245);" hide-xs>
+        <div flex="20" flex-xs="100" ng-if="categorie" layout="column" class="prof" style="background-color: rgb(51,54,64);overflow: auto;border-right: 2px solid rgb(5,170,245);" >
             <div flex="5"></div>
             <div flex="10"><h3>Catégorie</h3></div>
             <div flex="5"></div>
@@ -69,8 +69,8 @@
                     <input ng-model="searchmed"  class="reduceSize" style="text-align: center"  placeholder="entrer la recherche">
                 </div>
             </div>
-            <div flex="80"  layout="row" layout-wrap >
-                <div   layout="column" ng-repeat="med in medias|filterBy: ['nom','description']:searchmed" >
+            <div flex="80"  layout="row" layout-wrap class="med_xs" layout-xs="row" layout-align-xs="center center">
+                <div   layout="column" ng-repeat="med in medias" flex-xs="100" flex-sm="50" flex-md="30">
                     <div  class='md-padding pacard' style="margin-left: 20px;">
                         <md-card class="card" style="color:black;">
                             <md-card-title style="width: 100px;height: 100px;padding: 0px 14px;margin-left: 0em;">
@@ -86,7 +86,9 @@
                                     </div>
                                     <div flex="70" style="width:140px">
                                         <span class="md-subhead" style="font-size: 10px">Lu:{{med.readed}}</span>
+                                        <br><br>
                                         <span class="md-subhead" style="font-size: 10px">Télecharger:{{med.downloaded}}</span>
+                                        <br><br>
                                                 <span class="md-subhead" style="font-size: 10px"><a ng-click="lire(m)" ui-sref="document({id:med._id})" style="cursor:pointer;">{{med.affiche}}</a>
                                                 </span>
                                     </div>
@@ -118,7 +120,7 @@
                 </div>
             </div>
             <div flex="10" ng-hide="afficheMedia || affichemodifcat" layout="row">
-                <div flex="5" flex-offset="85">
+                <div flex="5"  flex-xs="100" flex-offset-xs="0" flex-offset="85">
                     <wan-material-paging wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
                     </wan-material-paging>
                 </div>
@@ -138,7 +140,7 @@
                     </md-input-container>
                     <md-input-container class="md-icon-float md-block">
                         <md-icon md-svg-src="../../image/photo-camera.svg" class="email"></md-icon>
-                        <div id="logo" name="logo" aria-label="a" value="{{mediae.logo}}" type="file" ngf-drop ngf-select ng-model="mediae.logo" class="drop-box"
+                        <div flex-xs="100" flex-sm="100" id="logo" name="logo" aria-label="a" value="{{mediae.logo}}" type="file" ngf-drop ngf-select ng-model="mediae.logo" class="drop-box"
                                ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="false"
                                accept="image/*" ngf-max-size="10MB"
                                ngf-pattern="'image/*'" >Dropt and select logo </div>
@@ -150,7 +152,7 @@
                     </md-input-container>
                     <md-input-container class="md-icon-float md-block">
                         <md-icon md-svg-src="../../image/menu-button.svg" class="name"></md-icon>
-                        <div ng-disabled="isShow" ng-click="isShow=false" aria-label="b" id="link" name="link" type="file" ngf-drop ngf-select ng-model="mediae.link" class="drop-box"
+                        <div flex-xs="100" flex-sm="100" ng-disabled="isShow" ng-click="isShow=false" aria-label="b" id="link" name="link" type="file" ngf-drop ngf-select ng-model="mediae.link" class="drop-box"
                                ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="false"
                                accept="image/*,application/pdf,audio/mp3,video/mp4" ngf-max-size="30MB"
                                ngf-pattern="'image/*,application/pdf,audio/mp3,video/mp4'">
@@ -181,11 +183,7 @@
                                ngf-pattern="'text/plain'" ng-click="isShow=true" ng-disabled="isShow == false" >
                         <div ng-bind-html="response_data" ng-show="isShow"></div>
                     </md-input-container>
-                    <md-input-container  ng-hide="modifiera"  class="md-icon-float md-block">
-                        <md-select multiple ng-model="mediae.categorie" placeholder="sélectionner catégorie" disabled>
-                            <md-option ng-selected="categorie._id === mediae.categorie " ng-repeat="categorie in categories " value="{{categorie._id}}">{{categorie.nom}}</md-option>
-                        </md-select>
-                    </md-input-container>
+
                     <md-input-container  class="md-icon-float md-block">
                         <label>Description</label>
                         <md-icon md-svg-src="../../image/drawing-house-plan.svg" class="name"></md-icon>
@@ -215,7 +213,7 @@
                     </md-input-container>
                     <md-input-container class="md-icon-float md-block">
                         <md-icon md-svg-src="../../image/photo-camera.svg" class="email"></md-icon>
-                        <div  name="logo" aria-label="a" value="{{mediai.logo}}" type="file" ngf-drop ngf-select ng-model="mediai.logo" class="drop-box"
+                        <div flex-xs="100" flex-sm="100" name="logo" aria-label="a" value="{{mediai.logo}}" type="file" ngf-drop ngf-select ng-model="mediai.logo" class="drop-box"
                                 ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="false"
                                 accept="image/*" ngf-max-size="10MB"
                                 ngf-pattern="'image/*'" >Dropt and select logo </div>
@@ -227,7 +225,7 @@
                     </md-input-container>
                     <md-input-container class="md-icon-float md-block">
                         <md-icon md-svg-src="../../image/menu-button.svg" class="name"></md-icon>
-                        <div ng-disabled="isShow" ng-click="isShow=false" aria-label="b"  name="link" type="file" ngf-drop ngf-select ng-model="mediai.link" class="drop-box"
+                        <div flex-xs="100" flex-sm="100" ng-disabled="isShow" ng-click="isShow=false" aria-label="b"  name="link" type="file" ngf-drop ngf-select ng-model="mediai.link" class="drop-box"
                                ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="false"
                                accept="image/*,application/pdf,audio/mp3,video/mp4" ngf-max-size="30MB"
                                ngf-pattern="'image/*,application/pdf,audio/mp3,video/mp4'">
@@ -257,11 +255,6 @@
                         <input ng-model="mediai.link" aria-label="c"   class="form-control" accept="text/plain"
                                ngf-pattern="'text/plain'" ng-click="isShow=true" ng-disabled="isShow == false" >
                         <div ng-bind-html="response_data" ng-show="isShow"></div>
-                    </md-input-container>
-                    <md-input-container  md-no-float class="md-icon-float md-block">
-                        <md-select multiple ng-model="mediai.categorie" placeholder="sélectionner catégorie" disabled>
-                            <md-option  ng-repeat="categorie in categories" value="{{categorie._id}}">{{categorie.nom}}</md-option>
-                        </md-select>
                     </md-input-container>
                     <md-input-container  class="md-icon-float md-block">
                         <label>Description</label>

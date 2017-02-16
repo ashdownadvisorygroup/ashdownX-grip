@@ -1,5 +1,5 @@
 <div  layout="row"  flex class="accueil"  style="background-color: rgb(34,34,34);">
-    <div flex="25" ng-if="aff_med" layout="column" style="background-color: rgb(51,54,64);overflow-y: auto;border-right: 2px solid rgb(5,170,245);height: 580px; ">
+    <div flex="25" ng-if="aff_med" layout="column" style="background-color: rgb(51,54,64);overflow-y: auto;border-right: 2px solid rgb(5,170,245);min-height: 580px; ">
         <div flex="100" >
             <ul>
                 <li ng-repeat="prf in profile">
@@ -26,7 +26,7 @@
             </ul>
         </div>
     </div>
-    <div flex="25" ng-if="aff_don || aff_profter "  layout="column" style="background-color: rgb(51,54,64);overflow-y: auto;border-right: 2px solid rgb(5,170,245);height: 580px; ">
+    <div flex="25" ng-if="aff_don || aff_profter " layout-xs="row"  layout="column" style="background-color: rgb(51,54,64);overflow-y: auto;border-right: 2px solid rgb(5,170,245);min-height: 580px; ">
         <div flex="100"  >
             <ul>
                 <li ng-repeat="prf in profile">
@@ -66,8 +66,8 @@
             </md-menu-bar>
         </div>
         <md-divider></md-divider>
-        <div flex="60" layout="row" layout-wrap ng-if="aff_med">
-            <div ng-repeat="m in allmedias" flex="25">
+        <div flex="60" flex-xs="70" layout="row" layout-wrap ng-if="aff_med" class="med_xs">
+            <div ng-repeat="m in allmedias" flex="25" flex-xs="100" flex-sm="50" flex-md="30">
                 <div layout="column"  class='md-padding pacard' flex layout-wrap>
                     <md-card class="card" style="color:black;">
                         <md-card-title  style="width: 100px;height: 100px;padding: 0px 1px;margin-left: 0em;">
@@ -99,7 +99,7 @@
             </div>
 
         </div>
-        <div flex="60" ng-if="aff_don" layout="column">
+        <div flex="60"  flex-xs="70" ng-if="aff_don" layout="column">
             <div flex="10">
                 Nom:{{users.name}}
             </div>
@@ -141,7 +141,7 @@
 
             </div>
         </div>
-        <div flex="60" ng-if="aff_profter">Profils terminés:
+        <div flex="60"  flex-xs="70" ng-if="aff_profter">Profils terminés:
             <ol>
                 <li  class="un" ng-repeat="p in profile | filterBy: ['progressuser']: 100">
                     {{p.nom}}
@@ -153,9 +153,9 @@
             </div>
 
         </div>
-        <div flex="5" layout="row" ng-if="aff_med">
-            <div flex="50"></div>
-            <div flex="50" >
+        <div flex="5"  flex-xs="70" layout="row" ng-if="aff_med">
+            <div flex="50" hide-xs></div>
+            <div flex="50" flex-xs="100" >
                 <wan-material-paging  wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
                 </wan-material-paging>
             </div>

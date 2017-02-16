@@ -6,6 +6,23 @@
     background-size: cover;
     color: white;
 }
+.content{
+
+}
+::-webkit-input-placeholder { /* Chrome */
+    color: white;
+}
+:-ms-input-placeholder { /* IE 10+ */
+    color: black;
+}
+::-moz-placeholder { /* Firefox 19+ */
+    color: black;
+
+}
+:-moz-placeholder { /* Firefox 4 - 18 */
+    color: black;
+
+}
 
 .Login-footer{
     margin: 0 50px;
@@ -36,14 +53,26 @@
         min-height: 120px;
     }
     .stage_list{
-        height:300px!important;
+
+        border-left:none!important;
+    }
+    .list_stage md-list{
+        font-size:100px!important;
     }
     .med_xs{
-        overflow-x: auto;
+        overflow-y: auto;
     }
-    .accueil{
-        overflow-y:auto;
+    .prof{
+        overflow-y: auto;
+        min-height:30px;
+        border:none!important;
     }
+    .sidebar{
+        overflow-y: auto;
+        min-height: 600px;
+    }
+
+
 }
 .Login-axgrip{
     margin-bottom: 40px;
@@ -52,13 +81,19 @@
     line-height: 1em;
     font-weight: 200;
 }
+.sidebar{
+    overflow-y: auto;
+}
+
 
 .Login-content{
     background-color:rgba(0,0,0,0.88);
     padding-top: 4%;
-    overflow-y:auto;min-height:600px
-}
 
+}
+.Login-above-content{
+
+}
 .Login-description{
     color: white;
     font-size: 2em;
@@ -230,6 +265,9 @@ md-card._md {
     height:180px;
 
 }
+.card_title{
+
+}
 .cardi {
     background-color: rgb(51,54,64);
     color: white;
@@ -265,6 +303,9 @@ md-icon.card-icon{
     min-width: 0em;
     border-radius: 0px;
 
+}
+md-card md-card-title.card_title{
+    text-align:center;width: 100px;height: 100px;padding: 0px 1px;margin-left: 0em;
 }
 md-card md-card-title md-card-title-media .md-media-lg {
     height: 10em;
@@ -628,7 +669,6 @@ figure img {
     padding: 0;
     overflow: hidden;
     background-color: white;
-    position: fixed;
     top: 0;
     width: 100%;
 
@@ -666,27 +706,9 @@ md-checkbox.md-default-theme.md-checked .md-ink-ripple, md-checkbox.md-checked .
     position: relative;
     margin-top: 50px;
 }
-.flex-container {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    height: 580px;
-
-    -ms-box-orient: horizontal;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -moz-flex;
-    display: -webkit-flex;
-    display: flex;
-   flex-direction: column;
-
-}
 
 
-.flex-end { -webkit-align-self: flex-end; align-self: flex-end; justify-self: end;float:left;}
+.jk-carousel  md-radio-button  {
 
-
-md-button.flex-item {
-
+    display: none;
 }

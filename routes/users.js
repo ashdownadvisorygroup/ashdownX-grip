@@ -9,6 +9,7 @@ var nodemailer = require('nodemailer');
 var Group = mongoose.model('Group');
 var Profil = mongoose.model('Profil');
 var MediaUser = mongoose.model('MediaUser');
+var Categorie = mongoose.model('Categorie');
 var CategorieMedia = mongoose.model('CategorieMedia');
 var UserProfil = mongoose.model('UserProfil');
 var ProfilCatUser = mongoose.model('ProfilCatUser');
@@ -22,7 +23,87 @@ var appRoot = require('app-root-path');
 
 var multer = require('multer');
 var fs = require('fs');
+function removeDuplicates(arr, prop) {
+    var new_arr = [];
+    var lookup  = {};
 
+    for (var i in arr) {
+        lookup[arr[i][prop]] = arr[i];
+    }
+
+    for (i in lookup) {
+        new_arr.push(lookup[i]);
+    }
+
+    return new_arr;
+}//fonction qui prend en entrée un tableau d'objects json et une de ses clés et filtre le tableau pour ladite clé à valeur unique
+
+router.get('/search', passport.authenticate('jwt', {session: false}), function (req, res) {
+    var token = getToken(req.headers);
+
+    if (token) {
+        if(req.query.search.length==0){
+            res.json({profils:[],groups:[],users:[],médias:[],catégories:[]});
+            return;
+        }
+
+        async.waterfall([
+            function (done) {
+                Profil.find().where("nom").regex(req.query.search).exec(function (err,prf ){
+                    Profil.find().where("description").regex(req.query.search).exec(function (err,prfs ){
+                        prf=prf.concat(prfs);
+                        prf=removeDuplicates(prf, "id");
+                            Profil.find().where("objectifs").regex(req.query.search).exec(function (err,prfo ){
+                                prf=prf.concat(prfo);
+                                prf = removeDuplicates(prf, "id");
+                                done(err,prf)
+                            });
+                    });
+                });
+
+            },
+            function (prf, done) {
+                Group.find().where("nom").ne('superadmin').regex(req.query.search).exec(function (err,grp ){
+                    Group.find().where("description").ne('superadmin').regex(req.query.search).exec(function (err,grpd ){
+                        grp=grp.concat(grpd);
+                        grp=removeDuplicates(grp, "id");
+                        done(err,prf,grp)
+                    });
+                });
+            },
+            function (prf,grp, done) {
+                User.find().where("name").regex(req.query.search).exec(function (err,usr ){
+                    done(err,prf,grp,usr)
+                });
+            },function (prf,grp,usr, done) {
+                Media.find().where("nom").regex(req.query.search).exec(function (err,med ){
+                    Media.find().where("description").regex(req.query.search).exec(function (err,medd ){
+                        med=med.concat(medd);
+                        med=removeDuplicates(med, "id");
+                        done(err,prf,grp,usr,med)
+                    });
+                });
+            },function (prf,grp,usr,med, done) {
+                Categorie.find().where("nom").regex(req.query.search).exec(function (err,cat ){
+                    Categorie.find().where("description").regex(req.query.search).exec(function (err,catd ){
+                        cat=cat.concat(catd);
+                        cat=removeDuplicates(cat, "id");
+                        res.json({profils:prf,groups:grp,users:usr,médias:med,catégories:cat});
+
+                        done(err,prf,grp,usr,med,cat);
+                    });
+                });
+            },
+
+        ], function (err) {
+            if (err) {
+                res.status(500).json({msg: "erreur "});
+                return;
+            }
+
+        });
+    }
+});
 /* GET users listing. */
 router.get('/users', passport.authenticate('jwt', {session: false}), function (req, res, next) {
     var token = getToken(req.headers);

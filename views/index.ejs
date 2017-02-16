@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="vendor/angular-loading-bar/build/loading-bar.min.css">
   <link href="vendor/ng-img-crop/source/scss/ng-img-crop.scss">
   <link rel="stylesheet" href="vendor/angular-material/angular-material.css">
-  <link rel="stylesheet" href="vendor/angular-jk-carousel/dist/jk-carousel.min.css" />
+  <link rel="stylesheet" href="javascripts/angular-jk-carousel/jk-carousel.min.css" />
 
 <!--  <link rel="stylesheet" href="vendor/ngPopover/js/ngPopover.min.js">-->
 
@@ -27,9 +27,9 @@
 <body ng-app="bv" ng-controller="AppCtrl" layout="column" >
   <div ui-view="header"></div>
   <div layout="row" flex>
-    <div ui-view="main1" flex="15"></div>
-    <div ui-view="main10" flex="70"></div>
-    <div ui-view="main11" flex="15"></div>
+    <div ui-view="main1" flex="15" hide-xs></div>
+    <div ui-view="main10" flex="70" flex-xs="100" ></div>
+    <div ui-view="main11" flex="15" hide-xs></div>
   </div>
 
   <div ui-view="main"></div>
@@ -60,7 +60,7 @@
 <script src="vendor/angular-material/angular-material.js"></script>
 <script src="vendor/angular-aria/angular-aria.js"></script>
 <script src="vendor/angular-material-paging/src/angular-material-paging.js"></script>
-<script src="vendor/angular-jk-carousel/dist/jk-carousel.js"></script>
+<script src="javascripts/angular-jk-carousel/jk-carousel.js"></script>
 <script src="vendor/angular-filter/dist/angular-filter.min.js"></script>
 <script src="vendor/angular-youtube-mb/src/angular-youtube-embed.js"></script>
 <script src="vendor/angular-thumbnails/dist/angular-thumbnails.min.js"></script>

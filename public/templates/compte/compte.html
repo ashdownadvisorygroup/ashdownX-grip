@@ -1,29 +1,40 @@
 <div  layout="column"  flex class="accueil"  style="background-color: rgb(34,34,34);">
 
 
-            <div  flex="90" layout="column"  >
-                    <div  flex="10" class="accueil-menu">
-                        <ul flex style="color:black;background-color: white" class="menuHor">
+            <div  flex="90" flex-xs="100" layout="column"  >
+                    <div  flex="10" flex-xs="100" layout-xs="column" class="accueil-menu">
+                        <ul   class="menuHor" hide-xs>
                             <li  style="color:white"><a  ui-sref="compte.infouser({id:iduser})">Profil</a></li>
                             <li  permission="['admin']" style="color:white"><a ui-sref="compte.creercategorie">créer Categorie</a></li>
-                            <li permission="['admin']" style="color:white"><a ui-sref="compte.creerprofil">Créer Profil</a></li>
+                            <li  permission="['admin']" style="color:white"><a ui-sref="compte.creerprofil">Créer Profil</a></li>
                             <li  permission="['admin']" style="color:white"><a ui-sref="compte.creeruser">Nouveau utilisateur</a></li>
 
                         </ul>
+                        <ul   class="menuHor" hide-gt-xs>
+                            <li  style="color:white"><a  ui-sref="compte.infouser({id:iduser})">Profil</a></li>
+                            <li  permission="['admin']" style="color:white"><a ui-sref="compte.creercategorie">créer Categorie</a></li>
+
+                        </ul>
+                        <br>
+                        <ul   class="menuHor" hide-gt-xs>
+                            <li  permission="['admin']" style="color:white"><a ui-sref="compte.creerprofil">Créer Profil</a></li>
+                            <li  permission="['admin']" style="color:white"><a ui-sref="compte.creeruser">Nouveau utilisateur</a></li>
+
+                        </ul>
+
                     </div>
-                    <div flex="90">
+                    <div flex="90" flex-xs="100">
                         <md-content  ng-if="infouse"  layout="row"  class="md-padding">
                             <div flex="20" layout="column">
                                 <div flex="20"></div>
                                 <div flex="20">
-                                    <img ng-src="{{u.photo}}" alt="{{u.name}}" class="img" style="width: 5em;
-    height: 5em;">
+                                    <img ng-src="{{u.photo}}" alt="{{u.name}}" class="img" style="width: 5em;height: 5em;">
                                 </div>
                                 <div flex="20">
                                     <md-icon md-svg-src="../../image/create-new-pencil-button.svg" ui-sref="compte.mofifier_profil({id:iduser})" aria-label="android " style="color: blue;cursor:pointer;" ></md-icon>
                                 </div>
                             </div>
-                            <div flex="80" layout="column" style="overflow:auto;">
+                            <div flex="80" flex-xs="100" layout="column" style="overflow:auto;">
                                 <div flex="5">Nom:{{u.name}}</div>
                                 <div flex="5">E-mail:{{u.email}}</div>
                                 <md-content > <br>
@@ -90,7 +101,7 @@
                             </div>
 
                         </md-content>
-                        <md-content ng-if="modifuse" class="md-padding" >
+                        <md-content ng-if="modifuse" class="md-padding" flex-xs="100">
                             <form  name="Formuser"  ng-submit="modifieruser()" style="overflow: auto;color:white;">
                                 <md-content class="md-no-momentum newuser">
                                     <md-input-container  class="md-block">
@@ -109,7 +120,7 @@
                                         <input ng-model="user.email" type="email" >
                                     </md-input-container>
                                     <md-input-container class="md-icon-float md-block">
-                                        <div id="photo" name="photo" aria-label="a" value="{{user.photo}}" type="file" ngf-drop ngf-select ng-model="user.photo" class="drop-box"
+                                        <div flex-xs="100" flex-sm="100"  id="photo" name="photo" aria-label="a" value="{{user.photo}}" type="file" ngf-drop ngf-select ng-model="user.photo" class="drop-box"
                                              ngf-drag-over-class="'dragover'" ngf-multiple="false" ngf-allow-dir="false"
                                              accept="image/*" ngf-max-size="10MB"
                                              ngf-pattern="'image/*'" >Drag and Drop Selection du fichier</div>
@@ -131,7 +142,7 @@
                                     <md-input-container  class="md-icon-float md-block">
                                         <label>nom(obligatoire)</label>
                                         <md-icon md-svg-src="../../image/menu-button.svg" class="name"></md-icon>
-                                        <input ng-model="catnew.nom" ng-minlength="10"
+                                        <input ng-model="catnew.nom" ng-minlength="5"
                                                md-maxlength="60" name="nom"
                                                type="text"  ng-required="true">
                                         <div ng-messages="Formcat.nom.$error">
@@ -176,7 +187,7 @@
                                     <md-input-container  class="md-icon-float md-block">
                                         <label>Nom</label>
                                         <md-icon md-svg-src="../../image/menu-button.svg" class="name"></md-icon>
-                                        <input  type="text" ng-minlength="10" ng-required="true"
+                                        <input  type="text" ng-minlength="5" ng-required="true"
                                                 md-maxlength="60" name="nom" ng-model="profnew.nom"
                                                 >
                                         <div ng-messages="Formprof.nom.$error">
@@ -209,12 +220,12 @@
                                 </md-content>
                             </form>
                         </md-content>
-                        <md-content class="md-padding"  ng-if="creeuse">
+                        <md-content class="md-padding"  ng-if="creeuse"  >
                                 <!--<span><img ngf-src="userm.photo" class="thumb ng-hide" style="height: 35px"></span>-->
-                                <form flex name="myFormnouvuser"  ng-submit="nouveauuser()" style="overflow: auto;color:white;height: 500px;" >
+                                <form flex name="myFormnouvuser"  ng-submit="nouveauuser()" style="overflow: auto;color:white;height: 450px;text-align:center;" >
                                     <md-content class="md-no-momentum newuser" style="overflow-y:auto;">
                                         <md-input-container class="md-icon-float md-block">
-                                            <div class="photo1" ng-init="utilisateur.photo='image/user.png'" name="photo"  aria-label="a" value="{{utilisateur.photo}}" type="file" ngf-drop ngf-select ng-model="utilisateur.photo"
+                                            <div flex-xs="100" flex-sm="100" class="photo1" ng-init="utilisateur.photo='image/user.png'" name="photo"  aria-label="a" value="{{utilisateur.photo}}" type="file" ngf-drop ngf-select ng-model="utilisateur.photo"
                                                  ngf-drag-over-class="dragover" ngf-multiple="false" ngf-allow-dir="false"
                                                  accept="image/*" ngf-max-size="10MB" ngf-resize="{width: 100, height: 100}"
                                                  ngf-pattern="'image/*'" >
@@ -229,7 +240,7 @@
                                             </div>
                                         </md-input-container>
 
-                                        <md-input-container  class="md-icon-float md-block" flex="50" >
+                                        <md-input-container  class="md-icon-float md-block"  >
                                             <label>Nom de l'utilisateur</label>
                                             <md-icon md-svg-src="../../image/menu-button.svg" class="name"></md-icon>
                                                 <input ng-model="utilisateur.name" ng-minlength="5" name="name"
@@ -241,17 +252,17 @@
                                                 </div>
                                         </md-input-container>
                                         <!--<span><img src="image/" class="thumb ng-hide" style="height: 35px"></span>-->
-                                        <md-input-container  class="md-icon-float md-block" flex="50">
+                                        <md-input-container  class="md-icon-float md-block" >
                                             <label>Mot de passe(obligatoire)</label>
                                             <md-icon md-svg-src="../../image/lock-and-key-icon-silhouette.svg"></md-icon>
                                             <input ng-model="utilisateur.password" type="password" ng-required="true">
                                         </md-input-container>
-                                        <md-input-container class="md-icon-float md-block" flex="50">
+                                        <md-input-container class="md-icon-float md-block" >
                                             <label>Email (obligatoire)</label>
                                             <md-icon md-svg-src="../../image/email-filled-closed-envelope.svg" class="email"></md-icon>
                                             <input ng-model="utilisateur.email" type="email" ng-required="true">
                                         </md-input-container>
-                                        <md-input-container   class=" md-block" flex="50" >
+                                        <md-input-container   class=" md-block"  >
                                             <md-icon md-svg-src="../../image/users-group.svg" style="display:inline-block;"></md-icon>
                                             <label>Groupe(s) de l'utilisateur</label>
                                             <md-select multiple ng-model="utilisateur.groups"  ng-required="true">

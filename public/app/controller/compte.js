@@ -330,7 +330,7 @@ app.controller('CompteCtrl', ['$scope','$cookieStore',
         });
         $scope.nouveauuser=function(){
             AuthService.register($scope.utilisateur).then(function(answer) {
-                text="reussi";
+                text="compte crée et email recu";
                 $scope.showActionToast(text);
             }, function(err) {
                 console.log(err);

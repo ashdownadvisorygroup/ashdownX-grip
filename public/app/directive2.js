@@ -162,3 +162,100 @@ app.directive('menuLink', function () {
         }
     };
 });
+    app.directive('wanPaging', function () {
+    return {
+        restrict: 'EA',
+        scope: {
+            wpTotal: '=',
+            position: '@',
+            gotoPageProf: '&',
+            stepProf: '=',
+            currentPageProf: '='
+        },
+        controller: Controller,
+        controllerAs: 'vm',
+        template: [
+            '<div layout="row" class="wan-material-paging" layout-align="{{ position }}">',
+            '<md-button class="md-raised md-primary wmp-button" ng-click="vm.gotoFirst()">{{ vm.first }}</md-button>',
+            '<md-button class="md-raised wmp-button" ng-click="vm.getoPre()" ng-show="vm.index - 1 >= 0">...</md-button>',
+            '<md-button class="md-raised wmp-button" ng-repeat="i in vm.stepInfo"',
+            ' ng-click="vm.goto(vm.index + i);" ng-show="vm.page[vm.index + i]" ',
+            ' ng-class="{true: \'md-primary\', false: \'\'}[vm.page[vm.index + i] === currentPageProf]">',
+            ' {{ vm.page[vm.index + i] }}',
+            '</md-button>',
+            '<md-button class="md-raised wmp-button" ng-click="vm.getoNext()" ng-show="vm.index + vm.step < wpTotal">...</md-button>',
+            '<md-button class="md-raised md-primary wmp-button" ng-click="vm.gotoLast()">{{ vm.last }}</md-button>',
+            '</div>'
+        ].join('')
+    };
+
+
+/**
+ * @ngInject
+ */
+function Controller($scope,$attrs) {
+    var vm = this;
+
+    vm.first = '<<';
+    vm.last = '>>';
+    vm.index = 0;
+    vm.step = $scope.stepProf;
+
+
+    vm.goto = function(index) {
+        $scope.currentPageProf = vm.page[index];
+    };
+
+    vm.getoPre = function(){
+        $scope.currentPageProf = vm.index;
+        vm.index -= vm.step;
+    };
+
+    vm.getoNext = function(){
+        vm.index += vm.step;
+        $scope.currentPageProf = vm.index + 1;
+    };
+
+    vm.gotoFirst = function(){
+        vm.index = 0;
+        $scope.currentPageProf = 1;
+    };
+
+    vm.gotoLast = function(){
+        vm.index = parseInt($scope.wpTotal / vm.step) * vm.step;
+        vm.index === $scope.wpTotal ? vm.index = vm.index - vm.step : '';
+        $scope.currentPageProf = $scope.wpTotal;
+    };
+
+    $scope.$watch('currentPageProf', function() {
+        $scope.gotoPageProf();
+    });
+
+    $scope.$watch('wpTotal', function() {
+        vm.init();
+    });
+
+    vm.init = function() {
+        vm.stepInfo = (function() {
+            var i, result = [];
+            for (i = 0; i < vm.step; i++) {
+                result.push(i)
+            }
+            return result;
+        })();
+
+        vm.page = (function() {
+            var i, result = [];
+            for (i = 1; i <= $scope.wpTotal; i++) {
+                result.push(i);
+            }
+            return result;
+        })();
+
+    };
+}
+    });
+
+
+
+

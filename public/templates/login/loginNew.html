@@ -1,11 +1,11 @@
 <div layout="column"  flex class="Login">
-   <div flex="95" layout="row" layout-xs="column" layout-sm="column" layout-md="column" layout-align-sm="center center" layout-align-md="center center" layout-align-xs="center center" class="Login-content">
+   <div flex="95" layout="row" layout-xs="column" layout-sm="column" layout-md="column" layout-align="center center" layout-align-sm="center center" layout-align-md="center center" layout-align-xs="center center" class="Login-content">
        <div flex="10" flex-xs="10" flex-order-xs="1"></div>
-       <div  flex="60"  flex-xs="40" flex-sm="50" flex-md="50"  style="overflow-y: auto;min-height: 120px" layout="column"   flex-order-xs="2" class="tehc"   >
-           <h5  class="Login-axgrip">
+       <div  flex="60"  flex-xs="40" flex-sm="40" flex-md="50"  layout="column"   flex-order-xs="2" class="tehc"   >
+           <h5  class="Login-axgrip" hide-sm hide-xs hide-md >
                AXGRIP
            </h5>
-           <div hide-xs hide-sm hide-md>
+           <div >
                <jk-carousel
                        data="dataArray"
                        item-template-url="'templates/login/item-template.html'"
@@ -18,15 +18,15 @@
 
        </div>
        <div  flex-md="5"  flex-sm="5"></div>
-       <div   flex="25"   flex-sm="100"  flex-xs="100" flex-md="95"  flex-order-xs="4"  style="overflow-y: auto;padding: 3px 22px;" layout="column" ng-show="affiche" class="Login-above-content">
+       <div   flex="25"   flex-sm="100"  flex-xs="100" flex-md="95"  flex-order-xs="4"  style="overflow-y:auto;min-height:120px;max-height:530px;padding: 3px 22px;" layout="column" ng-show="affiche" class="Login-above-content">
 
                <div flex="20" flex-xs="50" flex-sm="30" class="header"  layout="row" layout-align="center center">
                    <div  ><img src="../../image/GRIP_Logo.png" alt="" class="Login-image" ></div>
                </div>
            <div flex="80" flex-xs="50" flex-sm="70" class="content"  >
                    <form  name="myForm"  ng-submit="logino()">
-                       <input ng-model="user.name" type="text" placeholder="Compte utilisateur">
-                       <input ng-model="user.password" type="password" placeholder="Mot de passe">
+                       <input ng-model="user.name" id="name_2" type="text" placeholder="Compte utilisateur">
+                       <input ng-model="user.password" id="name_1" type="password" placeholder="Mot de passe">
 
                             <md-checkbox ng-model="user.cb1"  style="margin: 15px;" >
                                 Se souvenir de moi
@@ -94,7 +94,7 @@
                     <md-icon md-svg-src="../../image/google-plus-logo-on-black-background.svg" aria-label="android " style="color: deepskyblue;" class="Login-footer-icon1"></md-icon>
             </span>
             <span flex="50" hide-xs></span>
-            <span flex="25" flex-xs="100" flex-sm="50" style="text-align-last: right;">
+            <span flex="25" flex-xs="100" flex-sm="50" style="text-align-last: right;cursor:pointer" href="http://www.ashdownx.com">
                 All right reserved &copy; AshdownX
             </span>
         </div>

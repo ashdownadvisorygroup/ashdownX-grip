@@ -19,4 +19,9 @@ app.filter('nospace', function () {
 
             return doc.label || doc.name;
         };
+    })
+    .filter('pagination', function(){
+        return function(array, page, perPage){
+            return array.slice(page * perPage, (page+1) * perPage);
+        }
     });

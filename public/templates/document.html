@@ -7,8 +7,8 @@
             </div>
         </div>
     </div>
-    <div flex="85" layout="row">
-        <div flex="15" layout="column" style="background-color: rgb(51,54,64);overflow: auto;border-right: 2px solid rgb(5,170,245);" hide-xs>
+    <div flex="85" flex-xs="100" layout="row" layout-xs="column" style="overflow-y:auto;height: 530px ">
+        <div flex="15" flex-xs="100" flex-order-xs="2"  layout="column" style="background-color: rgb(51,54,64);overflow: auto;;min-height:500px;border-right: 2px solid rgb(5,170,245);" >
             <div flex="5"></div>
             <div flex="10">
                 Nom:{{media.nom}}
@@ -27,25 +27,28 @@
                 <md-divider></md-divider>
             </div>
         </div>
-        <div flex="85" flex-xs="85" style="text-align: center;">
+        <div flex="85" flex-xs="100" flex-order-xs="1" style="text-align: center;">
             <div ng-if="affiche == 'video'" flex class="accueil"  style="color:white;background-color: rgb(34,34,34);" layout="column">
-                <div flex="80" layout-align="center">
-                    <video width="800px" height="500px" class="youtube" controls>
+                <div flex="10"></div>
+
+                <div flex="80" flex-xs="100" layout-align="center">
+                    <video width="90%" height="90%" class="youtube" controls>
                         <source ng-src="{{media.link}}">
                         Your browser does not support the video tag.
                     </video>
                 </div>
-                <div flex="20"></div>
+                <div flex="10"></div>
             </div>
 
             <div ng-if="affiche == 'audio'" flex class="accueil"  style="color:white;background-color: rgb(34,34,34);" layout="column">
-                <div flex="80" layout-align="center" style="text-align: center;">
+                <div flex="10"></div>
+                <div flex="80" flex-xs="100" layout-align="center" style="text-align: center;">
                     <audio class="youtube" controls>
                         <source ng-src="{{media.link}}" type="audio/mp3">
                         Your browser does not support the audio element.
                     </audio>
                 </div>
-                <div flex="20"></div>
+                <div flex="10"></div>
 
             </div>
 
@@ -56,16 +59,17 @@
 
             </div>
             <div ng-if="affiche == 'youtube'" flex class="accueil"  style="color:white;background-color: rgb(34,34,34);" layout="column">
-                <div flex="80" layout-align="center" style="text-align: center;">
+                <div flex="10"></div>
+                <div flex="80" flex-xs="100" layout-align="center" style="text-align: center;">
                     <youtube-video video-id="theBestVideo" player="bestPlayer" class="youtube"
-                                   player-width="'50%'" player-height="'500px'"></youtube-video>
+                                   player-width="'90%'" player-height="'90%'"></youtube-video>
                     <br>
                     <a ng-click="bestPlayer.playVideo()" title="play button"><span class="glyphicon glyphicon-play home" style="margin-left: 40%"
                                                                                    aria-hidden="true"></span></a>
                     <a ng-click="bestPlayer.stopVideo()" title="stop button"><span class="glyphicon glyphicon-stop home"
                                                                                    aria-hidden="true"></span></a>
                 </div>
-                <div flex="20"></div>
+                <div flex="10"></div>
 
 
 
