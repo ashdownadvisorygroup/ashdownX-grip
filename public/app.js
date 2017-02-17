@@ -16,7 +16,7 @@ app.run(function($rootScope, $state,AuthService, isAuthenticated,CategorieFactor
             $state.go('new');
         }
     });
-    $rootScope.$state = $state;
+
 });
 
 app.config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
