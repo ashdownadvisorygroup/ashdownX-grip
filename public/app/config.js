@@ -14,6 +14,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                     },
                     main:{},
                     main2:{}
+
                 },
                 access: { requiredLogin: true }
             })

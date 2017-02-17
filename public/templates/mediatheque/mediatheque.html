@@ -1,7 +1,8 @@
 <div  layout="column" flex class="accueil"  style="background-color: rgb(34,34,34);">
-    <div layout="row" flex="90"  layout-wrap style="overflow-y: auto;min-height:50px;max-height:530px;">
+    <div layout="row" flex="90"  layout-wrap class="med_xs">
 
-        <div  ng-if="categories" flex="20" flex-xs="100" layout="column" style="background-color: rgb(51,54,64);overflow-y: auto;min-height:20px;max-height:530px;border-right: 2px solid rgb(5,170,245);" >
+        <div  ng-if="categories" flex="20" flex-xs="100" layout="column" class="prof" style="background-color: rgb(51,54,64);
+        overflow-y: auto;border-right: 2px solid rgb(5,170,245);" >
             <div flex="15">
                 <div flex>
                     <input ng-model="searchcat"  class="reduceSize" placeholder="entrer la recherche">
@@ -69,8 +70,8 @@
                     <input ng-model="searchmed"  class="reduceSize" style="text-align: center"  placeholder="entrer la recherche">
                 </div>
             </div>
-            <div flex="80"  layout="row" layout-wrap class="med_xs" layout-xs="row" layout-align-xs="center center">
-                <div   layout="column" ng-repeat="med in medias" flex-xs="100" flex-sm="50" flex-md="30">
+            <div flex="80"  layout="row" layout-wrap class="med_xss" layout-xs="row" layout-align-xs="center center">
+                <div   layout="column" ng-repeat="med in medias" flex-xs="100" flex-sm="50" flex-md="30" flex="20">
                     <div  class='md-padding pacard' style="margin-left: 20px;">
                         <md-card class="card" style="color:black;">
                             <md-card-title style="width: 100px;height: 100px;padding: 0px 14px;margin-left: 0em;">

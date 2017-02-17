@@ -126,10 +126,11 @@ app.controller('CategoriesCtrl', ['$scope','$cookieStore',
                     $scope.medias=$filter('filter')(medias,newVal)
                     $scope.total = Math.ceil($scope.medias.length/medPerPage);
                     afficher_ecran($scope.medias);
+                    var tmpe=$scope.medias;
                     $scope.medias=  $scope.medias.slice(0,medPerPage);
                     $scope.gotoPage = function() {
                         var i=$scope.currentPage;
-                        $scope.medias= $scope.medias.slice(medPerPage*i-medPerPage,medPerPage*i);
+                        $scope.medias= tmpe.slice(medPerPage*i-medPerPage,medPerPage*i);
                     };
                 }
                 else{
@@ -362,10 +363,10 @@ app.controller('CategoriesCtrl', ['$scope','$cookieStore',
 .controller('CategorieCtrl', ['$scope','$cookieStore',
     'CategorieFactory','LivreFactory','UserFactory','ProfilFactory', '$stateParams', '$state','AuthService'
     ,'youtubeEmbedUtils','$mdDialog','$sce','$rootScope',
-    '$log', '$timeout', '$location','$mdToast',
+    '$log', '$timeout', '$location','$mdToast','$filter',
     function ($scope,$cookieStore, CategorieFactory,LivreFactory,UserFactory,ProfilFactory, $stateParams,
               $state, AuthService,youtubeEmbedUtils,$mdDialog,$sce,$rootScope,
-              $log, $timeout, $location,$mdToast) {
+              $log, $timeout, $location,$mdToast,$filter) {
         //alert('a')
         $scope.currentPage=1;
         $scope.step=5;
@@ -395,6 +396,29 @@ app.controller('CategoriesCtrl', ['$scope','$cookieStore',
                 $scope.medias=categories.medias.slice(medPerPage*i-medPerPage,medPerPage*i);
                 afficher_ecran($scope.medias);
             };
+            $scope.$watch('searchmed', function(newVal){
+                if(newVal){
+                    $scope.medias=$filter('filter')(categories.medias,newVal)
+                    $scope.total = Math.ceil($scope.medias.length/medPerPage);
+                    afficher_ecran($scope.medias);
+                    var tempe=$scope.medias;
+                    $scope.medias=  $scope.medias.slice(0,medPerPage);
+                    $scope.gotoPage = function() {
+                        var i=$scope.currentPage;
+                        $scope.medias= tmpe.slice(medPerPage*i-medPerPage,medPerPage*i);
+                    };
+                }
+                else{
+                    $scope.medias = categories.medias;
+                    $scope.total = Math.ceil(categories.medias.length/medPerPage);
+                    $scope.medias= categories.medias.slice(0,medPerPage);
+                    $scope.gotoPage = function() {
+                        var i=$scope.currentPage;
+                        $scope.medias=categories.medias.slice(medPerPage*i-medPerPage,medPerPage*i);
+                        afficher_ecran($scope.medias);
+                    };
+                }
+            }, true);
         });
 
     }])

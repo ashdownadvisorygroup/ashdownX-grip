@@ -3,7 +3,9 @@
  */
 app.controller('ProfilsCtrl', ['$scope','$cookieStore',
     'CategorieFactory','LivreFactory','ProfilFactory', '$stateParams', '$state','AuthService','$mdToast','$mdDialog',
-    function ($scope,$cookieStore, CategorieFactory,LivreFactory,ProfilFactory, $stateParams, $state, AuthService,$mdToast,$mdDialog) {
+    '$filter',
+    function ($scope,$cookieStore, CategorieFactory,LivreFactory,ProfilFactory, $stateParams, $state, AuthService,$mdToast,
+              $mdDialog,$filter) {
         /***
          *
          *partie des toast pour les notification
@@ -67,6 +69,29 @@ app.controller('ProfilsCtrl', ['$scope','$cookieStore',
                     var i=$scope.currentPage;
                     $scope.profile=ProfilFactory.profsCats.slice(medPerPage*i-medPerPage,medPerPage*i);
                 };
+
+                $scope.$watch('searchprof', function(newVal){
+                    if(newVal){
+                        $scope.profile=$filter('filter')(ProfilFactory.profsCats,newVal)
+                        $scope.total = Math.ceil($scope.profile.length/medPerPage);
+                        var tempe=$scope.profile;
+                        $scope.profile=  $scope.profile.slice(0,medPerPage);
+                        $scope.gotoPage = function() {
+                            var i=$scope.currentPage;
+                            $scope.profile= tmpe.slice(medPerPage*i-medPerPage,medPerPage*i);
+                        };
+                    }
+                    else{
+                        $scope.profile = ProfilFactory.profsCats;
+                        $scope.total = Math.ceil(ProfilFactory.profsCats.length/medPerPage);
+                        $scope.profile= ProfilFactory.profsCats.slice(0,medPerPage);
+                        $scope.gotoPage = function() {
+                            var i=$scope.currentPage;
+                            $scope.profile=ProfilFactory.profsCats.slice(medPerPage*i-medPerPage,medPerPage*i);
+
+                        };
+                    }
+                }, true);
             });
         });
         $scope.triscat=function(prof){

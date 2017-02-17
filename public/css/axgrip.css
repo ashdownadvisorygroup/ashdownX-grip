@@ -45,6 +45,7 @@
     background-color:rgb(0,0,0);
 }
 
+
 @media only screen and (max-width: 600px) {
     .Login-axgrip{
         font-size: 65px!important;
@@ -61,6 +62,8 @@
     }
     .med_xs{
         overflow-y: auto;
+    }.med_xss{
+        overflow-y: auto;
     }
     .prof{
         overflow-y: auto;
@@ -71,6 +74,11 @@
         overflow-y: auto;
         min-height: 600px;
     }
+    .jk-carousel   {
+        width: 100%!important;
+        height: 100px!important;
+    }
+
 
 
 }
@@ -149,6 +157,11 @@
     border-radius: 2px;
     margin: 16px;
 }
+@media (min-width: 700px)and (max-width: 960px) {
+    .med_xss{
+        overflow-y: auto;
+    }
+}
 @media (min-width: 610px)and (max-width: 700px) {
     /* CSS that should be displayed if width is equal to or less than 800px goes here */
     .Login-above-content{
@@ -157,6 +170,7 @@
     img.img{
         width: 10%
     }
+
 }
 
 .accueil-nav{

@@ -209,7 +209,7 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
             var sat=[];
             $scope.currentPage= $scope.currentPageProf=1;
             $scope.step=$scope.stepProf=2;
-            var medPerPage= 8,medPerPage_prof=3;
+            var medPerPage= 10,medPerPage_prof=3;
             $scope.quantity = 1;
             $scope.aff=false;
             $scope.determinateValue=40;
@@ -249,6 +249,7 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
              $scope.gotoPage = function() {
              var i= $scope.currentPage;
              $scope.allmedias= ProfilFactory.allMedias.slice(medPerPage*i-medPerPage,medPerPage*i);
+                 afficher_ecran($scope.allmedias);
              };
              $scope.longueur=$scope.allmedias.length;
              afficher_ecran($scope.allmedias);
