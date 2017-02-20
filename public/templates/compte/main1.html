@@ -4,12 +4,12 @@
                         border-right: 2px solid rgb(5,170,245);" hide-xs>
                 <div flex="15">
                     <div flex>
-                        <input ng-model="searchprofcat"  class="reduceSize" placeholder="entrer la recherche">
+                        <input ng-model="searchprofcat"  class="reduceSize" style="text-align: center" placeholder="entrer la recherche">
                     </div>
 
                 </div>
                 <div flex="100">
-                    Liste des profils
+                   <div style="text-align: center"><h3>Liste des profils</h3></div>
                     <ul>
                         <li style="display: block;" class="un" ng-repeat="prf in filteredprofile=( profile |filterBy: ['nom','description','objectifs']:searchprofcat)">
                             {{ prf.nom }}

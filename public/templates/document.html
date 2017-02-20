@@ -8,22 +8,31 @@
         </div>
     </div>
     <div flex="85" flex-xs="100" layout="row" layout-xs="column" style="overflow-y:auto;height: 530px ">
-        <div flex="15" flex-xs="100" flex-order-xs="2"  layout="column" style="background-color: rgb(51,54,64);overflow: auto;;min-height:500px;border-right: 2px solid rgb(5,170,245);" >
+        <div flex="15" flex-xs="100" flex-order-xs="2"  class="md-padding" layout="column" style="background-color: rgb(51,54,64);overflow: auto;;min-height:500px;border-right: 2px solid rgb(5,170,245);" >
             <div flex="5"></div>
             <div flex="10">
-                Nom:{{media.nom}}
+                <u class="descriptioncat_med">Nom:</u><br>
+                {{media.nom}}
                 <md-divider></md-divider>
             </div>
-            <div flex="25">Description:{{media.description}}
+            <div flex="25">
+                <u class="descriptioncat_med">Description:</u><br>
+                {{media.description}}
                 <md-divider></md-divider>
             </div>
-            <div flex="5"> Lu:{{media.readed}}
+            <div flex="5">
+                <u class="descriptioncat_med">Lu:</u>
+                {{media.readed}}
                 <md-divider></md-divider>
             </div>
-            <div flex="5"> Notation:{{media.rate}}
+            <div flex="5">
+                <u class="descriptioncat_med">Notation:</u>
+                {{media.rate}}
                 <md-divider></md-divider>
             </div>
-            <div flex="5"> Téléchargé:{{media.downloaded}}
+            <div flex="5">
+                <u class="descriptioncat_med">Téléchargé:</u>
+                {{media.downloaded}}
                 <md-divider></md-divider>
             </div>
         </div>
@@ -54,8 +63,12 @@
 
             <div ng-if="affiche == 'pdf'" flex class="accueil"  style="color:white;background-color: rgb(34,34,34);" layout="column">
                 <div flex style="text-align: center;">
-                    <iframe ng-src="{{media.link}}" width="100%" height="100%"></iframe>
+                    <object data="{{media.link}}" type="application/pdf" width="100%" height="100%">
+                        <p><b>Example fallback content</b>: Ce navigateur ne supporte pas les PDFs. Veillez télécharger le PDF à ce lien <a href="{{media.link}}">Télécharger</a>.</p>
+                    </object>
                 </div>
+
+
 
             </div>
             <div ng-if="affiche == 'youtube'" flex class="accueil"  style="color:white;background-color: rgb(34,34,34);" layout="column">

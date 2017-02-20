@@ -10,7 +10,16 @@ var template_url="templates/";
 
 app.run(function($rootScope, $state,AuthService, isAuthenticated,CategorieFactory) {
     isAuthenticated.set(false);
+    var item1=window.localStorage.getItem('Rememberme');
+    var item2=window.localStorage.getItem('yourTokenKey');
+    /*if(item1){
+        if(item2){
+            console.log('i');
+            $state.go('axgrip.accueil');
+        }
+    }*/
     $rootScope.$on('$stateChangeStart', function(event, nextRoute, currentRoute) {
+
         if (nextRoute.access.requiredLogin && !AuthService.isAuthenticated.get()) {
             event.preventDefault();
             $state.go('new');

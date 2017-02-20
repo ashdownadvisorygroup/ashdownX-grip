@@ -28,7 +28,7 @@
                        <input ng-model="user.name" id="name_2" type="text" placeholder="Compte utilisateur">
                        <input ng-model="user.password" id="name_1" type="password" placeholder="Mot de passe">
 
-                            <md-checkbox ng-model="user.cb1"  style="margin: 15px;" >
+                            <md-checkbox ng-model="rememberme"  style="margin: 15px;" ng-click="youremember()" >
                                 Se souvenir de moi
                             </md-checkbox>
                        <md-button  type="submit">

@@ -1,17 +1,21 @@
 
 <div  layout="column"  flex class="accueil"  style="background-color: rgb(34,34,34);">
     <div flex="90"  layout="row">
-        <div flex="20" flex-sm="50" flex-md="50" flex-xs="100" ng-if="profil" layout="column" layout-xs="column" class="prof" style="background-color: rgb(51,54,64);overflow: auto;border-right: 2px solid rgb(5,170,245);" >
+        <div flex="20" flex-sm="50" flex-md="50" flex-xs="100" ng-if="profil" layout="column" class="md-padding" layout-xs="column" class="prof" style="background-color: rgb(51,54,64);overflow: auto;border-right: 2px solid rgb(5,170,245);" >
             <div flex="5"></div>
             <div flex="10">
-                Nom:{{profil.nom}}
-                <md-divider></md-divider>
-            </div>
-            <div flex="40" >Description:{{profil.description}}
+                <u class="descriptioncat_med">Nom:</u><br>
+                {{profil.nom}}
                 <md-divider></md-divider>
             </div>
             <div flex="40" >
-                Objectifs du profil:
+                <u class="descriptioncat_med">Description:</u><br>
+                {{profil.description}}
+                <md-divider></md-divider>
+            </div>
+            <div flex="40" >
+                <u class="descriptioncat_med">Objectifs du profil:</u><br>
+
                 <ol>
                     <li  ng-repeat="ct in profil.objectifs |unique">
                         {{ct}}
@@ -23,7 +27,8 @@
                 <md-divider></md-divider>
             </div>
             <div flex="5">
-                <md-button class="md-raised md-primary" permission="['admin']" ui-sref="axgrip.modifprofil({id:profil._id})">Modifier le profil</md-button>
+                <md-button class="md-raised md-primary" permission="['admin']" >Modifier le profil</md-button>
+               <!-- <md-button class="md-raised md-primary" permission="['admin']" ui-sref="axgrip.modifprofil({id:profil._id})">Modifier le profil</md-button>-->
             </div>
         </div>
         <div flex="10"></div>
@@ -37,29 +42,29 @@
                     <input ng-model="searchprof"  class="reduceSize" style="text-align: center;" placeholder="entrer la recherche">
                 </div>
             </div>
-            <div flex="5" ng-if="profil"> Liste des catégories</div>
+            <div flex="5" ng-if="profil"> <h2> Liste des catégories</h2></div>
             <div flex="5"></div>
             <div layout="row" flex="75"  flex-xs="100" flex-sm="75" flex-md="75" class="med_xss" layout-wrap>
                 <div layout="column" ng-repeat="prf in filteredprofile=( profile |filterBy: ['nom','description']:searchprof )"  >
                     <md-card class="cardprofil" style="color:black;">
                         <md-card-title>
-                            <md-card-title-text  style="cursor:pointer">
+                            <md-card-title-text  style="cursor:pointer ;padding-left: 13px">
                                 <span class="md-headline" ng-click="triscat(prf);">Nom:{{prf.nom}}</span>
                                 <span class="md-subhead" ng-click="triscat(prf);">Description:{{prf.description}}</span>
-                                <span>
-                                    <md-button permission="['admin']"  class="card-button" ng-click="showConfirmdelprof($event,prf)" aria-label="a">
-                                        <md-tooltip>Supprimer le profil</md-tooltip>
-                                        <md-icon md-svg-src="../../image/rubbish-bin-delete-button.svg" class="card-icon"></md-icon>
-                                    </md-button>
-                                </span>
                             </md-card-title-text>
                         </md-card-title>
+                        <md-card-actions layout="row" layout-align="center center" class="cardi">
+                            <md-button permission="['admin']"  class="card-button" ng-click="showConfirmdelprof($event,prf)" aria-label="a">
+                                <md-tooltip>Supprimer le profil</md-tooltip>
+                                <md-icon md-svg-src="../../image/rubbish-bin-delete-button.svg" class="card-icon"></md-icon>
+                            </md-button>
+                        </md-card-actions>
                     </md-card>
                 </div>
                 <div layout="row" ng-repeat="ct in profil.categorieprofil" >
-                    <md-card class="cardprofcat" style="color:black;">
+                    <md-card class="cardprofcat " style="color:black;">
                         <md-card-title>
-                            <md-card-title-text style="cursor:pointer">
+                            <md-card-title-text style="cursor:pointer;padding-left: 12px;">
                                 <span class="md-subhead"  ui-sref="axgrip.categorie({id:ct._id})">Nom:{{ct.nom}}</span>
                                 <span class="md-subhead" ui-sref="axgrip.categorie({id:ct._id})">Description:{{ct.description}}</span>
                             </md-card-title-text>

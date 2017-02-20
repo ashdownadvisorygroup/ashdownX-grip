@@ -6,12 +6,12 @@
                     <!--<section id="three" resizable r-directions="['bottom']" r-flex="true" style="height: 20px;background-color: #00A000;">
                         irennenenenene
                     </section>-->
-                    <div flex="15" flex-xs="10" layout="column">
-                        <input ng-model="searchprofcat"  class="reduceSize" placeholder="entrer la recherche">
+                    <div flex="15" flex-xs="10O" layout="column">
+                        <input ng-model="searchprofcat"  class="reduceSize" style="text-align: center;" placeholder="entrer la recherche">
 
                     </div>
-                    <div flex="80" flex-xs="100"  layout-xs="column" >
-                        <div flex="90" hide-gt-xs>
+                    <div flex="80" flex-xs="100"  layout-xs="column"  >
+                        <div flex="90" hide-gt-xs >
                             Liste des profils
                             <div class="flex-container" flex="5" layout="row" style="padding: 16px 20px;float:left">
                             <div class="flex-item flex-end" flex="" hide-gt-xs>
@@ -50,7 +50,10 @@
 
                         </div>
                         <div  flex="100" style="overflow-y: auto;height: 500px;" hide-xs>
-                            Liste des profils
+                             <div style="padding-left:12px;">
+                            <h3>Liste des profils</h3>
+                             </div>
+
                             <ul >
                                 <li style="display: block;" class="un" ng-repeat="prf in
                             filteredprofile=( profiles |filterBy: ['nom','description']:searchprofcat)"  flex-xs="100" >
@@ -93,10 +96,17 @@
                 <div flex="85" flex-xs="100" flex-order-xs="2" layout-xs="column"  layout="column"  id="main"  ng-show="stagiaires.length >0" ng-class="{'flex-100':hide2}" >
                     <div flex="5"  layout="row" style="padding-top: 2em;font-size: 12px" hide-xs>
                         <div class="flex-container" flex="5" layout="row" style="padding: 16px 20px;">
-                            <div class="flex-item flex-end" flex="" ng-click="afficher_cacher()">
-                                <md-button aria-label="a" class="card-button">
-                                    <md-tooltip>Réduire ou agrandir</md-tooltip>
-                                    <md-icon md-svg-src="../../image/hide-show.svg" class="card-icon"  style="cursor:pointer"></md-icon>
+                            <div ng-show="!hide1">
+                                <md-button aria-label="a" class="card-button"  ng-click="afficher_cacher()">
+                                    <md-tooltip>Réduire </md-tooltip>
+                                    <md-icon md-svg-src="../../image/left_arrow.svg" class="card-icon" style="cursor:pointer"></md-icon>
+                                </md-button>
+
+                            </div>
+                            <div ng-show="hide1">
+                                <md-button aria-label="a" class="card-button"  ng-click="afficher_cacher()">
+                                    <md-tooltip>agrandir</md-tooltip>
+                                    <md-icon md-svg-src="../../image/right_arrow.svg" class="card-icon" style="cursor:pointer"></md-icon>
                                 </md-button>
 
                             </div>
@@ -109,18 +119,32 @@
 
                         <div flex="15"  ng-click="aff_pop_not()" style="cursor: pointer;">populaires/mieux notés</div>
                         <div class="flex-container" flex="10" layout="row" style=" float: right;padding: 16px 20px;">
-                            <div class="flex-item flex-end" flex="5" ng-click="afficher_cacher2()">
-                                <md-button class="card-button" aria-label="a">
-                                    <md-tooltip>Réduire ou agrandir</md-tooltip>
-                                    <md-icon md-svg-src="../../image/hide-show.svg"  class="card-icon" style="cursor:pointer"></md-icon>
+                            <div ng-show="!hide2">
+                                <md-button aria-label="a" class="card-button"  ng-click="afficher_cacher2()">
+                                    <md-tooltip>Réduire </md-tooltip>
+                                    <md-icon md-svg-src="../../image/right_arrow.svg" class="card-icon" style="cursor:pointer"></md-icon>
                                 </md-button>
 
+                            </div>
+                            <div ng-show="hide2">
+                                <md-button aria-label="a" class="card-button"  ng-click="afficher_cacher2()">
+                                    <md-tooltip>agrandir</md-tooltip>
+                                    <md-icon md-svg-src="../../image/left_arrow.svg" class="card-icon" style="cursor:pointer"></md-icon>
+                                </md-button>
 
                             </div>
 
                         </div>
                     </div>
                     <div flex="5" style="padding-top:4px" ><hr></div>
+                    <div flex="35"  hide-gt-xs>
+                        <div>
+                            <wan-material-paging wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
+                            </wan-material-paging>
+                        </div>
+
+
+                    </div>
 
                     <div flex="75" flex-xs="100"    layout="row" layout-wrap >
                         <div ng-repeat="m in allmedias" flex="25" flex-xs="100" flex-sm="50" flex-md="30" >
@@ -130,10 +154,10 @@
                                         <md-card-title-text style="margin-right: 1em;line-height:5px;" layout="column">
                                             <div flex="30" flex-xs="30" layout-xs="row" layout="row">
                                                 <div flex="25" flex-xs="25" >
-                                                    <span class="md-headline" style="font-size: 15px">{{m.nom}}</span>
+                                                    <span class="md-headline" style="font-size: 15px;padding-left:10px;">{{m.nom}}</span>
                                                 </div>
                                                 <div flex="70" flex-xs="70"></div>
-                                                <div flex="5" flex-xs="10">
+                                                <div flex="5" flex-xs="10" style="text-align: end;">
                                                     <img ng-src="{{m.logo}}" style="width: 40px;height: 40px"  alt="" >
 
                                                 </div>
@@ -156,7 +180,7 @@
                         </div>
 
                     </div>
-                    <div flex="10"  layout="row">
+                    <div flex="10"  layout="row" hide-xs>
                         <div flex="50"></div>
                         <div flex="50" >
                             <wan-material-paging wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
@@ -170,10 +194,17 @@
                 <div layout="column"  ng-show="stagiaires.length == 0" id="corpus" flex="100" flex-order-gt-xs="2" flex-xs="100" flex-order-xs="3">
                     <div flex="5"  layout="row" style="padding-top: 2em;font-size: 12px" hide-xs>
                         <div  flex="5" layout="row" hide-xs>
-                            <div >
+                            <div ng-show="!hide1">
                                 <md-button aria-label="a" class="card-button"  ng-click="afficher_cacher()">
-                                    <md-tooltip>Réduire ou agrandir</md-tooltip>
-                                    <md-icon md-svg-src="../../image/hide-show.svg" class="card-icon" style="cursor:pointer"></md-icon>
+                                    <md-tooltip>Réduire </md-tooltip>
+                                    <md-icon md-svg-src="../../image/left_arrow.svg" class="card-icon" style="cursor:pointer"></md-icon>
+                                </md-button>
+
+                            </div>
+                            <div ng-show="hide1">
+                                <md-button aria-label="a" class="card-button"  ng-click="afficher_cacher()">
+                                    <md-tooltip>agrandir</md-tooltip>
+                                    <md-icon md-svg-src="../../image/right_arrow.svg" class="card-icon" style="cursor:pointer"></md-icon>
                                 </md-button>
 
                             </div>
@@ -184,14 +215,19 @@
                         <div flex="15"  ng-click="aff_pop_not()" style="cursor: pointer;">populaires/mieux notés</div>
                     </div>
                     <div flex="5" style="padding-top:4px" ><hr></div>
+                    <div flex-xs="100"   layout-xs="row" hide-gt-xs>
+                            <wan-material-paging style="background-color: transparent;color:white;" wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
+                            </wan-material-paging>
+
+                    </div>
                     <div flex="75" flex-xs="100"  layout="row"  layout-wrap >
                         <div ng-repeat="m in allmedias"  flex-xs="100" flex-sm="50" flex-md="30" flex="20">
-                            <div layout="column"  class='pacard' flex layout-wrap style="margin-left: 0px;">
-                                <md-card  style="color:black;">
+                            <div layout="column"  class='pacard ' flex layout-wrap style="margin-left: 0px;">
+                                <md-card  style="color:black;" >
                                     <md-card-title  style="width: 100px;height: 100px;padding: 0px 1px;margin-left: 0em;">
                                         <md-card-title-text style="margin-right: 1em;line-height:5px;" layout="column">
                                             <div flex="30" layout="row">
-                                                <div flex="25">
+                                                <div flex="25" class="md-padding">
                                                     <span class="md-headline" style="font-size: 15px">{{m.nom}}</span>
                                                 </div>
                                                 <div flex="70"></div>
@@ -200,7 +236,7 @@
 
                                                 </div>
                                             </div>
-                                            <div flex="70" style="width:140px">
+                                            <div flex="70" class="md-padding" style="width:140px">
                                                 <span class="md-subhead" style="font-size: 10px">Lu:{{m.readed}}</span>
                                                 <br><br>
                                                 <span class="md-subhead" style="font-size: 10px">Télecharger:{{m.downloaded}}</span>
@@ -220,7 +256,7 @@
                         </div>
 
                     </div>
-                    <div flex="10"   layout="row">
+                    <div flex="10"   layout="row" hide-xs>
                         <div flex="50"></div>
                         <div flex="50" flex-xs="100">
                             <wan-material-paging style="background-color: transparent;color:white;" wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
@@ -232,7 +268,7 @@
                 </div>
                 <div  flex="15" ng-show="stagiaires.length>0 || hide2"  flex-order-gt-xs="3" flex-xs="100" flex-order-xs="1"     style="background-color: rgb(51,54,64);border-left: 2px solid rgb(5,170,245);" >
                     <div >
-                        <input ng-model="searchstagiaire" class="reduceSize" style="" placeholder="entrer la recherche">
+                        <input ng-model="searchstagiaire" class="reduceSize" style="text-align:center" placeholder="entrer la recherche">
                       <!--  <div class="flex-container" flex="5" layout="row" style="padding: 16px 20px;" hide-gt-xs>
                             <div class="flex-item flex-end" flex="">
                                 <md-button aria-label="a" class="card-button">

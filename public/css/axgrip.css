@@ -635,7 +635,7 @@ button.remove{
 
 md-card._md.cardprofil {
     /*width: 50%;
-    height: 62%;*/width: 250px;height:150px;
+    height: 62%;*/width: 250px;height:180px;
 }
 md-card._md.cardprofcat {
    /* width: 80%;
@@ -725,4 +725,8 @@ md-checkbox.md-default-theme.md-checked .md-ink-ripple, md-checkbox.md-checked .
 .jk-carousel  md-radio-button  {
 
     display: none;
+}
+.descriptioncat_med{
+color:deepskyblue;
+    font-size:18px;
 }

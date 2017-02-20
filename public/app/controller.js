@@ -96,6 +96,7 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
         );
     };
     $scope.deconnexionaction = function(name, ev) {
+        window.localStorage.removeItem('Rememberme');
          AuthService.logout();
             $state.go('new');
     };
@@ -368,6 +369,9 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
                 src: "Des milliers d'utilisateurs classés selon les profils  et les motivations communes..."
             }
         ];
+        $scope.youremember=function(){
+            window.localStorage.setItem('Rememberme', true);
+        };
         $scope.affiche=true;
         $scope.affiche2=false;
         $scope.affiche3=false;
