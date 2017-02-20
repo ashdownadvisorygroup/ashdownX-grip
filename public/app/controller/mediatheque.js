@@ -152,6 +152,11 @@ app.controller('CategoriesCtrl', ['$scope','$cookieStore',
                 med.readed = up.readed;
             });
         };
+        $scope.telecharger = function(med){
+            LivreFactory.downloaded(med._id).then(function(up){//permet d'incrementer automatiquement le champ lu
+                med.downloaded = up.downloaded;
+            });
+        };
 
         for (var i = 0, len = masterActuel.length; i < len; i++) {
             tabmaster.push(masterActuel[i].id);

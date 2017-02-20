@@ -8,24 +8,34 @@ var app = angular.module('bv', ['ui.router','ngFileUpload','angular-loading-bar'
 
 var template_url="templates/";
 
-app.run(function($rootScope, $state,AuthService, isAuthenticated,CategorieFactory) {
+app.run(function($rootScope, $state,AuthService, isAuthenticated,CategorieFactory,$location) {
     isAuthenticated.set(false);
     var item1=window.localStorage.getItem('Rememberme');
     var item2=window.localStorage.getItem('yourTokenKey');
-    /*if(item1){
-        if(item2){
-            console.log('i');
-            $state.go('axgrip.accueil');
-        }
-    }*/
-    $rootScope.$on('$stateChangeStart', function(event, nextRoute, currentRoute) {
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams,fromState) {
 
-        if (nextRoute.access.requiredLogin && !AuthService.isAuthenticated.get()) {
+        if (toState.access.requiredLogin && !AuthService.isAuthenticated.get()) {
             event.preventDefault();
             $state.go('new');
         }
+        if(toState.name=='new'){
+            if(item1) {
+                if (item2) {
+                    $location.path('/accueil');
+                }
+            }
+        }
+
+
     });
-    $rootScope.$state = $state;
+    //$rootScope.$state = $state;
+  /*  if(item1){
+        if(item2){
+            console.log('i');
+            alert('jk')
+            $state.go('new');
+        }
+    }*/
 });
 
 app.config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {

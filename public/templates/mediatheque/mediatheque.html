@@ -92,7 +92,7 @@
                                         <br><br>
                                         <span class="md-subhead" style="font-size: 10px">Télecharger:{{med.downloaded}}</span>
                                         <br><br>
-                                                <span class="md-subhead" style="font-size: 10px"><a ng-click="lire(m)" ui-sref="document({id:med._id})" style="cursor:pointer;">{{med.affiche}}</a>
+                                                <span class="md-subhead" style="font-size: 10px"><a ng-click="lire(med)" ui-sref="document({id:med._id})" style="cursor:pointer;">{{med.affiche}}</a>
                                                 </span>
                                     </div>
                                 </md-card-title-text>
@@ -112,7 +112,7 @@
                                     <md-tooltip>Supprimer le média</md-tooltip>
                                     <md-icon md-svg-src="../../image/rubbish-bin-delete-button.svg" class="card-icon"></md-icon>
                                 </md-button>
-                                <md-button style="background-color: transparent" class="card-button" aria-label="a">
+                                <md-button style="background-color: transparent" class="card-button" ng-click="telecharger(med)" aria-label="a">
                                     <md-tooltip>Télécharger le média</md-tooltip>
                                     <a href="{{med.link}}" download="Download1">
                                         <md-icon  md-svg-src="../../image/download.svg" class="card-icon"></md-icon>
