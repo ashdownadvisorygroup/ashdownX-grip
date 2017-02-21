@@ -1,7 +1,7 @@
 <div flex="100"  layout="column"  class="accueil"  style="background-color: rgb(34,34,34);">
     <div layout="row" flex="100" layout-xs="column" flex-xs="100"  class="med_xs">
 
-        <div  ng-if="categories" flex="20" flex-xs="100" layout-xs="column"  layout="column" class="prof" style="background-color: rgb(51,54,64); overflow-y: auto;border-right: 2px solid rgb(5,170,245);" >
+        <div  ng-if="categories" flex="20" flex-xs="100" layout-xs="column"  layout="column" class="prof" style="background-color: rgb(51,54,64); overflow-y: auto;min-height:600px; border-right: 2px solid rgb(5,170,245);" >
             <div flex="5">
                 <div flex>
                     <input ng-model="searchcat"  class="reduceSize" style="text-align: center" placeholder="entrer la recherche">
@@ -47,7 +47,7 @@
                 </div>
             </div>
         </div>
-        <div flex="20"  ng-if="categorie" layout="column" class="prof md-padding" style="background-color: rgb(51,54,64);overflow: auto;border-right: 2px solid rgb(5,170,245);" >
+        <div flex="20"  ng-if="categorie" flex-xs="100" layout-xs="column" layout="column" class="prof md-padding" style="background-color: rgb(51,54,64);overflow: auto;;min-height:500px;border-right: 2px solid rgb(5,170,245);" >
             <div flex="5"></div>
             <div flex="10" ><h1 >Catégorie</h1></div>
             <div flex="15" >
@@ -66,12 +66,12 @@
         </div>
 
         <div  layout="column" flex="80" flex-xs="100" layout-xs="column" ng-hide="afficheMedia || affichemodifcat || affichecreeMedia"  >
-            <div flex="10">
+            <div flex="10" flex-xs="100">
                 <div flex >
                     <input ng-model="searchmed"  class="reduceSize" style="text-align: center"  placeholder="entrer la recherche">
                 </div>
             </div>
-            <div flex="80"  layout="row" layout-wrap class="med_xss" layout-xs="row" layout-align-xs="center center">
+            <div flex="80" flex-xs="100" layout="row" layout-wrap class="med_xss" style="min-height:500px" layout-xs="row" layout-align-xs="center center">
                 <div   layout="column" ng-repeat="med in medias" flex-xs="100" flex-sm="50" flex-md="30" flex="20">
                     <div  class='md-padding pacard' style="margin-left: 20px;">
                         <md-card class="card" style="color:black;">
@@ -124,7 +124,7 @@
 
                 </div>
             </div>
-            <div flex="10" ng-hide="afficheMedia || affichemodifcat" layout="row">
+            <div flex="10" flex-xs="100" ng-hide="afficheMedia || affichemodifcat" layout="row">
                 <div flex="5"  flex-xs="100" flex-offset-xs="0" flex-offset="85">
                     <wan-material-paging wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
                     </wan-material-paging>
@@ -133,7 +133,7 @@
 
 
         </div>
-        <div layout="column" flex="70" flex-xs="100" ng-show="afficheMedia" style="overflow-y:auto;" layout-padding ng-cloak>
+        <div layout="column" flex="70" flex-xs="100" ng-show="afficheMedia" style="overflow-y:auto;min-height: 388px;" layout-padding ng-cloak>
             <md-icon md-svg-src="../../image/left-arrow-in-circular-button.svg" ng-click="modifiermedia()"
                      aria-label="android " style="color: blue;" ></md-icon>
             <form  name="myFormMedia"  ng-submit="mediacreateupdate()">
@@ -200,7 +200,7 @@
                 </md-content>
             </form>
         </div>
-        <div layout="column" flex="70" flex-xs="100" ng-show="affichecreeMedia" style="overflow-y:auto;" layout-padding ng-cloak>
+        <div layout="column" flex="70" flex-xs="100" ng-show="affichecreeMedia" style="overflow-y:auto;min-height: 388px;" layout-padding ng-cloak>
             <md-icon md-svg-src="../../image/left-arrow-in-circular-button.svg" ng-click="ajoutermedia()"
                      aria-label="android " style="color: blue;" ></md-icon>
             <form  name="FormcreeMedia"  ng-submit="creationmedia()">
@@ -278,7 +278,7 @@
                 </md-content>
             </form>
         </div>
-        <div layout="column" flex="70" flex-xs="100" ng-show="affichemodifcat" style="overflow-y:auto;" layout-padding ng-cloak>
+        <div layout="column" flex="70" flex-xs="100" ng-show="affichemodifcat" style="overflow-y:auto;min-height: 388px;" layout-padding ng-cloak>
             <md-icon md-svg-src="../../image/left-arrow-in-circular-button.svg" ng-click="modifiercat()"
                      aria-label="android " style="color: blue;" ></md-icon>
             <form  name="Formcat"  ng-submit="modifiecategorie()">
