@@ -1,5 +1,5 @@
 <div layout="column" flex class="accueil" style="background-color: rgb(34,34,34);">
-    <div flex="90" layout="row" flex-xs="90" layout-xs="column" style="background-color: rgb(34,34,39);">
+    <div flex="100" layout="row" flex-xs="100" layout-xs="column" style="background-color: rgb(34,34,39);">
         <!-- layout-wrap for the card to take the size of the div-->
 
         <div flex="15" flex-xs="70" layout-xs="column" flex-order-xs="1" ng-hide="hide1" layout="column"
@@ -23,7 +23,7 @@
 
 
             </div>
-            <div flex-xs="100" layout-xs="column" hide>
+            <div flex-xs="100" layout-xs="column" hide-gt-xs>
                 <div flex-xs="10" ng-show="!hide1" hide-gt-xs>
                     <md-button aria-label="a" class="card-button" ng-click="afficher_cacher()">
                         <md-tooltip>Réduire</md-tooltip>
@@ -76,31 +76,34 @@
                     <div style="padding-left:12px;">
                         <h3>Liste des profils</h3>
                     </div>
-
-                    <ul>
-                        <li style="display: block;" class="un" ng-repeat="prf in
+                    <div style="margin-left:0px">
+                        <ul style="padding: 10px;">
+                            <li style="display: block;" class="un" ng-repeat="prf in
                             filteredprofile=( profiles |filterBy: ['nom','description']:searchprofcat)" flex-xs="100">
-                            {{ prf.nom }}
-                            <ul hide-xs>
-                                <li ng-repeat="ct in prf.categories"
-                                    ng-click="tri(ct);" style="cursor:pointer;margin-bottom:20px">
-                                    {{ct.nom}}
-                                </li>
-                            </ul>
-                            <div layout-align="space-around">
-                                <div flex="80">
-                                    <md-progress-linear md-mode="determinate"
-                                                        value="{{prf.progressuser}}"></md-progress-linear>
+                                {{ prf.nom }}
+                                <ul hide-xs>
+                                    <li ng-repeat="ct in prf.categories"
+                                        ng-click="tri(ct);" style="cursor:pointer;margin-bottom:20px">
+                                        {{ct.nom}}
+                                    </li>
+                                </ul>
+                                <div layout-align="space-around">
+                                    <div flex="80">
+                                        <md-progress-linear md-mode="determinate"
+                                                            value="{{prf.progressuser}}"></md-progress-linear>
 
+                                    </div>
+                                    <div flex="5"></div>
+                                    <div flex="15">
+                                        {{prf.progressuser}}%
+                                    </div>
                                 </div>
-                                <div flex="5"></div>
-                                <div flex="15">
-                                    {{prf.progressuser}}%
-                                </div>
-                            </div>
-                        </li>
+                            </li>
 
-                    </ul>
+                        </ul>
+                    </div>
+
+
                 </div>
 
             </div>
@@ -129,9 +132,9 @@
                     </div>
                 </div>
                 <div flex="80" hide-gt-xs></div>
-                <div flex="10" hide-xs style="padding-top:18px">&nbsp;&nbsp;{{longueur}} &nbsp;médias</div>
+                <div flex="10" hide-xs >&nbsp;&nbsp;{{longueur}} &nbsp;médias</div>
                 <div flex="55" hide-xs></div>
-                <div flex="15" hide-xs ng-click="aff_pop_not()" style="cursor: pointer;padding-top:18px">populaires/mieux notés</div>
+                <div flex="15" hide-xs ng-click="aff_pop_not()" >populaires/mieux notés</div>
                 <div  flex="10" layout-align="end end" layout="row">
                     <div ng-show="hide2" style="margin-top:220px">
                         <md-button aria-label="a" class="card-button" ng-click="afficher_cacher2()">
