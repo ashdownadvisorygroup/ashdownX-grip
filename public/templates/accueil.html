@@ -163,7 +163,7 @@
 
             </div>
 
-            <div flex="75" flex-xs="100" layout="row" layout-wrap>
+            <div flex="75" style="min-height: 300px;" flex-xs="100" layout="row" layout-wrap>
                 <div ng-repeat="m in allmedias" flex="25" flex-xs="100" flex-sm="50" flex-md="30">
                     <div layout="column" class='pacard' flex layout-wrap style="margin-left: 20px;">
                         <md-card class="card" style="color:black;">
@@ -228,9 +228,9 @@
 
                 </div>
                 <div flex="80" hide-gt-xs></div>
-                <div flex="10" hide-xs>&nbsp;&nbsp;{{longueur}} &nbsp;médias</div>
+                <div flex="10" hide-xs style="padding-top:16px">&nbsp;&nbsp;{{longueur}} &nbsp;médias</div>
                 <div flex="55" hide-xs></div>
-                <div flex="15" hide-xs ng-click="aff_pop_not()" style="cursor: pointer;">populaires/mieux notés</div>
+                <div flex="15" hide-xs ng-click="aff_pop_not()" style="cursor: pointer;padding-top:16px">populaires/mieux notés</div>
                 <div  flex="10" layout="row">
                     <div ng-show="hide2">
                         <md-button aria-label="a" class="card-button" ng-click="afficher_cacher2()">
