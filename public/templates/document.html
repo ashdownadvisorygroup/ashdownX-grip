@@ -7,7 +7,7 @@
             </div>
         </div>
     </div>
-    <div flex="85" flex-xs="100" layout="row" layout-xs="column" style="overflow-y:auto;height: 530px ">
+    <div flex="85" flex-xs="100" layout="row" layout-xs="column" style="overflow-y:auto;height: 580px ">
         <div flex="15" flex-xs="100" flex-order-xs="2"  class="md-padding" layout="column" style="background-color: rgb(51,54,64);overflow: auto;;min-height:500px;border-right: 2px solid rgb(5,170,245);" >
             <div flex="5"></div>
             <div flex="10">
@@ -59,18 +59,10 @@
                 <div flex="10"></div>
             </div>
             <div ng-if="affiche == 'pdf'" flex class="accueil"  style="color:white;background-color: rgb(34,34,34);" layout="column">
-                <div flex >
-                    <!-- <object data="{{media.link}}" type="application/pdf" width="100%" height="100%">
-                       <p>Ce navigateur ne supporte pas les PDFs. Veillez télécharger le PDF à ce lien <a href="{{media.link}}" download="média">Télécharger</a>.</p>
-
-                    </object> -->
-                    <object data="{{media.link}}" type="application/pdf" width="100%" height="100%">
-                        <embed src="{{media.link}}" type="application/pdf" />
-                        <p>Ce navigateur ne supporte pas les PDFs. Veillez télécharger le PDF à ce lien <a href="{{media.link}}" download="média">Télécharger</a>.</p>
-
-                    </object>
-                    <object data="{{media.link}}" type="application/pdf" width="100%" height="100%">
-                        <embed src="{{media.link}}" type="application/pdf" />
+                <div flex="100" layout-align="column" >
+                    <object data="{{media.link}}" type="application/pdf" width="100%" height="580px">
+                        <embed src="{{media.link}}" type="application/pdf"  width="100%" height="100%">
+                        <p>Ce navigateur ne supporte pas les PDFs. Veillez télécharger le PDF à ce lien <a href="{{media.link}}" download="média" ng-click="telecharger(media)">Télécharger</a>.</p>
                     </object>
                 </div>
             </div>

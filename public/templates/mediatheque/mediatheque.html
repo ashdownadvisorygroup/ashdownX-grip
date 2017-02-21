@@ -1,9 +1,8 @@
-<div  layout="column" flex class="accueil"  style="background-color: rgb(34,34,34);">
-    <div layout="row" flex="90"  layout-wrap class="med_xs">
+<div flex="100"  layout="column"  class="accueil"  style="background-color: rgb(34,34,34);">
+    <div layout="row" flex="100" layout-xs="column" flex-xs="100"  class="med_xs">
 
-        <div  ng-if="categories" flex="20" flex-xs="100" layout="column" class="prof" style="background-color: rgb(51,54,64);
-        overflow-y: auto;border-right: 2px solid rgb(5,170,245);" >
-            <div flex="15">
+        <div  ng-if="categories" flex="20" flex-xs="100" layout-xs="column"  layout="column" class="prof" style="background-color: rgb(51,54,64); overflow-y: auto;border-right: 2px solid rgb(5,170,245);" >
+            <div flex="5">
                 <div flex>
                     <input ng-model="searchcat"  class="reduceSize" style="text-align: center" placeholder="entrer la recherche">
                 </div>
@@ -17,15 +16,15 @@
 
                                 </div>
                                 <div>
-                                    <md-button class="card-button" ng-click="ajoutermedia(cat)" aria-label="a">
+                                    <md-button class="button_show" ng-click="ajoutermedia(cat)" aria-label="a">
                                         <md-tooltip>Ajouter un média a la catégorie</md-tooltip>
                                         <md-icon  md-svg-src="../../image/add.svg" class="card-icon"></md-icon>
                                     </md-button>
-                                    <md-button permission="['admin']" class="card-button" ng-click="modifiercat(cat)" aria-label="a">
+                                    <md-button permission="['admin']" class="button_show" ng-click="modifiercat(cat)" aria-label="a">
                                         <md-tooltip>Modifier la catégorie</md-tooltip>
                                         <md-icon  md-svg-src="../../image/create-new-pencil-button.svg" class="card-icon"></md-icon>
                                     </md-button>
-                                    <md-button permission="['admin']" class="card-button" ng-click="showConfirmdecat($event, cat)" aria-label="a">
+                                    <md-button permission="['admin']" class="button_show" ng-click="showConfirmdecat($event, cat)" aria-label="a">
                                         <md-tooltip>Supprimer la catégorie</md-tooltip>
                                         <md-icon md-svg-src="../../image/rubbish-bin-delete-button.svg" class="card-icon"></md-icon>
                                     </md-button>
@@ -48,7 +47,7 @@
                 </div>
             </div>
         </div>
-        <div flex="20" flex-xs="100" ng-if="categorie" layout="column" class="prof md-padding" style="background-color: rgb(51,54,64);overflow: auto;border-right: 2px solid rgb(5,170,245);" >
+        <div flex="20"  ng-if="categorie" layout="column" class="prof md-padding" style="background-color: rgb(51,54,64);overflow: auto;border-right: 2px solid rgb(5,170,245);" >
             <div flex="5"></div>
             <div flex="10" ><h1 >Catégorie</h1></div>
             <div flex="15" >
@@ -66,7 +65,7 @@
 
         </div>
 
-        <div  layout="column" flex="80" flex-xs="100" ng-hide="afficheMedia || affichemodifcat || affichecreeMedia"  >
+        <div  layout="column" flex="80" flex-xs="100" layout-xs="column" ng-hide="afficheMedia || affichemodifcat || affichecreeMedia"  >
             <div flex="10">
                 <div flex >
                     <input ng-model="searchmed"  class="reduceSize" style="text-align: center"  placeholder="entrer la recherche">

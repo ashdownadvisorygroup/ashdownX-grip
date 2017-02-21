@@ -12,7 +12,8 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 
                         templateUrl: template_url+'resultats_recherche/resultats_recherche.html',
                         controller: 'resultatsRechercheCtrl'
-                }
+                },
+                'main2@':{}
 
             },
             access: { requiredLogin: true },

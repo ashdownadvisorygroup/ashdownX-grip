@@ -13,7 +13,6 @@ app.run(function($rootScope, $state,AuthService, isAuthenticated,CategorieFactor
     var item1=window.localStorage.getItem('Rememberme');
     var item2=window.localStorage.getItem('yourTokenKey');
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams,fromState) {
-
         if (toState.access.requiredLogin && !AuthService.isAuthenticated.get()) {
             event.preventDefault();
             $state.go('new');
@@ -25,17 +24,9 @@ app.run(function($rootScope, $state,AuthService, isAuthenticated,CategorieFactor
                 }
             }
         }
-
-
     });
-    //$rootScope.$state = $state;
-  /*  if(item1){
-        if(item2){
-            console.log('i');
-            alert('jk')
-            $state.go('new');
-        }
-    }*/
+    $rootScope.$state = $state;
+
 });
 
 app.config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {

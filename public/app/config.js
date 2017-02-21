@@ -93,15 +93,35 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
             })
             .state('document', {
                 url: '/document/{id}',
-                templateUrl: template_url+'/document.html',
+                views:{
+                    header:{
+                    },
+                    main:{
+                        templateUrl: template_url+'/document.html',
+                        controller: 'documentCtrl'
+
+                    },
+                    main2:{}
+
+                },
                 access: { requiredLogin: true },
-                controller: 'documentCtrl'
+
             })
             .state('new', {
                 url: '/new',
-                templateUrl: template_url+'login/loginNew.html',
+                views:{
+                    header:{
+                    },
+                    main:{
+                        templateUrl: template_url+'login/loginNew.html',
+                        controller: 'LoginNewCtrl',
+                    },
+                    main2:{}
+
+                },
+
                 access: { requiredLogin: false },
-                controller: 'LoginNewCtrl'
+
 
             })
             .state('axgrip.renewpassword', {

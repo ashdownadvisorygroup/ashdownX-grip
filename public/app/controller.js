@@ -287,6 +287,11 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
                     $scope.theBestVideo = youtubeEmbedUtils.getIdFromURL($scope.media.link)
                 }
             })
+            $scope.telecharger = function(med){
+                LivreFactory.downloaded(med._id).then(function(up){//permet d'incrementer automatiquement le champ lu
+                    med.downloaded = up.downloaded;
+                });
+            };
         }])
 
 

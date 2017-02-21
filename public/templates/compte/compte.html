@@ -28,16 +28,17 @@
                             <div flex="20" layout="column">
                                 <div flex="20"></div>
                                 <div flex="20">
-                                    <img ng-src="{{u.photo}}" alt="{{u.name}}" class="img" style="width: 5em;height: 5em;">
+                                    <img ng-src="{{u.photo}}" alt="{{u.name}}" class="img" style="width: 4em;height: 4em;">
                                 </div>
+                                <div flex="20"></div>
                                 <div flex="20">
                                     <md-icon md-svg-src="../../image/create-new-pencil-button.svg" ui-sref="compte.mofifier_profil({id:iduser})" aria-label="android " style="color: blue;cursor:pointer;" ></md-icon>
                                 </div>
                             </div>
-                            <div flex="80" flex-xs="100" layout="column" style="overflow:auto;">
+                            <div flex="80" flex-xs="100" layout="column" style="overflow-y:auto;">
                                 <div flex="5">Nom:{{u.name}}</div>
                                 <div flex="5">E-mail:{{u.email}}</div>
-                                <md-content > <br>
+                                <div > <br>
                                     <div class="md-accordion">
                                         <md-toolbar ng-init="one = false" ng-click="one = !one">
                                             <div class="md-toolbar-tools">
@@ -51,9 +52,9 @@
                                         <div  ng-repeat="data in u.groups" style="color:black;padding:0px"
                                               ng-class="{dataContent:true, activeContent:one}">{{data.nom}}</div>
                                     </div>
-                                </md-content>
+                                </div>
 
-                                <md-content > <br>
+                                <div > <br>
                                     <div class="md-accordion">
                                         <md-toolbar ng-init="two = false" ng-click="two = !two">
                                             <div class="md-toolbar-tools">
@@ -67,8 +68,8 @@
                                         <div  ng-repeat="data in u.profil" style="color:black;padding:0px"
                                               ng-class="{dataContent:true, activeContent:two}">{{data.nom}}</div>
                                     </div>
-                                </md-content>
-                                <md-content > <br>
+                                </div>
+                                <div > <br>
                                     <div class="md-accordion">
                                         <md-toolbar ng-init="expanded = false" ng-click="expanded = !expanded">
                                             <div class="md-toolbar-tools">
@@ -82,8 +83,8 @@
                                         <div  ng-repeat="data in u.encadreur" style="color:black;padding:0px"
                                               ng-class="{dataContent:true, activeContent:expanded}">{{data.nom}}</div>
                                     </div>
-                                </md-content>
-                                <md-content > <br>
+                                </div>
+                                <div > <br>
                                     <div class="md-accordion">
                                         <md-toolbar ng-init="three = false" ng-click="three = !three">
                                             <div class="md-toolbar-tools">
@@ -97,7 +98,7 @@
                                         <div  ng-repeat="data in u.master" style="color:black;padding:0px"
                                               ng-class="{dataContent:true, activeContent:three}">{{data.nom}}</div>
                                     </div>
-                                </md-content>
+                                </div>
                             </div>
 
                         </md-content>

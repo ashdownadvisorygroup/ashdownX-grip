@@ -316,6 +316,14 @@ md-icon.card-icon{
     min-height: 0em;
     min-width: 0em;
     border-radius: 0px;
+    line-height: 12px;
+
+}
+ .button_show{
+    min-height: 0em;
+    min-width: 0em;
+    border-radius: 0px;
+    line-height: 12px;
 
 }
 md-card md-card-title.card_title{
@@ -377,7 +385,7 @@ button:focus + .menu {
     display: none;
 }
 
-li.un:first-letter { font-size:3em;text-transform: uppercase}
+li.un:first-letter { font-size:2em;text-transform: uppercase}
 md-list-item.md-3-line, md-list-item.md-3-line > .md-no-style {
     height: auto;
     min-height: 0px;

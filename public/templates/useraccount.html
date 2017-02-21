@@ -82,10 +82,10 @@
 
                                     </div>
                                 </div>
-                                <div flex="70" class=" md-padding" style="width:140px">
+                                <div flex="70" class=" md-padding" style="width: 140px;">
                                     <span class="md-subhead" style="font-size: 10px">Lu:{{m.readed}}</span>
                                     <br>
-                                    <span class="md-subhead" style="font-size: 10px">Télecharger:{{m.downloaded}}</span><br><br>
+                                    <span class="md-subhead" style="font-size: 10px">Télecharger:{{m.downloaded}}</span><br>
                                                 <span class="md-subhead" style="font-size: 10px"><a ng-click="lire(m)" ui-sref="document({id:m._id})" style="cursor:pointer;">{{m.affiche}}</a>
                                                 </span>
                                 </div>
@@ -153,10 +153,11 @@
             </div>
 
         </div>
+        <div flex="10"></div>
         <div flex="5"  flex-xs="70" layout="row" ng-if="aff_med">
             <div flex="50" hide-xs></div>
             <div flex="50" flex-xs="100" >
-                <wan-material-paging  wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
+                <wan-material-paging  wmp-total="total" goto-page="gotoPage()" position="end" current-page="currentPage" step="step">
                 </wan-material-paging>
             </div>
         </div>

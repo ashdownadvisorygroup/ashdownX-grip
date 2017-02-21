@@ -1,308 +1,346 @@
-<div  layout="column"  flex class="accueil"  style="background-color: rgb(34,34,34);">
-    <div flex="90"  layout="row" flex-xs="90" layout-xs="column"  style="background-color: rgb(34,34,39);">
-            <!-- layout-wrap for the card to take the size of the div-->
+<div layout="column" flex class="accueil" style="background-color: rgb(34,34,34);">
+    <div flex="90" layout="row" flex-xs="90" layout-xs="column" style="background-color: rgb(34,34,39);">
+        <!-- layout-wrap for the card to take the size of the div-->
 
-                <div flex="15" flex-xs="100" flex-order-xs="1" ng-hide="hide1" layout="column" style="background-color: rgb(51,54,64);border-right: 2px solid rgb(5,170,245);" >
-                    <!--<section id="three" resizable r-directions="['bottom']" r-flex="true" style="height: 20px;background-color: #00A000;">
-                        irennenenenene
-                    </section>-->
-                    <div flex="15" flex-xs="10O" layout="column">
-                        <input ng-model="searchprofcat"  class="reduceSize" style="text-align: center;" placeholder="entrer la recherche">
+        <div flex="15" flex-xs="70" layout-xs="column" flex-order-xs="1" ng-hide="hide1" layout="column"
+             style="background-color: rgb(51,54,64);border-right: 2px solid rgb(5,170,245);">
+            <!--<section id="three" resizable r-directions="['bottom']" r-flex="true" style="height: 20px;background-color: #00A000;">
+                irennenenenene
+            </section>-->
+            <div flex="10" layout="row" hide-xs>
+                <div style="padding-left: 190px;position:fixed" ng-show="!hide1" hide-xs>
+                    <md-button aria-label="a" class="card-button" ng-click="afficher_cacher()">
+                        <md-tooltip>Réduire</md-tooltip>
+                        <md-icon md-svg-src="../../image/left_arrow.svg" class="card-icon"
+                                 style="cursor:pointer"></md-icon>
+                    </md-button>
 
-                    </div>
-                    <div flex="80" flex-xs="100"  layout-xs="column"  >
-                        <div flex="90" hide-gt-xs >
-                            Liste des profils
-                            <div class="flex-container" flex="5" layout="row" style="padding: 16px 20px;float:left">
-                            <div class="flex-item flex-end" flex="" hide-gt-xs>
-                                <md-button aria-label="a" class="card-button">
-                                    <md-tooltip>Réduire ou agrandir</md-tooltip>
-                                    <md-icon md-svg-src="../../image/hide-show.svg" class="card-icon" ng-click="afficher_cacher()" style="cursor:pointer"></md-icon>
-                                </md-button>
+                </div>
+                <div flex="100" hide-xs>
+                    <input ng-model="searchprofcat" class="reduceSize" style="text-align: center;"
+                           placeholder="entrer la recherche">
+                </div>
+
+
+            </div>
+            <div flex-xs="100" layout-xs="column" hide>
+                <div flex-xs="10" ng-show="!hide1" hide-gt-xs>
+                    <md-button aria-label="a" class="card-button" ng-click="afficher_cacher()">
+                        <md-tooltip>Réduire</md-tooltip>
+                        <md-icon md-svg-src="../../image/left_arrow.svg" class="card-icon"
+                                 style="cursor:pointer"></md-icon>
+                    </md-button>
+
+                </div>
+                <div flex="100" flex-xs="100">
+                    <input ng-model="searchprofcat" class="reduceSize" style="text-align: center;"
+                           placeholder="entrer la recherche">
+                </div>
+                Liste des profils
+                <ul style="overflow-x: auto;min-width: 70px;padding-right:33px" layout-xs="row" flex-xs="100">
+                    <li style="display: block;min-width:300px;" class="un" ng-repeat="prf in
+                            filteredprofile=( profile |filterBy: ['nom','description']:searchprofcat)" flex-xs="100">
+                        {{ prf.nom }}
+                        <ul hide-xs>
+                            <li ng-repeat="ct in prf.categories"
+                                ng-click="tri(ct);" style="cursor:pointer;margin-bottom:20px">
+                                {{ct.nom}}
+                            </li>
+                        </ul>
+                        <div layout-align="space-around">
+                            <div flex="80">
+                                <md-progress-linear md-mode="determinate"
+                                                    value="{{prf.progressuser}}"></md-progress-linear>
 
                             </div>
-
+                            <div flex="5"></div>
+                            <div flex="15">
+                                {{prf.progressuser}}%
+                            </div>
                         </div>
-                            <ul style="overflow-x: auto;min-width: 70px;" layout-xs="row" flex-xs="100" >
-                                <li style="display: block;min-width:300px" class="un" ng-repeat="prf in
-                            filteredprofile=( profile |filterBy: ['nom','description']:searchprofcat)"  flex-xs="100" >
-                                    {{ prf.nom }}
-                                    <ul hide-xs>
-                                        <li  ng-repeat="ct in prf.categories"
-                                             ng-click="tri(ct);" style="cursor:pointer;margin-bottom:20px">
-                                            {{ct.nom}}
-                                        </li>
-                                    </ul>
-                                    <div layout-align="space-around" >
-                                        <div flex="80">
-                                            <md-progress-linear md-mode="determinate" value="{{prf.progressuser}}"></md-progress-linear>
+                    </li>
 
-                                        </div>
-                                        <div flex="5"></div>
-                                        <div flex="15">
-                                            {{prf.progressuser}}%
-                                        </div>
-                                    </div>
+                </ul>
+                <div flex="10" flex-xs="100" layout="row" hide-gt-xs>
+                    <wan-paging style="background-color: transparent;color:white;" wp-total="tatol"
+                                goto-page-prof="gotoPageProf()" position="center" current-page-prof="currentPageProf"
+                                step-prof="stepProf">
+                    </wan-paging>
+
+                </div>
+            </div>
+            <div flex="80" flex-xs="100" layout-xs="column">
+
+
+                <div flex="100" style="overflow-y: auto;height: 500px;" hide-xs>
+                    <div style="padding-left:12px;">
+                        <h3>Liste des profils</h3>
+                    </div>
+
+                    <ul>
+                        <li style="display: block;" class="un" ng-repeat="prf in
+                            filteredprofile=( profiles |filterBy: ['nom','description']:searchprofcat)" flex-xs="100">
+                            {{ prf.nom }}
+                            <ul hide-xs>
+                                <li ng-repeat="ct in prf.categories"
+                                    ng-click="tri(ct);" style="cursor:pointer;margin-bottom:20px">
+                                    {{ct.nom}}
                                 </li>
-
                             </ul>
+                            <div layout-align="space-around">
+                                <div flex="80">
+                                    <md-progress-linear md-mode="determinate"
+                                                        value="{{prf.progressuser}}"></md-progress-linear>
 
-
-                        </div>
-                        <div  flex="100" style="overflow-y: auto;height: 500px;" hide-xs>
-                             <div style="padding-left:12px;">
-                            <h3>Liste des profils</h3>
-                             </div>
-
-                            <ul >
-                                <li style="display: block;" class="un" ng-repeat="prf in
-                            filteredprofile=( profiles |filterBy: ['nom','description']:searchprofcat)"  flex-xs="100" >
-                                    {{ prf.nom }}
-                                    <ul hide-xs>
-                                        <li  ng-repeat="ct in prf.categories"
-                                             ng-click="tri(ct);" style="cursor:pointer;margin-bottom:20px">
-                                            {{ct.nom}}
-                                        </li>
-                                    </ul>
-                                    <div layout-align="space-around" >
-                                        <div flex="80">
-                                            <md-progress-linear md-mode="determinate" value="{{prf.progressuser}}"></md-progress-linear>
-
-                                        </div>
-                                        <div flex="5"></div>
-                                        <div flex="15">
-                                            {{prf.progressuser}}%
-                                        </div>
-                                    </div>
-                                </li>
-
-                            </ul>
-                        </div>
-
-                        <div flex="10" flex-xs="100"  layout="row" hide-gt-xs>
-                                <wan-paging style="background-color: transparent;color:white;" wp-total="tatol" goto-page-prof="gotoPageProf()" position="center" current-page-prof="currentPageProf" step-prof="stepProf">
-                                </wan-paging>
-
-                        </div>
-
-
-
-
-
-                    </div>
-                </div>
-
-            <div flex="85" flex-xs="100" flex-order-xs="2" layout="row" layout-xs="column" style="overflow-y: auto;" ng-class="{'flex-100': hide1}">
-                <div flex="85" flex-xs="100" flex-order-xs="2" layout-xs="column"  layout="column"  id="main"  ng-show="stagiaires.length >0" ng-class="{'flex-100':hide2}" >
-                    <div flex="5"  layout="row" style="padding-top: 2em;font-size: 12px" hide-xs>
-                        <div class="flex-container" flex="5" layout="row" style="padding: 16px 20px;">
-                            <div ng-show="!hide1">
-                                <md-button aria-label="a" class="card-button"  ng-click="afficher_cacher()">
-                                    <md-tooltip>Réduire </md-tooltip>
-                                    <md-icon md-svg-src="../../image/left_arrow.svg" class="card-icon" style="cursor:pointer"></md-icon>
-                                </md-button>
-
+                                </div>
+                                <div flex="5"></div>
+                                <div flex="15">
+                                    {{prf.progressuser}}%
+                                </div>
                             </div>
-                            <div ng-show="hide1">
-                                <md-button aria-label="a" class="card-button"  ng-click="afficher_cacher()">
-                                    <md-tooltip>agrandir</md-tooltip>
-                                    <md-icon md-svg-src="../../image/right_arrow.svg" class="card-icon" style="cursor:pointer"></md-icon>
-                                </md-button>
+                        </li>
 
-                            </div>
-
-                        </div>
-                        <div flex="10">{{longueur}} &nbsp;médias</div>
-
-                        <div flex="65"></div>
-
-
-                        <div flex="15"  ng-click="aff_pop_not()" style="cursor: pointer;">populaires/mieux notés</div>
-                        <div class="flex-container" flex="10" layout="row" style=" float: right;padding: 16px 20px;">
-                            <div ng-show="!hide2">
-                                <md-button aria-label="a" class="card-button"  ng-click="afficher_cacher2()">
-                                    <md-tooltip>Réduire </md-tooltip>
-                                    <md-icon md-svg-src="../../image/right_arrow.svg" class="card-icon" style="cursor:pointer"></md-icon>
-                                </md-button>
-
-                            </div>
-                            <div ng-show="hide2">
-                                <md-button aria-label="a" class="card-button"  ng-click="afficher_cacher2()">
-                                    <md-tooltip>agrandir</md-tooltip>
-                                    <md-icon md-svg-src="../../image/left_arrow.svg" class="card-icon" style="cursor:pointer"></md-icon>
-                                </md-button>
-
-                            </div>
-
-                        </div>
-                    </div>
-                    <div flex="5" style="padding-top:4px" ><hr></div>
-                    <div flex="35"  hide-gt-xs>
-                        <div>
-                            <wan-material-paging wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
-                            </wan-material-paging>
-                        </div>
-
-
-                    </div>
-
-                    <div flex="75" flex-xs="100"    layout="row" layout-wrap >
-                        <div ng-repeat="m in allmedias" flex="25" flex-xs="100" flex-sm="50" flex-md="30" >
-                            <div layout="column"  class='pacard' flex layout-wrap style="margin-left: 20px;">
-                                <md-card class="card" style="color:black;" >
-                                    <md-card-title  class="card_title" >
-                                        <md-card-title-text style="margin-right: 1em;line-height:5px;" layout="column">
-                                            <div flex="30" flex-xs="30" layout-xs="row" layout="row">
-                                                <div flex="25" flex-xs="25" >
-                                                    <span class="md-headline" style="font-size: 15px;padding-left:10px;">{{m.nom}}</span>
-                                                </div>
-                                                <div flex="70" flex-xs="70"></div>
-                                                <div flex="5" flex-xs="10" style="text-align: end;">
-                                                    <img ng-src="{{m.logo}}" style="width: 40px;height: 40px"  alt="" >
-
-                                                </div>
-                                            </div>
-                                            <div flex="70"  flex-xs="80">
-                                                <span class="md-subhead" style="font-size: 10px">Lu:{{m.readed}}</span>
-                                                <br><br>
-                                                <span class="md-subhead" style="font-size: 10px">Télecharger:{{m.downloaded}}</span>
-                                                <br><br><br>
-                                                <span class="md-subhead" style="font-size: 10px"><a ng-click="lire(m)" ui-sref="document({id:m._id})" style="cursor:pointer;">{{m.affiche}}</a>
-                                                </span>
-                                            </div>
-                                        </md-card-title-text>
-                                    </md-card-title>
-                                    <md-card-actions layout="row" layout-align="start center" class="cardi" hide-xs>
-                                        En cours
-                                    </md-card-actions>
-                                </md-card>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div flex="10"  layout="row" hide-xs>
-                        <div flex="50"></div>
-                        <div flex="50" >
-                            <wan-material-paging wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
-                            </wan-material-paging>
-                        </div>
-                    </div>
-
-
-                </div>
-
-                <div layout="column"  ng-show="stagiaires.length == 0" id="corpus" flex="100" flex-order-gt-xs="2" flex-xs="100" flex-order-xs="3">
-                    <div flex="5"  layout="row" style="padding-top: 2em;font-size: 12px" hide-xs>
-                        <div  flex="5" layout="row" hide-xs>
-                            <div ng-show="!hide1">
-                                <md-button aria-label="a" class="card-button"  ng-click="afficher_cacher()">
-                                    <md-tooltip>Réduire </md-tooltip>
-                                    <md-icon md-svg-src="../../image/left_arrow.svg" class="card-icon" style="cursor:pointer"></md-icon>
-                                </md-button>
-
-                            </div>
-                            <div ng-show="hide1">
-                                <md-button aria-label="a" class="card-button"  ng-click="afficher_cacher()">
-                                    <md-tooltip>agrandir</md-tooltip>
-                                    <md-icon md-svg-src="../../image/right_arrow.svg" class="card-icon" style="cursor:pointer"></md-icon>
-                                </md-button>
-
-                            </div>
-
-                        </div>
-                        <div flex="10">&nbsp;&nbsp;{{longueur}} &nbsp;médias</div>
-                        <div flex="75"></div>
-                        <div flex="15"  ng-click="aff_pop_not()" style="cursor: pointer;">populaires/mieux notés</div>
-                    </div>
-                    <div flex="5" style="padding-top:4px" ><hr></div>
-                    <div flex-xs="100"   layout-xs="row" hide-gt-xs>
-                            <wan-material-paging style="background-color: transparent;color:white;" wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
-                            </wan-material-paging>
-
-                    </div>
-                    <div flex="75" flex-xs="100"  layout="row"  layout-wrap >
-                        <div ng-repeat="m in allmedias"  flex-xs="100" flex-sm="50" flex-md="30" flex="20">
-                            <div layout="column"  class='pacard ' flex layout-wrap style="margin-left: 0px;">
-                                <md-card  style="color:black;" >
-                                    <md-card-title  style="width: 100px;height: 100px;padding: 0px 1px;margin-left: 0em;">
-                                        <md-card-title-text style="margin-right: 1em;line-height:5px;" layout="column">
-                                            <div flex="30" layout="row">
-                                                <div flex="25" class="md-padding">
-                                                    <span class="md-headline" style="font-size: 15px">{{m.nom}}</span>
-                                                </div>
-                                                <div flex="70"></div>
-                                                <div flex="5">
-                                                    <img ng-src="{{m.logo}}" style="width: 40px;height: 40px"  alt="" >
-
-                                                </div>
-                                            </div>
-                                            <div flex="70" class="md-padding" style="width:140px">
-                                                <span class="md-subhead" style="font-size: 10px">Lu:{{m.readed}}</span>
-                                                <br><br>
-                                                <span class="md-subhead" style="font-size: 10px">Télecharger:{{m.downloaded}}</span>
-                                                <br><br><br>
-                                                <span class="md-subhead" style="font-size: 10px"><a ng-click="lire(m)" ui-sref="document({id:m._id})" style="cursor:pointer;">{{m.affiche}}</a>
-                                                </span>
-                                            </div>
-
-                                        </md-card-title-text>
-
-                                    </md-card-title>
-                                    <md-card-actions layout="row" layout-align="start center" class="cardi">
-                                        En cours
-                                    </md-card-actions>
-                                </md-card>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div flex="10"   layout="row" hide-xs>
-                        <div flex="50"></div>
-                        <div flex="50" flex-xs="100">
-                            <wan-material-paging style="background-color: transparent;color:white;" wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
-                            </wan-material-paging>
-                        </div>
-                    </div>
-
-
-                </div>
-                <div  flex="15" ng-show="stagiaires.length>0 || hide2"  flex-order-gt-xs="3" flex-xs="100" flex-order-xs="1"     style="background-color: rgb(51,54,64);border-left: 2px solid rgb(5,170,245);" >
-                    <div >
-                        <input ng-model="searchstagiaire" class="reduceSize" style="text-align:center" placeholder="entrer la recherche">
-                      <!--  <div class="flex-container" flex="5" layout="row" style="padding: 16px 20px;" hide-gt-xs>
-                            <div class="flex-item flex-end" flex="">
-                                <md-button aria-label="a" class="card-button">
-                                    <md-tooltip>Réduire ou agrandir</md-tooltip>
-                                    <md-icon md-svg-src="../../image/hide-show.svg" class="card-icon" ng-click="afficher_cacher()" style="cursor:pointer"></md-icon>
-                                </md-button>
-
-                            </div>
-
-                        </div>-->
-                    </div>
-                    <md-content style="background-color: rgb(51,54,64);color:white;overflow-y: auto;height:525px;" class="stage_list" flex>
-                        <section>
-                            <md-subheader >Liste des stagiaires</md-subheader>
-
-                            <md-list class="">
-                                <md-list-item class="md-3-line list_stage" ng-repeat="item in filteredStagiaires=( stagiaires |filterBy: ['name','email']:searchstagiaire)"
-                                              style="height:7%;"  >
-                                    <img ng-src="{{item.photo}}?{{$index}}" class="md-avatar" alt="{{item.name}}">
-                                    <div class="md-list-item-text" >
-                                        <a  ui-sref="axgrip.useraccount({id:item._id})" style="text-decoration: none;">
-                                            <h3 style="color:white;cursor:pointer;font-size: 12px">{{item.name}}</h3>
-                                        </a>
-                                    </div>
-                                    <md-divider md-inset ng-if="!$last"></md-divider>
-                                </md-list-item>
-                            </md-list>
-                        </section>
-                    </md-content>
+                    </ul>
                 </div>
 
             </div>
 
+
+
+
+
+        </div>
+
+
+    <div flex="85" flex-xs="100" flex-order-xs="2" layout="row" layout-xs="column" style="overflow-y: auto;"
+         ng-class="{'flex-100': hide1}">
+        <div flex="85" flex-xs="100" flex-order-xs="2" layout-xs="column" layout="column" id="main"
+             ng-show="stagiaires.length >0" ng-class="{'flex-100':hide2}">
+
+            <div flex="5" layout="row" flex-xs="100" style="padding-top: 1em;font-size: 12px" >
+                <div flex="10" layout="row" layout-align="start start" layout-align-xs="start end">
+                    <div ng-show="hide1" style="position:relative">
+                        <md-button aria-label="a" class="card-button" ng-click="afficher_cacher()">
+                            <md-tooltip>agrandir liste des profils</md-tooltip>
+                            <md-icon md-svg-src="../../image/right_arrow.svg" class="card-icon"
+                                     style="cursor:pointer"></md-icon>
+                        </md-button>
+
+                    </div>
+                </div>
+                <div flex="80" hide-gt-xs></div>
+                <div flex="10" hide-xs style="padding-top:18px">&nbsp;&nbsp;{{longueur}} &nbsp;médias</div>
+                <div flex="55" hide-xs></div>
+                <div flex="15" hide-xs ng-click="aff_pop_not()" style="cursor: pointer;padding-top:18px">populaires/mieux notés</div>
+                <div  flex="10" layout-align="end end" layout="row">
+                    <div ng-show="hide2" style="margin-top:220px">
+                        <md-button aria-label="a" class="card-button" ng-click="afficher_cacher2()">
+                            <md-tooltip>agrandir liste des stagiaires</md-tooltip>
+                            <md-icon md-svg-src="../../image/left_arrow.svg" class="card-icon"
+                                     style="cursor:pointer"></md-icon>
+                        </md-button>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div flex="5" style="padding-top:4px">
+                <hr>
+            </div>
+
+            <div flex="35" hide-gt-xs>
+                <div>
+                    <wan-material-paging wmp-total="total" goto-page="gotoPage()" position="center"
+                                         current-page="currentPage" step="step">
+                    </wan-material-paging>
+                </div>
+
+
+            </div>
+
+            <div flex="75" flex-xs="100" layout="row" layout-wrap>
+                <div ng-repeat="m in allmedias" flex="25" flex-xs="100" flex-sm="50" flex-md="30">
+                    <div layout="column" class='pacard' flex layout-wrap style="margin-left: 20px;">
+                        <md-card class="card" style="color:black;">
+                            <md-card-title class="card_title">
+                                <md-card-title-text style="margin-right: 1em;line-height:5px;" layout="column">
+                                    <div flex="30" flex-xs="30" layout-xs="row" layout="row">
+                                        <div flex="25" flex-xs="25">
+                                            <span class="md-headline" style="font-size: 15px;padding-left:10px;">{{m.nom}}</span>
+                                        </div>
+                                        <div flex="70" flex-xs="70"></div>
+                                        <div flex="5" flex-xs="10" style="text-align: end;">
+                                            <img ng-src="{{m.logo}}" style="width: 40px;height: 40px" alt="">
+
+                                        </div>
+                                    </div>
+                                    <div flex="70" flex-xs="80">
+                                        <span class="md-subhead" style="font-size: 10px">Lu:{{m.readed}}</span>
+                                        <br><br>
+                                        <span class="md-subhead"
+                                              style="font-size: 10px">Télecharger:{{m.downloaded}}</span>
+                                        <br><br><br>
+                                                <span class="md-subhead" style="font-size: 10px"><a ng-click="lire(m)"
+                                                                                                    ui-sref="document({id:m._id})"
+                                                                                                    style="cursor:pointer;">{{m.affiche}}</a>
+                                                </span>
+                                    </div>
+                                </md-card-title-text>
+                            </md-card-title>
+                            <md-card-actions layout="row" layout-align="start center" class="cardi" hide-xs>
+
+                            </md-card-actions>
+                        </md-card>
+                    </div>
+                </div>
+
+            </div>
+            <div flex="10" layout="row" hide-xs>
+                <div flex="50"></div>
+                <div flex="50">
+                    <wan-material-paging wmp-total="total" goto-page="gotoPage()" position="center"
+                                         current-page="currentPage" step="step">
+                    </wan-material-paging>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div layout="column" ng-show="stagiaires.length == 0" id="corpus" flex="100" flex-order-gt-xs="2" flex-xs="100"
+             flex-order-xs="3">
+            <div flex="5" layout="row">
+                <div ng-show="hide1" style="padding-left: 190px;position:fixed">
+                    <md-button aria-label="a" class="card-button" ng-click="afficher_cacher()">
+                        <md-tooltip>agrandir</md-tooltip>
+                        <md-icon md-svg-src="../../image/right_arrow.svg" class="card-icon"
+                                 style="cursor:pointer"></md-icon>
+                    </md-button>
+
+                </div>
+
+            </div>
+            <div flex="5" layout="row" style="padding-top: 2em;font-size: 12px" hide-xs>
+                <div flex="5"></div>
+                <div flex="10">&nbsp;&nbsp;{{longueur}} &nbsp;médias</div>
+                <div flex="70"></div>
+                <div flex="10" ng-click="aff_pop_not()" style="cursor: pointer;">populaires/mieux notés</div>
+
+            </div>
+            <div class="flex-container" flex="5" layout="row">
+                <div ng-show="hide2">
+                    <md-button aria-label="a" class="card-button" ng-click="afficher_cacher2()">
+                        <md-tooltip>agrandir</md-tooltip>
+                        <md-icon md-svg-src="../../image/left_arrow.svg" class="card-icon"
+                                 style="cursor:pointer"></md-icon>
+                    </md-button>
+
+                </div>
+
+            </div>
+            <div flex="5" style="padding-top:4px">
+                <hr>
+            </div>
+            <div flex-xs="100" layout-xs="row" hide-gt-xs>
+                <wan-material-paging style="background-color: transparent;color:white;" wmp-total="total"
+                                     goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
+                </wan-material-paging>
+
+            </div>
+            <div flex="75" flex-xs="100" layout="row" layout-wrap>
+                <div ng-repeat="m in allmedias" flex-xs="100" flex-sm="50" flex-md="30" flex="20">
+                    <div layout="column" class='pacard ' flex layout-wrap style="margin-left: 0px;">
+                        <md-card style="color:black;">
+                            <md-card-title style="width: 100px;height: 100px;padding: 0px 1px;margin-left: 0em;">
+                                <md-card-title-text style="margin-right: 1em;line-height:5px;" layout="column">
+                                    <div flex="30" layout="row">
+                                        <div flex="25" class="md-padding">
+                                            <span class="md-headline" style="font-size: 15px">{{m.nom}}</span>
+                                        </div>
+                                        <div flex="70"></div>
+                                        <div flex="5">
+                                            <img ng-src="{{m.logo}}" style="width: 40px;height: 40px" alt="">
+
+                                        </div>
+                                    </div>
+                                    <div flex="70" class="md-padding" style="width:140px">
+                                        <span class="md-subhead" style="font-size: 10px">Lu:{{m.readed}}</span>
+                                        <br><br>
+                                        <span class="md-subhead"
+                                              style="font-size: 10px">Télecharger:{{m.downloaded}}</span>
+                                        <br><br><br>
+                                                <span class="md-subhead" style="font-size: 10px"><a ng-click="lire(m)"
+                                                                                                    ui-sref="document({id:m._id})"
+                                                                                                    style="cursor:pointer;">{{m.affiche}}</a>
+                                                </span>
+                                    </div>
+
+                                </md-card-title-text>
+
+                            </md-card-title>
+                            <md-card-actions layout="row" layout-align="start center" class="cardi">
+
+                            </md-card-actions>
+                        </md-card>
+                    </div>
+                </div>
+
+            </div>
+            <div flex="10" layout="row" hide-xs>
+                <div flex="50"></div>
+                <div flex="50" flex-xs="100">
+                    <wan-material-paging style="background-color: transparent;color:white;" wmp-total="total"
+                                         goto-page="gotoPage()" position="center" current-page="currentPage"
+                                         step="step">
+                    </wan-material-paging>
+                </div>
+            </div>
+
+
+        </div>
+        <div flex="15" ng-show="stagiaires.length>0" ng-hide="hide2" flex-order-gt-xs="3" flex-xs="100" layout="column"
+             flex-order-xs="1" style="background-color: rgb(51,54,64);border-left: 2px solid rgb(5,170,245);">
+            <div flex="10" layout="row" >
+                <div ng-show="!hide2" style="right:-100px;">
+                    <md-button aria-label="a" class="card-button" ng-click="afficher_cacher2()">
+                        <md-tooltip>Réduire</md-tooltip>
+                        <md-icon md-svg-src="../../image/right_arrow.svg" class="card-icon"
+                                 style="cursor:pointer"></md-icon>
+                    </md-button>
+
+                </div>
+                <div flex="100">
+                    <input ng-model="searchstagiaire" class="reduceSize" style="text-align:center"
+                           placeholder="entrer la recherche">
+                </div>
+            </div>
+
+            <md-content style="background-color: rgb(51,54,64);color:white;overflow-y: auto;height:525px;"
+                        class="stage_list" flex>
+                <section>
+                    <md-subheader>Liste des stagiaires</md-subheader>
+
+                    <md-list class="">
+                        <md-list-item class="md-3-line list_stage"
+                                      ng-repeat="item in filteredStagiaires=( stagiaires |filterBy: ['name','email']:searchstagiaire)"
+                                      style="height:7%;">
+                            <img ng-src="{{item.photo}}?{{$index}}" class="md-avatar" alt="{{item.name}}">
+                            <div class="md-list-item-text">
+                                <a ui-sref="axgrip.useraccount({id:item._id})" style="text-decoration: none;">
+                                    <h3 style="color:white;cursor:pointer;font-size: 12px">{{item.name}}</h3>
+                                </a>
+                            </div>
+                            <md-divider md-inset ng-if="!$last"></md-divider>
+                        </md-list-item>
+                    </md-list>
+                </section>
+            </md-content>
+        </div>
+
     </div>
+
+</div>
 
 
 </div>

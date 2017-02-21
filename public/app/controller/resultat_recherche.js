@@ -50,7 +50,7 @@ app.controller('resultatsRechercheCtrl', ['$scope',function ($scope) {
             }
         }, true);
     }])
-    .controller('ResultatMediaCtrl', ['$scope', function ($scope) {
+    .controller('ResultatMediaCtrl', ['$scope','LivreFactory', function ($scope,LivreFactory) {
         $scope.step=6;var medPerPage=12;$scope.currentPage=1;
 
         $scope.lire = function(med){

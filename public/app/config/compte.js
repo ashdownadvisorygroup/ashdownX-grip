@@ -20,7 +20,8 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                 main11:{
                     templateUrl: template_url+'compte/main3.html',
                     controller: 'CompteCtrl'
-                }
+                },
+
 
 
             },

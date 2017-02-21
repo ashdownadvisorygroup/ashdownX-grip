@@ -112,8 +112,6 @@ app.controller('ProfilsCtrl', ['$scope','$cookieStore',
                     $scope.showActionToast(text)
                 });
             }, function(msg) {
-                text="suppression annulée"
-                $scope.showActionToast(text);
             });
         };
 

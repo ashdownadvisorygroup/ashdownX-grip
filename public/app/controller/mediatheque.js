@@ -188,9 +188,8 @@ app.controller('CategoriesCtrl', ['$scope','$cookieStore',
 
         $scope.showConfirmdecat = function(ev,cat) {
             var confirm = $mdDialog.confirm()
-                .title('voulez vous supprimer cette categorie?')
-                .content('vous etes sur le point de supprimer la categorie et ses medias seront envoyes dans ' +
-                    'la categorie par defaut')
+                .title('voulez vous supprimer cette catégorie?')
+                .content('vous êtes sur le point de supprimer la catégorie')
                 .ariaLabel('bonne chance')
                 .targetEvent(ev)
                 .ok('Oui!')
@@ -425,5 +424,16 @@ app.controller('CategoriesCtrl', ['$scope','$cookieStore',
                 }
             }, true);
         });
+        //incremente readed lors d'un lecture ie lien vers le document
+        $scope.lire = function(med){
+            LivreFactory.readed(med._id).then(function(up){//permet d'incrementer automatiquement le champ lu
+                med.readed = up.readed;
+            });
+        };
+        $scope.telecharger = function(med){
+            LivreFactory.downloaded(med._id).then(function(up){//permet d'incrementer automatiquement le champ lu
+                med.downloaded = up.downloaded;
+            });
+        };
 
     }])

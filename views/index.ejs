@@ -25,18 +25,18 @@
 
 
 </head>
-<body ng-app="bv" ng-controller="AppCtrl" layout="column" >
+<body ng-app="bv" ng-controller="AppCtrl"  layout="column" >
   <div ui-view="header"></div>
-  <div layout="row" flex ng-show="$state.includes('compte')">
-    <div ui-view="main1" flex="15" hide-xs></div>
-    <div ui-view="main10" flex="70" flex-xs="100" ></div>
-    <div ui-view="main11" flex="15" hide-xs></div>
+  <div layout="row" flex flex-xs="100" flex-sm="100" flex-md="100" layout-xs="row"  ng-show="$state.includes('compte')">
+    <div ui-view="main1" flex="15" layout="column" hide-xs></div>
+    <div ui-view="main10" flex="70" layout="column" layout-xs="column" flex-xs="100" ></div>
+    <div ui-view="main11" flex="15" layout="column" hide-xs></div>
   </div>
 
-  <div ui-view="main" flex ></div>
+  <div flex ui-view="main"  layout="column"></div>
   <div ui-view="main2" ></div>
-  <div ui-view="footer"></div>
-  <div ui-view=""></div>
+  <div ui-view="footer" ></div>
+  <div  ui-view="" ></div>
 </body>
 
 
