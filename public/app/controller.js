@@ -381,7 +381,9 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
         $scope.affiche2=false;
         $scope.affiche3=false;
         $scope.logino = function() {
+            console.log($scope.user)
             AuthService.login($scope.user).then(function(msg) {
+                console.log(msg)
                 $state.go('axgrip.accueil');
             }, function(errMsg) {
                 text="identification incorrect"

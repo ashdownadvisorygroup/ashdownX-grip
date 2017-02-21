@@ -1,36 +1,33 @@
-<div  layout="column"  flex class="accueil"  style="background-color: rgb(34,34,34);">
-    <div flex="100" >
-            <div flex layout="column" style="background-color: rgb(51,54,64);overflow-y: auto;min-height: 600px;
-                        border-right: 2px solid rgb(5,170,245);" hide-xs>
-                <div flex="100">
-                        <input ng-model="searchprofcat"  class="reduceSize" style="text-align: center" placeholder="entrer la recherche">
-
-                   <div style="text-align: center"><h3>Liste des profils</h3></div>
+<div layout="column" flex class="accueil" style="background-color: rgb(34,34,34);">
+    <div flex="100" layout="column">
+        <div flex layout="column" style="background-color: rgb(51,54,64);border-right: 2px solid rgb(5,170,245);" hide-xs>
+            <input ng-model="searchprofcat" class="reduceSize" style="text-align: center" placeholder="entrer la recherche">
+            <div style="text-align: center"><h3>Liste des profils</h3></div>
+            <ul style="overflow-y: auto;min-height: 455px;">
+                <li style="display: block;" class="un"
+                    ng-repeat="prf in filteredprofile=( profile |filterBy: ['nom','description','objectifs']:searchprofcat)">
+                    {{ prf.nom }}
                     <ul>
-                        <li style="display: block;" class="un" ng-repeat="prf in filteredprofile=( profile |filterBy: ['nom','description','objectifs']:searchprofcat)">
-                            {{ prf.nom }}
-                            <ul>
-                                <li  ng-repeat="ct in prf.categories"
-                                     ng-click="tri(ct);" style="cursor:pointer;margin-bottom:22px">
-                                    {{ct.nom}} <br>{{ct.etat}}
-                                </li>
-                            </ul>
-                            <div layout-align="space-around">
-                                <div flex="80">
-                                    <md-progress-linear md-mode="determinate" value="{{prf.progressuser}}"></md-progress-linear>
-                                    <br>
-                                </div>
-                                <div flex="5"></div>
-                                <div flex="15">
-                                    <br>
-                                    {{prf.progressuser}}%
-                                </div>
-                            </div>
+                        <li ng-repeat="ct in prf.categories"
+                            ng-click="tri(ct);" style="cursor:pointer;margin-bottom:22px">
+                            {{ct.nom}} <br>{{ct.etat}}
                         </li>
-
                     </ul>
+                    <div layout-align="space-around">
+                        <div flex="80">
+                            <md-progress-linear md-mode="determinate"
+                                                value="{{prf.progressuser}}"></md-progress-linear>
+                            <br>
+                        </div>
+                        <div flex="5"></div>
+                        <div flex="15">
+                            <br>
+                            {{prf.progressuser}}%
+                        </div>
+                    </div>
+                </li>
 
-                </div>
-            </div>
+            </ul>
+        </div>
     </div>
 </div>
