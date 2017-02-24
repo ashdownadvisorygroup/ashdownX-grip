@@ -59,4 +59,22 @@ app.filter('nospace', function () {
 
             return filtered;
         };
+    })
+    .filter('progressbar', function(){
+        return function (number) {
+            var filtered = "";
+                if(number>=0 && number <30){
+                    filtered="red";
+                }
+                if(number>=30 && number < 50){
+                    filtered="orange";
+                }
+                if(number>=50 && number < 80){
+                    filtered="blue";
+                }
+                if(number>=80 && number <= 100){
+                    filtered="green";
+                }
+            return filtered;
+        };
     });

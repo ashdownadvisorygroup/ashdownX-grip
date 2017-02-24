@@ -18,7 +18,7 @@ var gulpFilter = require('gulp-filter')
 // Paths
 var bower = require('gulp-bower-files')
 var src = {
-    styl: ['public/javascripts/angular-jk-carousel/**/*.css'],
+    styl: ['public/javascripts/angular-jk-carousel/jk-carousel.css'],
     css: ['public/css/**/*.css'],
     js1: ['public/javascripts/angular-jk-carousel/**/*.js'],
     js2: ['public/app/**/*.js'],
@@ -31,7 +31,7 @@ var src = {
 
 src.js2 = src.js2.concat(src.js3)
 src.js2 = src.js2.concat(src.js4)
-src.js2 = src.js2.concat(src.js5)
+src.js2 = src.js2.concat(src.js5)//combinaison des contrôlleurs,services,config et app.js
 
 
 var publishdir = 'public'
@@ -44,7 +44,7 @@ var dist = {
 }
 // default task
 gulp.task('default', function() {
-    gulp.start('styles', 'scripts');
+    gulp.start('task1','bower','javascript' ,'axgrip_css');
 });
 // css task
 gulp.task('styles', function () {
@@ -67,15 +67,16 @@ gulp.task('scripts', function() {
         .pipe(size())
 
 });
-
+//tâche de tous les fichiers javascripts qui  sont  dans app:controlleurs ,services....
 gulp.task('task1', function() {
-    return gulp.src(src.js1)
+    return gulp.src(src.js2)
         .pipe(concat('app.js'))
         .pipe(gulp.dest(dist.js))
         .pipe(rename('app.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest(dist.js));
 });
+//tâche de tous les fichiers javascripts et css dans le dossier vendor
 gulp.task('bower', function() {
     var jsFilter = gulpFilter('**/*.js')
     var cssFilter = gulpFilter('**/*.css')
@@ -93,8 +94,8 @@ gulp.task('bower', function() {
         .pipe(uglify())
         .pipe(gulp.dest(dist.css));
 });
+//tâche de tous les fichiers javascripts qui ne sont pas dans app,et vendor
 gulp.task('javascript', function() {
-
     return gulp.src(src.js1)
         .pipe(concat('javascripts.js'))
         .pipe(gulp.dest(dist.js))
@@ -102,7 +103,7 @@ gulp.task('javascript', function() {
         .pipe(uglify())
         .pipe(gulp.dest(dist.js));
 });
-
+//tâche de tous les fichiers css qui ne sont pas dans vendor et nos styles écrits
 gulp.task('stylesheets', function() {
 
     return gulp.src(src.styl)
@@ -112,7 +113,8 @@ gulp.task('stylesheets', function() {
         .pipe(uglify())
         .pipe(gulp.dest(dist.css));
 });
-gulp.task('axgrip_css', function() {
+//tâche de tous les fichiers css que nous avons écrit
+gulp.task('axgrip', function() {
 
     return gulp.src(src.css)
         .pipe(concat('axgrip.css'))

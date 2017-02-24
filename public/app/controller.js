@@ -64,7 +64,6 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
 
         $scope.startIntro=function(){
            $state.go($state.$current.self.name,{guide:true});
-            console.log($state.$current.self.name)
         }
 
 

@@ -446,7 +446,6 @@ app.factory('IntroFactory', ['$cookieStore','$localStorage',function($cookieStor
         }
     },
         ExitEvent:function (scope) {
-        console.log("Exit Event called");
             $localStorage['intro_'+factory.state+'_'+$cookieStore.get('user').id+'_'+'autostart']= false;
     }
     }

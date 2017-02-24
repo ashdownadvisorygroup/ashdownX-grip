@@ -169,7 +169,6 @@ app.controller('ProfilsCtrl', ['$scope','$cookieStore',
                 angular.forEach($scope.profil.categorieprofil,function(dat){
                     dat.description=text_truncate(dat.description,46);
                 })
-                console.log($scope.profil.categorieprofil)
                     $scope.total = Math.ceil(profils.categorieprofil.length/medPerPage);
                     $scope.profil.categorieprofil= profils.categorieprofil.slice(0,medPerPage);
                     $scope.gotoPage = function() {

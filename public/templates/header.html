@@ -44,7 +44,7 @@
                         <img src="../../image/GRIP_Logo.png" alt="" class="accueil-img" >
                     </div>
                 </div>
-                <div  flex="5" >
+                <div  flex="5" hide-xs >
                     <md-button id="step2" class="button_show" ng-click="startIntro()" aria-label="a">
                         <md-tooltip>Afficher l'intro</md-tooltip>
                         <md-icon  md-svg-src="../../image/play-button.svg" class="card-icon"></md-icon>
@@ -54,8 +54,8 @@
                     <div flex="90">
                         <input class="input2" ng-model="search" ng-change="rechercher()" type="search" style="color:black;background-color:white;">
                     </div>
-                    <div flex="10" >
-                        <img src="../image/search.png" ui-sref="axgrip.resultats_recherche.profil" style="width: 34px;  height: 34px;background-color: rgb(5,170,245);cursor:pointer;"/>
+                    <div flex="10">
+                        <md-icon  md-svg-src="../../image/search.svg" ui-sref="axgrip.resultats_recherche.profil"  ng-class="md-48" style="cursor: pointer;padding-left:5px;"></md-icon>
                     </div>
                 </div>
                 <div flex="10"></div>

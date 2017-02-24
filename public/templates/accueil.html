@@ -93,14 +93,23 @@
                                         {{ct.nom}}
                                     </li>
                                 </ul>
-                                <div layout-align="space-around">
+                                <div layout-align="space-around" >
                                     <div flex="80">
-                                        <md-progress-linear md-mode="determinate"
+                                        <md-progress-linear md-mode="determinate"  ng-class="{
+                            'green': (prf.progressuser|progressbar)=='green',
+                                        'blue': (prf.progressuser|progressbar)=='blue',
+                                        'orange': (prf.progressuser|progressbar)=='orange',
+                                        'red': (prf.progressuser|progressbar)=='red'   }"
                                                             value="{{prf.progressuser}}"></md-progress-linear>
 
                                     </div>
                                     <div flex="5"></div>
-                                    <div flex="15">
+                                    <div flex="15"  ng-class="{
+                            'green': (prf.progressuser|progressbar)=='green',
+                                        'blue': (prf.progressuser|progressbar)=='blue',
+                                        'orange': (prf.progressuser|progressbar)=='orange',
+                                        'red': (prf.progressuser|progressbar)=='red'   }">
+                                        <br>
                                         {{prf.progressuser}}%
                                     </div>
                                 </div>
