@@ -1,14 +1,20 @@
-<div flex="100"  layout="column"  class="accueil"  style="background-color: rgb(34,34,34);">
+<div flex="100"  layout="column"  class="accueil"  style="background-color: rgb(34,34,34);"
+     ng-intro-options="IntroOptions" ng-intro-method="CallMe"
+     ng-intro-oncomplete="CompletedEvent" ng-intro-onexit="ExitEvent"
+     ng-intro-onchange="ChangeEvent" ng-intro-onbeforechange="BeforeChangeEvent"
+     ng-intro-onafterchange="AfterChangeEvent"
+     ng-intro-autostart="ShouldAutoStart">
     <div layout="row" flex="100" layout-xs="column" flex-xs="100"  class="med_xs">
 
         <div  ng-if="categories" flex="20" flex-xs="100" layout-xs="column"  layout="column" class="prof" style="background-color: rgb(51,54,64); overflow-y: auto;min-height:600px; border-right: 2px solid rgb(5,170,245);" >
-            <div flex="5">
+            <div flex="5" layout="column" id="step6">
                 <div flex>
                     <input ng-model="searchcat"  class="reduceSize" style="text-align: center" placeholder="entrer la recherche">
                 </div>
+
             </div>
                     <h5  style="font-size: 18px;cursor:pointer;padding-left: 10px;" ng-click="trisgen();">Catégories</h5>
-                    <div  flex="75" style="overflow-y: auto;">
+                    <div  flex="75" id="step7" style="overflow-y: auto;">
                         <ul>
                             <li ng-repeat="cat in filteredcategories=( categories |filterBy: ['nom','description']:searchcat) "  style="cursor:pointer;">
                                 <div ng-click="tris(cat);">
@@ -16,15 +22,15 @@
 
                                 </div>
                                 <div>
-                                    <md-button class="button_show" ng-click="ajoutermedia(cat)" aria-label="a">
+                                    <md-button id="step8" class="button_show" ng-click="ajoutermedia(cat)" aria-label="a">
                                         <md-tooltip>Ajouter un média a la catégorie</md-tooltip>
                                         <md-icon  md-svg-src="../../image/add.svg" class="card-icon"></md-icon>
                                     </md-button>
-                                    <md-button permission="['admin']" class="button_show" ng-click="modifiercat(cat)" aria-label="a">
+                                    <md-button id="step9" permission="['admin']" class="button_show" ng-click="modifiercat(cat)" aria-label="a">
                                         <md-tooltip>Modifier la catégorie</md-tooltip>
                                         <md-icon  md-svg-src="../../image/create-new-pencil-button.svg" class="card-icon"></md-icon>
                                     </md-button>
-                                    <md-button permission="['admin']" class="button_show" ng-click="showConfirmdecat($event, cat)" aria-label="a">
+                                    <md-button id="step10" permission="['admin']" class="button_show" ng-click="showConfirmdecat($event, cat)" aria-label="a">
                                         <md-tooltip>Supprimer la catégorie</md-tooltip>
                                         <md-icon md-svg-src="../../image/rubbish-bin-delete-button.svg" class="card-icon"></md-icon>
                                     </md-button>
@@ -47,7 +53,7 @@
                 </div>
             </div>
         </div>
-        <div flex="20"  ng-if="categorie" flex-xs="100" layout-xs="column" layout="column" class="prof md-padding" style="background-color: rgb(51,54,64);overflow: auto;;min-height:500px;border-right: 2px solid rgb(5,170,245);" >
+        <div flex="20"  id="step14" ng-if="categorie" flex-xs="100" layout-xs="column" layout="column" class="prof md-padding" style="background-color: rgb(51,54,64);overflow: auto;;min-height:500px;border-right: 2px solid rgb(5,170,245);" >
             <div flex="5"></div>
             <div flex="10" ><h1 >Catégorie</h1></div>
             <div flex="15" >
@@ -65,14 +71,25 @@
 
         </div>
 
-        <div  layout="column" flex="80" flex-xs="100" layout-xs="column" ng-hide="afficheMedia || affichemodifcat || affichecreeMedia"  >
-            <div flex="10" flex-xs="100" style="min-height: 100px;">
-                <div flex >
-                    <input ng-model="searchmed"  class="reduceSize" style="text-align: center"  placeholder="entrer la recherche">
+        <div ng-class="{'flex-60': categorie}" layout="column" flex="80" flex-xs="100" layout-xs="column" ng-hide="afficheMedia || affichemodifcat || affichecreeMedia"  >
+            <div flex="10" flex-xs="100" layout="row" style="min-height: 50px;">
+                <div flex="50" layout="row" >
+                    <div flex="100" id="step11">
+                        <input ng-model="searchmed"  class="reduceSize" style="text-align: center"  placeholder="entrer la recherche">
+                    </div>
+
+                </div>
+                <div flex="50" style="color:white">
+                    <md-input-container class="md-block" style="margin-top: 11px;">
+                        <md-select id="step12" class="sel_media" ng-change="changevalue(val)" placeholder="types de médias" ng-model="val" >
+                            <md-option ng-repeat="o in options"  value="{{o.id}}" >{{o.nom}}</md-option>
+                        </md-select>
+                    </md-input-container>
+
                 </div>
             </div>
-            <div flex="80" flex-xs="100" layout="row" layout-wrap class="med_xss" style="min-height:500px" layout-xs="row" layout-align-xs="center center">
-                <div   layout="column" ng-repeat="med in medias" flex-xs="100" flex-sm="50" flex-md="30" flex="20">
+            <div flex="80"   flex-xs="100" layout="row" layout-wrap class="med_xss" style="min-height:500px" layout-xs="row" layout-align-xs="center center">
+                <div  id="step13"  layout="column" ng-repeat="med in medias" flex-xs="100" flex-sm="50" flex-md="30" flex="20" ng-class="{'flex-25': categorie}">
                     <div  class='md-padding pacard' style="margin-left: 20px;">
                         <md-card class="card" style="color:black;">
                             <md-card-title style="width: 100px;height: 100px;padding: 0px 14px;margin-left: 0em;">
@@ -133,6 +150,29 @@
 
 
         </div>
+        <div flex="20" layout="column" ng-if="categorie">
+
+            <md-content style="background-color: rgb(51,54,64);color:white;overflow-y: auto;height:100px;"
+                        class="stage_list" flex>
+                <section >
+                    <md-subheader id="step15">Conseillers de la catégorie</md-subheader>
+                    <md-list class="">
+                        <md-list-item class="md-3-line list_stage"
+                                      ng-repeat="item in categorie.categoriemedia">
+                            <img ng-src="{{item.photo}}?{{$index}}" class="md-avatar" alt="{{item.name}}">
+                            <div class="md-list-item-text">
+                                <a ui-sref="axgrip.useraccount({id:item._id})" style="text-decoration: none;">
+                                    <h3 style="color:white;cursor:pointer;font-size: 12px">{{item.name}}</h3>
+                                </a>
+                            </div>
+                            <md-divider md-inset ng-if="!$last"></md-divider>
+                        </md-list-item>
+                    </md-list>
+                </section>
+            </md-content>
+
+
+        </div>
         <div layout="column" flex="70" flex-xs="100" ng-show="afficheMedia" style="overflow-y:auto;min-height: 388px;" layout-padding ng-cloak>
             <md-icon md-svg-src="../../image/left-arrow-in-circular-button.svg" ng-click="modifiermedia()"
                      aria-label="android " style="color: blue;" ></md-icon>
@@ -188,6 +228,11 @@
                                ngf-pattern="'text/plain'" ng-click="isShow=true" ng-disabled="isShow == false" >
                         <div ng-bind-html="response_data" ng-show="isShow"></div>
                     </md-input-container>
+                    <md-input-container class="md-block">
+                        <md-select   ng-model="mediae.type" ng-required="true" placeholder="type du média">
+                            <md-option ng-repeat="o in options"  value="{{o.id}}">{{o.nom}}</md-option>
+                        </md-select>
+                    </md-input-container>
 
                     <md-input-container  class="md-icon-float md-block">
                         <label>Description</label>
@@ -208,7 +253,7 @@
                     <md-input-container  class="md-icon-float md-block">
                         <label>Name</label>
                         <md-icon md-svg-src="../../image/menu-button.svg" class="name"></md-icon>
-                        <input ng-model="mediai.nom"  ng-minlength="10" md-maxlength="60"
+                        <input ng-model="mediai.nom"  ng-minlength="5" md-maxlength="60"
                                type="text" placeholder="Nom (Obligatoire)" ng-required="true">
                         <div ng-messages="FormcreeMedia.nom.$error">
                             <div ng-message="required">le nom est obligatoire</div>
@@ -261,10 +306,15 @@
                                ngf-pattern="'text/plain'" ng-click="isShow=true" ng-disabled="isShow == false" >
                         <div ng-bind-html="response_data" ng-show="isShow"></div>
                     </md-input-container>
+                    <md-input-container class="md-block">
+                        <md-select   ng-model="mediai.type" ng-required="true" placeholder="type du média">
+                            <md-option ng-repeat="o in options"  value="{{o.id}}">{{o.nom}}</md-option>
+                        </md-select>
+                    </md-input-container>
                     <md-input-container  class="md-icon-float md-block">
                         <label>Description</label>
                         <md-icon md-svg-src="../../image/drawing-house-plan.svg" class="name"></md-icon>
-                        <input ng-model="mediai.description" type="text"  ng-minlength="14"
+                        <input ng-model="mediai.description" type="text"  ng-minlength="10"
                                md-maxlength="60" placeholder="Description (Obligatoire)" ng-required="true">
                         <div ng-messages="FormcreeMedia.nom.$error">
                             <div ng-message="required">la description est obligatoire</div>

@@ -39,10 +39,39 @@ function afficher_ecran(str) {
 app.controller('CategoriesCtrl', ['$scope','$cookieStore',
     'CategorieFactory','LivreFactory','UserFactory','ProfilFactory', '$stateParams', '$state','AuthService'
     ,'youtubeEmbedUtils','$mdDialog','$sce','$rootScope',
-    '$log', '$timeout', '$location','$mdToast','$filter',
+    '$log', '$timeout', '$location','$mdToast','$filter','IntroFactory',
     function ($scope,$cookieStore, CategorieFactory,LivreFactory,UserFactory,ProfilFactory, $stateParams,
               $state, AuthService,youtubeEmbedUtils,$mdDialog,$sce,$rootScope,
-              $log, $timeout, $location,$mdToast,$filter) {
+              $log, $timeout, $location,$mdToast,$filter,IntroFactory) {
+        if($stateParams.guide===true)
+        {
+            angular.element(document).ready(function () {
+                $scope.CallMe();
+            });
+            $stateParams.guide=false;
+        }
+        $scope.IntroOptions = {
+            steps:IntroFactory.getSteps('mediatheque'),
+            showStepNumbers: true,
+            exitOnOverlayClick: true,
+            exitOnEsc:true,
+            nextLabel: '<strong>Suivant!</strong>',
+            prevLabel: '<span style="color:green">Précédent</span>',
+            skipLabel: 'Quitter',
+            doneLabel: 'Merci'
+        };
+        $scope.ShouldAutoStart = IntroFactory.auto_start_intro('mediatheque');
+        $scope.ExitEvent = IntroFactory.ExitEvent;
+        $scope.ChangeEvent = IntroFactory.changeEvent;
+        $scope.options=[{id:"ag",nom:"apprentissage de base"},{id:"aa",nom:"apprentissage avancé"},
+            {id:"ac",nom:"apprentissage complémentaire"},{id:"tt",nom:"tout type"}];
+       // $scope.val="ag";
+      /*  if($stateParams.guide===true)
+        {
+            angular.element(document).ready(function () {
+                $scope.CallMe();
+            });
+        }*/
        // alert('b')
         CategorieFactory.get().then(function (categories) {//obtention de toutes les categories
             $scope.categories = categories;
@@ -112,6 +141,19 @@ app.controller('CategoriesCtrl', ['$scope','$cookieStore',
         /*partie presentation mediatheque*/
         LivreFactory.get().then(function (medias) {
             $scope.medias = medias;
+            $scope.changevalue=function(val){
+                    if(val=="tt"){
+                        $scope.medias = medias;
+                        console.log($scope.medias)
+                        $scope.total = Math.ceil(medias.length/medPerPage);
+                        $scope.medias= medias.slice(0,medPerPage);
+                        $scope.gotoPage = function() {
+                            var i=$scope.currentPage;
+                            $scope.medias=medias.slice(medPerPage*i-medPerPage,medPerPage*i);
+                            afficher_ecran($scope.medias);
+                        };
+                    }
+            };
             $scope.total = Math.ceil(medias.length/medPerPage);
             $scope.medias= medias.slice(0,medPerPage);
             $scope.gotoPage = function() {
@@ -144,6 +186,22 @@ app.controller('CategoriesCtrl', ['$scope','$cookieStore',
                     };
                 }
             }, true);
+            $scope.changevalue=function(val){
+                if(val=='tt'){
+                    $scope.medias = medias;
+                    $scope.total = Math.ceil(medias.length/medPerPage);
+                    $scope.medias= medias.slice(0,medPerPage);
+                    $scope.gotoPage = function() {
+                        var i=$scope.currentPage;
+                        $scope.medias=medias.slice(medPerPage*i-medPerPage,medPerPage*i);
+                        afficher_ecran($scope.medias);
+                    };
+                }
+                else {
+                    $scope.medias=$filter('filter')(medias,{ type: val });
+                }
+
+            }
 
         });
         //incremente readed lors d'un lecture ie lien vers le document
@@ -367,10 +425,33 @@ app.controller('CategoriesCtrl', ['$scope','$cookieStore',
 .controller('CategorieCtrl', ['$scope','$cookieStore',
     'CategorieFactory','LivreFactory','UserFactory','ProfilFactory', '$stateParams', '$state','AuthService'
     ,'youtubeEmbedUtils','$mdDialog','$sce','$rootScope',
-    '$log', '$timeout', '$location','$mdToast','$filter',
+    '$log', '$timeout', '$location','$mdToast','$filter','IntroFactory',
     function ($scope,$cookieStore, CategorieFactory,LivreFactory,UserFactory,ProfilFactory, $stateParams,
               $state, AuthService,youtubeEmbedUtils,$mdDialog,$sce,$rootScope,
-              $log, $timeout, $location,$mdToast,$filter) {
+              $log, $timeout, $location,$mdToast,$filter,IntroFactory) {
+        if($stateParams.guide===true)
+        {
+            angular.element(document).ready(function () {
+                $scope.CallMe();
+            });
+            $stateParams.guide=false;
+        }
+        $scope.IntroOptions = {
+            steps:IntroFactory.getSteps('categorie'),
+            showStepNumbers: true,
+            exitOnOverlayClick: true,
+            exitOnEsc:true,
+            nextLabel: '<strong>Suivant!</strong>',
+            prevLabel: '<span style="color:green">Précédent</span>',
+            skipLabel: 'Quitter',
+            doneLabel: 'Merci'
+        };
+        $scope.ShouldAutoStart = IntroFactory.auto_start_intro('categorie');
+        $scope.ExitEvent = IntroFactory.ExitEvent;
+        $scope.ChangeEvent = IntroFactory.changeEvent;
+        $scope.options=[{id:"ag",nom:"apprentissage de base"},{id:"aa",nom:"apprentissage avancé"},
+            {id:"ac",nom:"apprentissage complémentaire"},{id:"tt",nom:"tout type"}];
+//$scope.val="ag";
         //alert('a')
         $scope.currentPage=1;
         $scope.step=5;
@@ -423,6 +504,23 @@ app.controller('CategoriesCtrl', ['$scope','$cookieStore',
                     };
                 }
             }, true);
+            $scope.changevalue=function(val){
+                console.log('i')
+                if(val=='tt'){
+                    $scope.medias = categories.medias;
+                    $scope.total = Math.ceil(categories.medias.length/medPerPage);
+                    $scope.medias= categories.medias.slice(0,medPerPage);
+                    $scope.gotoPage = function() {
+                        var i=$scope.currentPage;
+                        $scope.medias=categories.medias.slice(medPerPage*i-medPerPage,medPerPage*i);
+                        afficher_ecran($scope.medias);
+                    };
+                }
+                else {
+                    $scope.medias=$filter('filter')(categories.medias,{ type: val });
+                }
+
+            }
         });
         //incremente readed lors d'un lecture ie lien vers le document
         $scope.lire = function(med){
@@ -435,5 +533,6 @@ app.controller('CategoriesCtrl', ['$scope','$cookieStore',
                 med.downloaded = up.downloaded;
             });
         };
+
 
     }])

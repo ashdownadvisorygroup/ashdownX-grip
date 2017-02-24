@@ -146,21 +146,67 @@ router.get('/profil/:profil',passport.authenticate('jwt', { session: false}), fu
     var token = getToken(req.headers);
     if (token) {
         var d;
+        var list=[];
+        var list2=[];
         CategorieProfil.find()
             .where('profil').equals(req.params.profil)
+            .sort({ rang : 1 })
             .populate('categorie')
             .exec(function (errmed, result){
                 if (errmed) {
                     return next(errmed);
                 }
+                var query = UserProfil.find()
+                    .where('profil').equals(req.params.profil)
+                    .where('progression').equals("100")
+                    .populate('user');
+                query.exec(function (err, user_profil) {
+                    if (err) {
+                        console.log(err);
+                        return res.json("il ya erreur dans la requete reessayer svp");
+                    }
+                    if (!user_profil) {
+                        return res.json("pas de userprofil correspondant a la recherche");
+                    }
+                    user_profil.forEach(function(dat) {
+                                list.push(dat.user);
+                    });
+                    var query2 = UserProfil.find()
+                        .where('profil').equals(req.params.profil)
+                        .where('encadre').equals("true")
+                         .sort({ progression : 1 })
+                        .populate('user');
+                    query2.exec(function (err, user_profil) {
+                        if (err) {
+                            console.log(err);
+                            return res.json("il ya erreur dans la requete reessayer svp");
+                        }
+                        if (!user_profil) {
+                            return res.json("pas de userprofil correspondant a la recherche");
+                        }
+                        else{
+                            d = req.profil;
+                            d.categorieprofil=[];
+                            d.users=list;//liste des utilisateurs qui ont terminé le profil
+                            user_profil.forEach(function(dat) {
+                                d.userprofil.push(dat.user);
+                            });
+                            var taille=result.length;
+                            for(var i = 0; i<taille; i++) {
+                                var obj={nom:"",description:"",rang:"",_id:""};
+                                obj.nom=result[i].categorie.nom
+                                obj.description=result[i].categorie.description
+                                obj.rang=result[i].rang
+                                obj._id=result[i].categorie._id;
+                                d.categorieprofil[i]=obj;
+                                //console.log(d)
+                            }
+                        }
+                        res.json(d);
+                        });
 
-                d = req.profil;
-                d.categorieprofil=[];
-                var taille=result.length;
-                for(var i = 0; i<taille; i++) {
-                    d.categorieprofil[i]=(result[i].categorie);
-                }
-                res.json(d);
+
+                });
             });
     }
 
@@ -169,8 +215,9 @@ router.get('/profil/:profil',passport.authenticate('jwt', { session: false}), fu
 router.post('/profils',mustBe.authorized("admin"),passport.authenticate('jwt', { session: false}), function (req, res, next) {
     var token = getToken(req.headers);
     if (token) {
+        console.log(req.body.categorie);
         req.checkBody('nom', 'Veuillez renseigne les nom').notEmpty();
-        req.checkBody('nom', 'Veuillez ajouter des caractere aux nom').len(10, 60);
+        req.checkBody('nom', 'Veuillez ajouter des caractere aux nom').len(4, 60);
         var errors = req.validationErrors();
         if (errors) {
             res.json(errors, 422);
@@ -188,8 +235,10 @@ router.post('/profils',mustBe.authorized("admin"),passport.authenticate('jwt', {
              * la suite permet d'envoyer un tableau délement en une une ligne dans la base de donnée
              */
             var profCat = CategorieProfil.collection.initializeUnorderedBulkOp({useLegacyOps: true});
+            var i=1;
             req.body.categorie.forEach(function(cat_id){
-                profCat.insert({profil: prf._id, categorie:cat_id, progression: '0'});
+                profCat.insert({profil: prf._id, categorie:cat_id, progression: '0',rang:i});
+                i++;
             });
             profCat.execute(function(er, result) {
                 if(er) {
@@ -206,12 +255,7 @@ router.post('/profils',mustBe.authorized("admin"),passport.authenticate('jwt', {
 router.put('/profil/:profil',mustBe.authorized("admin"),passport.authenticate('jwt', { session: false}), function (req, res) {
     var token = getToken(req.headers);
     if (token) {
-        /*prf = req.profil;
-        prf.nom = req.body.nom;
-        prf.description = req.body.description;
-        prf.objectifs = req.body.objectifs;*/
         var obj=req.body;
-
         Profil.findByIdAndUpdate(req.params.profil,{$set: obj},function(err,prf) {
             if (err) {
                 return next(err);
@@ -219,11 +263,35 @@ router.put('/profil/:profil',mustBe.authorized("admin"),passport.authenticate('j
             if(!prf) {
                 return next(new Error('can\'t find user'));
             }
-            console.log(prf)
-            res.json('updated');
+            if(req.body.categorie){
+                var profCat = CategorieProfil.collection.initializeUnorderedBulkOp({useLegacyOps: true});
+                profCat.find( { profil: prf._id } ).remove();
+                profCat.execute(function(er, result) {
+                    if(er) {
+                        console.error(er);
+                        return res.json({success: false, msg: "Erreur d'enregistrement."});
+                    } else {
+                        console.log(result.nRemoved)
+
+                        var profCat2 = CategorieProfil.collection.initializeUnorderedBulkOp({useLegacyOps: true});
+                        var i=1;
+                        req.body.categorie.forEach(function(cat_id){
+                            profCat2.insert({profil: prf._id, categorie:cat_id, progression: '0',rang:i});
+                            i++;
+                        });
+                        profCat2.execute(function(er, result) {
+                            if(er) {
+                                console.error(er);
+                                return res.json({success: false, msg: "Erreur d'enregistrement."});
+                            } else {
+                                res.json('updated');
+                            }
+                        });
+                    }
+                });
+            }
         });
     }
-
 });
 router.delete('/profil/:profil',mustBe.authorized("admin"),passport.authenticate('jwt', { session: false}), function (req, res) {
     var token = getToken(req.headers);

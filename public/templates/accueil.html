@@ -1,4 +1,9 @@
-<div layout="column" flex class="accueil" style="background-color: rgb(34,34,34);">
+<div layout="column" flex class="accueil"  style="background-color: rgb(34,34,34);"
+     ng-intro-options="IntroOptions" ng-intro-method="CallMe"
+     ng-intro-oncomplete="CompletedEvent" ng-intro-onexit="ExitEvent"
+     ng-intro-onchange="ChangeEvent" ng-intro-onbeforechange="BeforeChangeEvent"
+     ng-intro-onafterchange="AfterChangeEvent"
+     ng-intro-autostart="ShouldAutoStart" >
     <div flex="100" layout="row" flex-xs="100" layout-xs="column" style="background-color: rgb(34,34,39);" class="med_xs">
         <!-- layout-wrap for the card to take the size of the div-->
 
@@ -8,15 +13,15 @@
                 irennenenenene
             </section>-->
             <div flex="10" layout="row" hide-xs>
-                <div style="padding-left: 190px;position:fixed" ng-show="!hide1" hide-xs>
-                    <md-button aria-label="a" class="card-button" ng-click="afficher_cacher()">
+                <div style="padding-left: 190px;position:fixed" ng-show="!hide1"  hide-xs>
+                    <md-button id="step9" aria-label="a" class="card-button" ng-click="afficher_cacher()">
                         <md-tooltip>Réduire la liste des profils</md-tooltip>
                         <md-icon md-svg-src="../../image/left_arrow.svg" class="card-icon"
                                  style="cursor:pointer"></md-icon>
                     </md-button>
 
                 </div>
-                <div flex="100" hide-xs>
+                <div flex="100" id="step10" hide-xs>
                     <input ng-model="searchprofcat" class="reduceSize" style="text-align: center;"
                            placeholder="entrer la recherche">
                 </div>
@@ -37,11 +42,11 @@
                            placeholder="entrer la recherche">
                     Liste des profils
                     <ul style="overflow-x: auto;min-width: 70px;padding-right:33px;min-height: 100px;" layout-xs="row" flex-xs="100">
-                        <li style="display: block;min-width:300px;" class="un" ng-repeat="prf in
+                        <li style="display: block;min-width:300px;cursor:pointer;" class="un" ui-sref="axgrip.profil({id:prf._id})" ng-repeat="prf in
                             filteredprofile=( profile |filterBy: ['nom','description']:searchprofcat)" flex-xs="100">
                             {{ prf.nom }}
-                            <ul hide-xs>
-                                <li ng-repeat="ct in prf.categories"
+                            <ul  hide-xs>
+                                <li ui-sref="axgrip.categorie({id:ct._id})" ng-repeat="ct in prf.categories"
                                     ng-click="tri(ct);" style="cursor:pointer;margin-bottom:20px">
                                     {{ct.nom}}
                                 </li>
@@ -70,7 +75,7 @@
 
                 </div>
             </div>
-            <div flex="80" flex-xs="100" layout-xs="column">
+            <div id="step11" flex="80" flex-xs="100" layout-xs="column">
 
 
                 <div flex="100" style="overflow-y: auto;min-height: 540px;" hide-xs>
@@ -79,12 +84,12 @@
                     </div>
                     <div style="margin-left:0px">
                         <ul style="padding: 10px;">
-                            <li style="display: block;" class="un" ng-repeat="prf in
+                            <li style="display: block;cursor:pointer;" class="un" ui-sref="axgrip.profil({id:prf._id})" ng-repeat="prf in
                             filteredprofile=( profiles |filterBy: ['nom','description']:searchprofcat)" flex-xs="100">
                                 {{ prf.nom }}
                                 <ul hide-xs>
-                                    <li ng-repeat="ct in prf.categories"
-                                        ng-click="tri(ct);" style="cursor:pointer;margin-bottom:20px">
+                                    <li ui-sref="axgrip.categorie({id:ct._id})" ng-repeat="ct in prf.categories"
+                                       style="cursor:pointer;margin-bottom:20px">
                                         {{ct.nom}}
                                     </li>
                                 </ul>
@@ -116,13 +121,13 @@
         </div>
 
 
-    <div flex="85" flex-xs="100" flex-order-xs="2" layout="row" layout-xs="column" style="overflow-y: auto;"
+    <div flex="85" id="step12" flex-xs="100" flex-order-xs="2" layout="row" layout-xs="column" style="overflow-y: auto;"
          ng-class="{'flex-100': hide1}">
         <div flex="85" flex-xs="100" flex-order-xs="2" layout-xs="column" layout="column" id="main"
              ng-show="stagiaires.length >0" ng-class="{'flex-100':hide2}">
 
             <div flex="5" layout="row" flex-xs="100" style="padding-top: 1em;font-size: 12px" >
-                <div flex="10" layout="row" layout-align="start start" layout-align-xs="start end">
+                <div flex="10" layout="row"  layout-align="start start" layout-align-xs="start end">
                     <div ng-show="hide1" style="position:relative">
                         <md-button aria-label="a" class="card-button" ng-click="afficher_cacher()">
                             <md-tooltip>agrandir liste des profils</md-tooltip>
@@ -135,9 +140,9 @@
                 <div flex="80" hide-gt-xs></div>
                 <div flex="10" hide-xs style="padding-top:16px">&nbsp;&nbsp;{{longueur}} &nbsp;médias</div>
                 <div flex="55" hide-xs></div>
-                <div flex="15" hide-xs ng-click="aff_pop_not()" style="cursor: pointer;padding-top:16px">populaires/mieux notés</div>
-                <div  flex="10" layout-align="end end" layout="row">
-                    <div ng-show="hide2" style="margin-top:220px">
+                <div flex="15" hide-xs id="step13" ng-click="aff_pop_not()" style="cursor: pointer;padding-top:16px">populaires/mieux notés</div>
+                <div  flex="10" id="step16" layout-align="end end" layout="row">
+                    <div ng-show="hide2"  style="margin-top:220px">
                         <md-button aria-label="a" class="card-button" ng-click="afficher_cacher2()">
                             <md-tooltip>agrandir liste des stagiaires</md-tooltip>
                             <md-icon md-svg-src="../../image/left_arrow.svg" class="card-icon"
@@ -163,7 +168,7 @@
 
             </div>
 
-            <div flex="75" style="min-height: 300px;" flex-xs="100" layout="row" layout-wrap>
+            <div flex="75" id="step14" style="min-height: 300px;" flex-xs="100" layout="row" layout-wrap>
                 <div ng-repeat="m in allmedias" flex="25" flex-xs="100" flex-sm="50" flex-md="30">
                     <div layout="column" class='pacard' flex layout-wrap style="margin-left: 20px;">
                         <md-card class="card" style="color:black;">
@@ -305,9 +310,9 @@
 
 
         </div>
-        <div flex="15" ng-show="stagiaires.length>0 && !hide2" flex-order-gt-xs="3" flex-xs="100" layout="column" flex-order-xs="1" style="background-color: rgb(51,54,64);min-height: 500px;border-left: 2px solid rgb(5,170,245);">
-            <div flex="10" layout="row" >
-                <div ng-show="!hide2" style="right:-100px;">
+        <div flex="15" ng-show="stagiaires.length>0 && !hide2"  flex-order-gt-xs="3" flex-xs="100" layout="column" flex-order-xs="1" style="background-color: rgb(51,54,64);min-height: 500px;border-left: 2px solid rgb(5,170,245);">
+            <div flex="10"  layout="row" >
+                <div ng-show="!hide2"  style="right:-100px;">
                     <md-button aria-label="a" class="card-button" ng-click="afficher_cacher2()">
                         <md-tooltip>Réduire la liste des stagiaires</md-tooltip>
                         <md-icon md-svg-src="../../image/right_arrow.svg" class="card-icon"
@@ -323,8 +328,8 @@
 
             <md-content style="background-color: rgb(51,54,64);color:white;overflow-y: auto;height:525px;"
                         class="stage_list" flex>
-                <section>
-                    <md-subheader>Liste des stagiaires</md-subheader>
+                <section >
+                    <md-subheader id="step15">Liste des stagiaires</md-subheader>
 
                     <md-list class="">
                         <md-list-item class="md-3-line list_stage"
@@ -349,4 +354,5 @@
 
 
 </div>
+
 

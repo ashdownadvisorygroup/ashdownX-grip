@@ -1,15 +1,15 @@
 <div layout="column" flex class="accueil" style="background-color: rgb(34,34,34);">
     <div flex="100" layout="column">
         <div flex layout="column" style="background-color: rgb(51,54,64);border-right: 2px solid rgb(5,170,245);" hide-xs>
-            <input ng-model="searchprofcat" class="reduceSize" style="text-align: center" placeholder="entrer la recherche">
+            <input id="step6" ng-model="searchprofcat" class="reduceSize" style="text-align: center" placeholder="entrer la recherche">
             <div style="text-align: center"><h3>Liste des profils</h3></div>
-            <ul style="overflow-y: auto;min-height: 455px;">
-                <li style="display: block;" class="un"
+            <ul style="overflow-y: auto;min-height: 455px;" id="step7">
+                <li style="display: block;cursor:pointer;" class="un" ui-sref="axgrip.profil({id:prf._id})"
                     ng-repeat="prf in filteredprofile=( profile |filterBy: ['nom','description','objectifs']:searchprofcat)">
                     {{ prf.nom }}
                     <ul>
-                        <li ng-repeat="ct in prf.categories"
-                            ng-click="tri(ct);" style="cursor:pointer;margin-bottom:22px">
+                        <li  ng-repeat="ct in prf.categories"
+                             ui-sref="axgrip.categorie({id:ct._id})" style="cursor:pointer;margin-bottom:22px">
                             {{ct.nom}} <br>{{ct.etat}}
                         </li>
                     </ul>

@@ -64,6 +64,394 @@ var groupmediacat=function(data){
         return data.categories;
     }
 }
+app.factory('IntroFactory', ['$cookieStore','$localStorage',function($cookieStore,$localStorage){
+    var factory={
+        ShoulAutoStart:"",
+        state:false,
+        steps:{
+            'accueil':[
+                        {
+                            element: document.querySelector('#step1'),
+                            intro: "logo de la bibliothèque axgrip",
+                            position:'bottom'
+                        },
+                        {
+                            element: document.querySelectorAll('#step2')[0],
+                            intro: "cliquer ici pour avoir le guide d'utilisation de la bibliothèque",
+                            position: 'right'
+                        },
+                        {
+                            element: '#step3',
+                            intro: 'Moteur de recherche des médias, profils, groupes,catégories,utilisateurs',
+                            position: 'left'
+                        },
+                        {
+                            element: '#step4',
+                            intro: "onglets de la bibliothèque:<br>accueil: où nous situons déjà<br>médiathèque: contenant tous les médias et catégories " +
+                            "de axgrip <br>profils: qui contient tous les profils de axgrip",
+                            position:'bottom'
+
+                        },
+                        {
+                            element: '#step5',
+                            intro: "compte d'utilisation et déconnexion",
+                            position:'bottom'
+                        },
+                        {
+                            element: '#step9',
+                            intro: "Réduire ou agrandir la liste des profils",
+                            position:"bottom"
+                        },
+                        {
+                            element: '#step10',
+                            intro: "recherche d'un profil désiré",
+                            position:"bottom"
+                        },
+                        {
+                            element: '#step11',
+                            intro: "Profils de formation de l'utilistateur en cours",
+                            position:"right"
+                        },
+                        {
+                            element: '#step13',
+                            intro: "permet de trier les médias par ordre de popularité/mieux notés",
+                            position:"bottom"
+                        },
+                        {
+                            element: '#step14',
+                            intro: "liste des médias de formation de l'utilisateur en cours",
+
+                        },
+                        {
+                            element: '#step15',
+                            intro: "liste des stagiaires que l'utilisateur en cours encadre avec possibilité de recherche",
+
+                        },
+                        {
+                            element: '#step16',
+                            intro: "permet d'agrandir ou réduire la liste des stagiaires de l'utilisateur en cours",
+
+                        }
+            ],
+            'mediatheque':[
+                {
+                    element: document.querySelector('#step1'),
+                    intro: "logo de la bibliothèque axgrip",
+                    position:'bottom'
+                },
+                {
+                    element: document.querySelectorAll('#step2')[0],
+                    intro: "cliquer ici pour avoir le guide d'utilisation de la bibliothèque",
+                    position: 'right'
+                },
+                {
+                    element: '#step3',
+                    intro: 'Moteur de recherche des médias, profils, groupes,catégories,utilisateurs',
+                    position: 'left'
+                },
+                {
+                    element: '#step4',
+                    intro: "onglets de la bibliothèque:<br>accueil: où nous situons déjà<br>médiathèque: contenant tous les médias et catégories " +
+                    "de axgrip <br>profils: qui contient tous les profils de axgrip",
+                    position:'bottom'
+
+                },
+                {
+                    element: '#step5',
+                    intro: "compte d'utilisation et déconnexion",
+                    position:'bottom'
+                },{
+                    element: '#step6',
+                    intro: "recherche d'une catégorie",
+                    position:'right'
+                },{
+                    element: '#step7',
+                    intro: "liste des catégories",
+                    position:'right'
+                },{
+                    element: '#step8',
+                    intro: "ajouter un média à la catégorie",
+                    position:'bottom'
+                },{
+                    element: '#step9',
+                    intro: "modifier la catégorie",
+                    position:'bottom'
+                },{
+                    element: '#step10',
+                    intro: "supprimer la catégorie",
+                    position:'bottom'
+                },{
+                    element: '#step11',
+                    intro: "recherche d'un média",
+                    position:'bottom'
+                },{
+                    element: '#step12',
+                    intro: "Recherche Type de média",
+                    position:'bottom'
+                },{
+                    element: '#step12',
+                    intro: "liste des médias",
+                    position:'bottom'
+                }
+            ],
+            'profils':[
+                {
+                    element: document.querySelector('#step1'),
+                    intro: "logo de la bibliothèque axgrip",
+                    position:'bottom'
+                },
+                {
+                    element: document.querySelectorAll('#step2')[0],
+                    intro: "cliquer ici pour avoir le guide d'utilisation de la bibliothèque",
+                    position: 'right'
+                },
+                {
+                    element: '#step3',
+                    intro: 'Moteur de recherche des médias, profils, groupes,catégories,utilisateurs',
+                    position: 'left'
+                },
+                {
+                    element: '#step4',
+                    intro: "onglets de la bibliothèque:<br>accueil: où nous situons déjà<br>médiathèque: contenant tous les médias et catégories " +
+                    "de axgrip <br>profils: qui contient tous les profils de axgrip",
+                    position:'bottom'
+
+                },
+                {
+                    element: '#step5',
+                    intro: "compte d'utilisation et déconnexion",
+                    position:'bottom'
+                },{
+                    element: '#step6',
+                    intro: "liste des profils",
+                    position:'bottom'
+                },{
+                    element: '#step7',
+                    intro: "recherche d'un profil",
+                    position:'bottom'
+                }
+            ],
+            'useraccount':[
+                {
+                    element: document.querySelector('#step1'),
+                    intro: "logo de la bibliothèque axgrip",
+                    position:'bottom'
+                },
+                {
+                    element: document.querySelectorAll('#step2')[0],
+                    intro: "cliquer ici pour avoir le guide d'utilisation de la bibliothèque",
+                    position: 'right'
+                },
+                {
+                    element: '#step3',
+                    intro: 'Moteur de recherche des médias, profils, groupes,catégories,utilisateurs',
+                    position: 'left'
+                },
+                {
+                    element: '#step4',
+                    intro: "onglets de la bibliothèque:<br>accueil: où nous situons déjà<br>médiathèque: contenant tous les médias et catégories " +
+                    "de axgrip <br>profils: qui contient tous les profils de axgrip",
+                    position:'bottom'
+
+                },
+                {
+                    element: '#step5',
+                    intro: "compte d'utilisation et déconnexion",
+                    position:'bottom'
+                },{
+                    element: '#step6',
+                    intro: "liste des profils ainsi que leur pourcentage",
+                    position:'bottom'
+                },{
+                    element: '#step7',
+                    intro: "Données sur l'utilisateur sélectionné",
+                    position:'right'
+                },{
+                    element: '#step8',
+                    intro: "Profils terminés par l'utilisateur sélectionné",
+                    position:'bottom'
+                },{
+                    element: '#step9',
+                    intro: "Médias des profils de formation de l'utilisateur sélectionné",
+                    position:'bottom'
+                }
+            ],
+            'compte':[
+                {
+                    element: document.querySelector('#step1'),
+                    intro: "logo de la bibliothèque axgrip",
+                    position:'bottom'
+                },
+                {
+                    element: document.querySelectorAll('#step2')[0],
+                    intro: "cliquer ici pour avoir le guide d'utilisation de la bibliothèque",
+                    position: 'right'
+                },
+                {
+                    element: '#step3',
+                    intro: 'Moteur de recherche des médias, profils, groupes,catégories,utilisateurs',
+                    position: 'left'
+                },
+                {
+                    element: '#step4',
+                    intro: "onglets de la bibliothèque:<br>accueil: où nous situons déjà<br>médiathèque: contenant tous les médias et catégories " +
+                    "de axgrip <br>profils: qui contient tous les profils de axgrip",
+                    position:'bottom'
+
+                },
+                {
+                    element: '#step5',
+                    intro: "compte d'utilisation et déconnexion",
+                    position:'bottom'
+                },{
+                    element: '#step6',
+                    intro: "recherche d'un profil",
+                    position:'bottom'
+                },{
+                    element: '#step7',
+                    intro: "liste des profils",
+                    position:'right'
+                },{
+                    element: '#step8',
+                    intro: "profil de l'utilisateur en cours",
+                    position:'bottom'
+                },{
+                    element: '#step9',
+                    intro: "création d'une catégorie",
+                    position:'bottom'
+                },{
+                    element: '#step10',
+                    intro: "création d'un profil de formation",
+                    position:'bottom'
+                },{
+                    element: '#step11',
+                    intro: "création d'un nouvel utilisateur",
+                    position:'bottom'
+                },{
+                    element: '#step12',
+                    intro: "recherche d'un stagiaire",
+                    position:'left'
+                },{
+                    element: '#step13',
+                    intro: "liste des stagiaires",
+                    position:'left'
+                }
+            ],
+            'categorie':[
+                {
+                    element: document.querySelector('#step1'),
+                    intro: "logo de la bibliothèque axgrip",
+                    position:'bottom'
+                },
+                {
+                    element: document.querySelectorAll('#step2')[0],
+                    intro: "cliquer ici pour avoir le guide d'utilisation de la bibliothèque",
+                    position: 'right'
+                },
+                {
+                    element: '#step3',
+                    intro: 'Moteur de recherche des médias, profils, groupes,catégories,utilisateurs',
+                    position: 'left'
+                },
+                {
+                    element: '#step4',
+                    intro: "onglets de la bibliothèque:<br>accueil: où nous situons déjà<br>médiathèque: contenant tous les médias et catégories " +
+                    "de axgrip <br>profils: qui contient tous les profils de axgrip",
+                    position:'bottom'
+
+                },
+                {
+                    element: '#step5',
+                    intro: "compte d'utilisation et déconnexion",
+                    position:'bottom'
+                },{
+                    element: '#step14',
+                    intro: "description et données sur la catégorie",
+                    position:'bottom'
+                },{
+                    element: '#step11',
+                    intro: "recherche d'un média",
+                    position:'bottom'
+                },{
+                    element: '#step12',
+                    intro: "Recherche Type de média",
+                    position:'bottom'
+                },{
+                    element: '#step12',
+                    intro: "liste des médias",
+                    position:'bottom'
+                },
+                {
+                    element: '#step15',
+                    intro: "liste des conseillers de la catégorie",
+                    position:'bottom'
+                }
+            ],
+            'profil':[
+                {
+                    element: document.querySelector('#step1'),
+                    intro: "logo de la bibliothèque axgrip",
+                    position:'bottom'
+                },
+                {
+                    element: document.querySelectorAll('#step2')[0],
+                    intro: "cliquer ici pour avoir le guide d'utilisation de la bibliothèque",
+                    position: 'right'
+                },
+                {
+                    element: '#step3',
+                    intro: 'Moteur de recherche des médias, profils, groupes,catégories,utilisateurs',
+                    position: 'left'
+                },
+                {
+                    element: '#step4',
+                    intro: "onglets de la bibliothèque:<br>accueil: où nous situons déjà<br>médiathèque: contenant tous les médias et catégories " +
+                    "de axgrip <br>profils: qui contient tous les profils de axgrip",
+                    position:'bottom'
+
+                },
+                {
+                    element: '#step5',
+                    intro: "compte d'utilisation et déconnexion",
+                    position:'bottom'
+                },{
+                    element: '#step8',
+                    intro: "données sur le profil de formation",
+                    position:'bottom'
+                },{
+                    element: '#step9',
+                    intro: "liste des catégories du profil",
+                    position:'bottom'
+                },{
+                    element: '#step10',
+                    intro: "liste des encadreurs du profil",
+                    position:'bottom'
+                },{
+                    element: '#step11',
+                    intro: "Utilisateurs ayant achevé le profil",
+                    position:'bottom'
+                }
+            ],
+        },
+        getSteps:function(state){
+            factory.state=state;
+            return factory.steps[state];
+        },
+        auto_start_intro: function(state){
+            return $localStorage['intro_'+factory.state+'_'+$cookieStore.get('user').id+'_'+'autostart']!=false;
+    },
+        changeEvent: function (targetElement, scope) {
+            if(this._currentStep==factory.steps[factory.state].length-1){
+            $localStorage['intro_'+factory.state+'_'+$cookieStore.get('user').id+'_'+'autostart']= false;
+        }
+    },
+        ExitEvent:function (scope) {
+        console.log("Exit Event called");
+            $localStorage['intro_'+factory.state+'_'+$cookieStore.get('user').id+'_'+'autostart']= false;
+    }
+    }
+    return factory;
+}])
 app.factory('CategorieFactory', ['$http','$q','Upload',
         'AuthService','isAuthenticated','LivreFactory',function(
         $http , $q ,Upload,AuthService,isAuthenticated,LivreFactory){
@@ -518,14 +906,17 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                     factory.loadUserCredentials();
                     var deferred = $q.defer();
                     prof.objectifs=prof.data.join(factory.valsplit)
+                    console.log(prof.objectifs)
                     delete prof.data;
                     $http({
                         method: 'POST',
                         url: '/profils',
                         data: prof
                     }).then(function(success){
+                        console.log(success)
                         deferred.resolve(success.data);
                     },function(error){
+                        console.log(error)
                         deferred.reject(error);
                     });
                     return deferred.promise;
@@ -1074,7 +1465,8 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
            property = value;
         }
     };
-}).service('shared2', function () {
+})
+    .service('shared2', function () {
     var property=0;
     return {
         get: function () {

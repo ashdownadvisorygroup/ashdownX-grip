@@ -35,6 +35,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                     controller: 'InfoUserCtrl'
                 }
             },
+            params: { guide: null },
             access: { requiredLogin: true },
         })
         .state('compte.mofifier_profil', {

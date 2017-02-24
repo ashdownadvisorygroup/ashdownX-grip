@@ -22,6 +22,7 @@ var User = mongoose.model('User');
 var Group = mongoose.model('Group');
 var Media = mongoose.model('Media');
 var CategorieMedia = mongoose.model('CategorieMedia');
+var MediaUser = mongoose.model('MediaUser');
 var util = require('util');
 var fs = require('fs');
 
@@ -94,16 +95,34 @@ router.get('/categorie/:categorie',passport.authenticate('jwt', { session: false
                     }
                     d= req.categorie;
                    d.medias = [];
+                var v=[];
                     var taille=result.length;
                     for(var i = 0; i<taille; i++) {
                         if(result[i].categorie==req.params.categorie){
                             if(result[i].media){
                                 d.medias[j]=result[i].media;
+                                v.push(result[i].media._id)//pour récupérer tous les médias de la catégorie
                                 j++;
                             }
                         }
                     }
-                    res.json(d);
+                d.categoriemedia=[];
+                MediaUser.find()
+                    .where('media').in(v)
+                    .populate('user')
+                    .exec(function (errmed, ofmed){
+                        if (errmed) {
+                            return next(errmed);
+                        }
+                        var list=[];
+                        ofmed.forEach(function(dat) {
+                            list.push(dat.user);//pour récupérer tous les master de la dite catégorie en prenant les master de tous ses médias
+                        });
+                        d.categoriemedia=list;
+                       // res.json(d.categoriemedia)
+                        res.json(d);
+                    });
+
                 });
     }
 
@@ -113,7 +132,7 @@ router.post('/categories', function (req, res, next) {
     var token = getToken(req.headers);
     if (token || true) {
         req.checkBody('nom', 'Veuillez renseigne les nom').notEmpty();
-        req.checkBody('nom', 'Veuillez ajouter des caractere aux nom').len(7, 60);
+        req.checkBody('nom', 'Veuillez ajouter des caractere aux nom').len(5, 60);
 
         var errors = req.validationErrors();
         if (errors) {

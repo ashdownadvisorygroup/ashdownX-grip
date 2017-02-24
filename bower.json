@@ -40,6 +40,7 @@
     "ngPopover": "^0.0.19",
     "ng-img-crop": "ngImgCrop#^0.3.2",
     "jquery": "^3.1.1",
-    "angular-jk-carousel": "^0.1.9"
+    "angular-jk-carousel": "^0.1.9",
+    "angular-intro.js": "^3.0.1"
   }
 }

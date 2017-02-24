@@ -3,9 +3,10 @@
  */
 app.controller('CompteCtrl', ['$scope','$cookieStore',
     'CategorieFactory','LivreFactory','UserFactory','ProfilFactory', '$stateParams', '$state','AuthService','GroupFactory',
-    '$mdToast',
+    '$mdToast','IntroFactory',
     function ($scope,$cookieStore, CategorieFactory,LivreFactory,UserFactory,ProfilFactory, $stateParams,
-              $state, AuthService,GroupFactory,$mdToast) {
+              $state, AuthService,GroupFactory,$mdToast,IntroFactory) {
+
         /*** partie pour les profils donc l'accueil de l'utilisateur***/
         var profilActuel=$cookieStore.get('user').profilActuel;
         var tab =[];
@@ -28,9 +29,29 @@ app.controller('CompteCtrl', ['$scope','$cookieStore',
     }])
 .controller('InfoUserCtrl', ['$scope','$cookieStore',
     'CategorieFactory','LivreFactory','UserFactory','ProfilFactory', '$stateParams', '$state','AuthService','GroupFactory',
-    '$mdToast',
+    '$mdToast','IntroFactory',
     function ($scope,$cookieStore, CategorieFactory,LivreFactory,UserFactory,ProfilFactory, $stateParams,
-              $state, AuthService,GroupFactory,$mdToast) {
+              $state, AuthService,GroupFactory,$mdToast,IntroFactory) {
+        if($stateParams.guide===true)
+        {
+            angular.element(document).ready(function () {
+                $scope.CallMe();
+            });
+            $stateParams.guide=false;
+        }
+        $scope.IntroOptions = {
+            steps:IntroFactory.getSteps('compte'),
+            showStepNumbers: true,
+            exitOnOverlayClick: true,
+            exitOnEsc:true,
+            nextLabel: '<strong>Suivant!</strong>',
+            prevLabel: '<span style="color:green">Précédent</span>',
+            skipLabel: 'Quitter',
+            doneLabel: 'Merci'
+        };
+        $scope.ShouldAutoStart = IntroFactory.auto_start_intro('compte');
+        $scope.ExitEvent = IntroFactory.ExitEvent;
+        $scope.ChangeEvent = IntroFactory.changeEvent;
 
         $scope.infouse=true;
         $scope.iduser=$cookieStore.get('user').id;
@@ -182,13 +203,21 @@ app.controller('CompteCtrl', ['$scope','$cookieStore',
                 $scope.profnew.data.splice(index,1);
         }
         $scope.newprof=function(){
-            ProfilFactory.ajouterProfil($scope.profnew).then(function(answer) {
+            console.log($scope.profnew);
+
+           ProfilFactory.ajouterProfil($scope.profnew).then(function(answer) {
                 text="reussi"
                 $scope.showActionToast(text);
             }, function(err) {
                 text="echec"
                 $scope.showActionToast(text);
             });
+        }
+        $scope.changevalue=function(item){
+           console.log(item)
+        }
+        $scope.change=function(item){
+           console.log(item)
         }
 
     }])

@@ -134,12 +134,9 @@ router.param('user', function (req, res, next, id) {
 });
 router.get('/user/:user', passport.authenticate('jwt', {session: false}), function (req, res) {
     var token = getToken(req.headers);
-
     if (token) {
         var decoded = jwt.decode(token, config.secret);
-
         var query = User.findById(req.params.user);
-
         query.exec(function (err, user) {
             if (err) {
                 return next(err);
@@ -148,16 +145,26 @@ router.get('/user/:user', passport.authenticate('jwt', {session: false}), functi
                 console.log('can\'t find user');
                 return next(new Error('can\'t find user'));
             }
-            user.populate('groups')
+            UserProfil.find()
+                .where('user').equals(req.params.user)
+                .where('encadre').equals('false')
                 .populate('profil')
-                .populate('encadreur')
-                .populate('master', function (err, user) {
-                    if (err) {
-                        return next(err);
-                    }
-                    res.json(user);
+                .exec( function (err, userprof) {
+                    user.userprofil=userprof;
+                    user.populate('groups')
+                        .populate('profil')
+                        .populate('encadreur')
+                        .populate('master', function (err, user) {
+                            if (err) {
+                                return next(err);
+                            }
+                            Profil.find()
+                                .where("description").regex(req.query.search).exec(function (err,prfs ){
+                            });
+                            res.json(user);
+                        });
                 });
-        });
+         });
     }
 });
 router.get('/users/:user/media_user', passport.authenticate('jwt', {session: false}), function (req, res) {
@@ -449,6 +456,12 @@ router.post('/signup', passport.authenticate('jwt', {session: false}), function 
                 }
                 if (req.body.master) {
                     newUser.master.push.apply(newUser.master, req.body.master);
+                   /* var mas=req.body.master;
+                    var profUser = UserProfil.collection.initializeUnorderedBulkOp({useLegacyOps: true});
+                    req.body.profil.forEach(function (prof_id) {
+                        profUser.insert({user: newUser._id, profil: prof_id, progression: '0'});
+                    });*/
+
                 }
                 if (req.body.encadreur) {
                     newUser.encadreur.push.apply(newUser.encadreur, req.body.encadreur);
@@ -463,58 +476,68 @@ router.post('/signup', passport.authenticate('jwt', {session: false}), function 
                      * la suite permet d'envoyer un tableau délement en une une ligne dans la base de donnée
                      */
                     var profUser = UserProfil.collection.initializeUnorderedBulkOp({useLegacyOps: true});
-                    req.body.profil.forEach(function (prof_id) {
-                        profUser.insert({user: newUser._id, profil: prof_id, progression: '0'});
-                    });
-                    profUser.execute(function (er, result) {
-                        if (er) {
-                            console.error(er);
-                            return res.json({success: false, msg: "Erreur d'enregistrement."});
-                        } else {
-                            var Transport = nodemailer.createTransport({
-                                service: 'Gmail',
-                                auth: {
-                                    user: 'phibi.noubissi@gmail.com',
-                                    pass: 'phibi1234'
-                                }
-                            });
-                            var data = {
-                                nom: newUser.name,
-                                prenom: newUser.prenom,
-                                password: req.body.password
-                            };
-                            var content=ejs.renderFile(__dirname + '/../emails/welcome/welcome.ejs', data, function (err, data) {
-                                var mailOptions = {
-                                    to: newUser.email,
-                                    from: 'phibi.noubissi@gmail.com',
-                                    subject: 'Compte crée',
-                                    html: data,
-                                    attachments: [{
-                                        filename: 'GRIP_Logo.png',
-                                        path: 'https://cask.scotch.io/2014/10/04-sample-app.png',
-                                        cid: 'ashdownx_logo' //same cid value as in the html img src
-                                    },{
-                                        filename: 'Ashdown Advisory Group.png',
-                                        path: appRoot + '/emails/welcome/Ashdown Advisory Group.png',
-                                        cid: 'logo_ashdown' //same cid value as in the html img src
-                                    },{   // file on disk as an attachment
-                                        filename: 'welcome.txt',
-                                        path: __dirname + '/../emails/welcome/welcome.txt' // stream this file
-                                    },]
-                                };
-                                Transport.sendMail(mailOptions, function (err) {
-                                    if (err) {
-                                        console.log(err);
+                    var profUser2 = UserProfil.collection.initializeUnorderedBulkOp({useLegacyOps: true});
+                    if(req.body.profil){
+                        req.body.profil.forEach(function (prof_id) {
+                            profUser.insert({user: newUser._id, profil: prof_id, progression: '0',encadre:'false'});
+                        });
+                    }
+                    if(req.body.encadreur){
+                        req.body.encadreur.forEach(function (prof_id) {
+                            profUser2.insert({user: newUser._id, profil: prof_id, progression: '0',encadre:'true'});
+                        });
+                    }
+                    profUser2.execute(function(err,res){
+                        profUser.execute(function (er, result) {
+                            if (er) {
+                                console.error(er);
+                                return res.json({success: false, msg: "Erreur d'enregistrement."});
+                            } else {
+                                var Transport = nodemailer.createTransport({
+                                    service: 'Gmail',
+                                    auth: {
+                                        user: 'phibi.noubissi@gmail.com',
+                                        pass: 'phibi1234'
                                     }
-                                    if (res.headersSent) {
-                                        console.log(res.headersSent);
-                                    }
-                                    res.json({success: true, msg: newUser});
                                 });
-                            })
+                                var data = {
+                                    nom: newUser.name,
+                                    prenom: newUser.prenom,
+                                    password: req.body.password
+                                };
+                                var content=ejs.renderFile(__dirname + '/../emails/welcome/welcome.ejs', data, function (err, data) {
+                                    var mailOptions = {
+                                        to: newUser.email,
+                                        from: 'phibi.noubissi@gmail.com',
+                                        subject: 'Compte crée',
+                                        html: data,
+                                        attachments: [{
+                                            filename: 'GRIP_Logo.png',
+                                            path: 'https://cask.scotch.io/2014/10/04-sample-app.png',
+                                            cid: 'ashdownx_logo' //same cid value as in the html img src
+                                        },{
+                                            filename: 'Ashdown Advisory Group.png',
+                                            path: appRoot + '/emails/welcome/Ashdown Advisory Group.png',
+                                            cid: 'logo_ashdown' //same cid value as in the html img src
+                                        },{   // file on disk as an attachment
+                                            filename: 'welcome.txt',
+                                            path: __dirname + '/../emails/welcome/welcome.txt' // stream this file
+                                        },]
+                                    };
+                                    Transport.sendMail(mailOptions, function (err) {
+                                        if (err) {
+                                            console.log(err);
+                                        }
+                                        if (res.headersSent) {
+                                            console.log(res.headersSent);
+                                        }
+                                        res.json({success: true, msg: newUser});
+                                    });
+                                })
 
-                        }
-                    });
+                            }
+                        });
+                    })
                 });
             });
         });

@@ -146,6 +146,23 @@ router.post('/categorie_profils',mustBe.authorized("admin"),passport.authenticat
     }
 
 });
+router.get('/categorie_profils',passport.authenticate('jwt', { session: false}), function (req, res, next) {
+    var token = getToken(req.headers);
+    if (token) {
+        var query = CategorieProfil.find()
+        query.exec(function (err, categorie_profil) {
+            if (err) {
+                return next(err);
+            }
+            if (!categorie_profil) {
+                return res.json("error lor de la sauvegarde");
+                return next(new Error('can\'t find categorie_profil'));
+            }
+           res.json(categorie_profil);
+        });
+    }
+
+});
 
 router.put('/categorie_profil/:categorie_profil',passport.authenticate('jwt', { session: false}), function (req, res) {
     var token = getToken(req.headers);

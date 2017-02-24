@@ -26,6 +26,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                         controller: 'AccueilCtrl'
                     }
                 },
+                params: { guide: null },
                 access: { requiredLogin: true }
             })
             .state('axgrip.profils', {
@@ -36,6 +37,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                         controller: 'ProfilsCtrl'
                     }
                 },
+                params: { guide: null },
                 access: { requiredLogin: true }
             })
             .state('axgrip.modifprofil', {
@@ -56,6 +58,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                         controller: 'ProfilCtrl'
                     }
                 },
+                params: { guide: null },
                 access: { requiredLogin: true }
             })
             .state('axgrip.mediatheque', {
@@ -67,6 +70,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                             controller: 'CategoriesCtrl'
                         }
                 },
+                params: { guide: null },
                 access: { requiredLogin: true }
             })
             .state('axgrip.categorie', {
@@ -79,6 +83,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                         }
 
                 },
+                params: { guide: null },
                 access: { requiredLogin: true }
             })
             .state('axgrip.groupe', {

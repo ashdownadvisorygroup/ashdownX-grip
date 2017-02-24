@@ -54,7 +54,18 @@ text_truncate = function(str, length, ending) {
 app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupFactory,ProfilFactory,LivreFactory,
                                    AuthService,youtubeEmbedUtils, $state,$q,$mdDialog,$cookieStore,$filter,
                                       $sce,$mdSidenav,$mdToast,sharedProperties,isAuthenticated,sharedmdtabactual2,SearchFactory,
- $rootScope) {
+ $rootScope,$localStorage) {
+        $scope.selectedTab= $localStorage.selectedTab;
+
+    $scope.$watch('selectedTab', function(newVal){
+        newVal =newVal||0;
+        $localStorage.selectedTab = newVal;
+    },true);
+
+        $scope.startIntro=function(){
+           $state.go($state.$current.self.name,{guide:true});
+            console.log($state.$current.self.name)
+        }
 
 
        $scope.rechercher= function(){
@@ -191,9 +202,29 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
         }])
 .controller('AccueilCtrl', ['$scope','$cookieStore',
         'CategorieFactory','LivreFactory','UserFactory','ProfilFactory', '$stateParams', '$state','AuthService',
-        'youtubeEmbedUtils','$sce','$mdToast','$filter',
+        'youtubeEmbedUtils','$sce','$mdToast','$filter','IntroFactory',
         function ($scope,$cookieStore, CategorieFactory,LivreFactory,UserFactory,ProfilFactory, $stateParams,
-                  $state, AuthService,youtubeEmbedUtils,$sce,$mdToast,$filter) {
+                  $state, AuthService,youtubeEmbedUtils,$sce,$mdToast,$filter,IntroFactory) {
+            if($stateParams.guide===true)
+            {
+                angular.element(document).ready(function () {
+                    $scope.CallMe();
+                });
+                $stateParams.guide=false;
+            }
+            $scope.IntroOptions = {
+                steps:IntroFactory.getSteps('accueil'),
+                showStepNumbers: true,
+                exitOnOverlayClick: true,
+                exitOnEsc:true,
+                nextLabel: '<strong>Suivant!</strong>',
+                prevLabel: '<span style="color:green">Précédent</span>',
+                skipLabel: 'Quitter',
+                doneLabel: 'Merci'
+            };
+            $scope.ShouldAutoStart = IntroFactory.auto_start_intro('accueil');
+            $scope.ExitEvent = IntroFactory.ExitEvent;
+            $scope.ChangeEvent = IntroFactory.changeEvent;
             $scope.hide1=false;
             $scope.hide2=false;
             $scope.afficher_cacher=function(){

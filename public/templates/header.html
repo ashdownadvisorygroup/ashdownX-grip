@@ -39,36 +39,41 @@
                         <img src="../image/menu.png" style="width:24px;height:24px;"/>
                     </md-button>
                 </div>
-              <div flex="15" layout="row" hide-xs >
+              <div flex="15" id="step1" layout="row" hide-xs >
                     <div ui-sref="axgrip.accueil" style="cursor:pointer;">
                         <img src="../../image/GRIP_Logo.png" alt="" class="accueil-img" >
                     </div>
                 </div>
-                <div flex="5"></div>
-                <div flex="35" flex-xs="60" layout="row" layout-align="center center"  >
+                <div  flex="5" >
+                    <md-button id="step2" class="button_show" ng-click="startIntro()" aria-label="a">
+                        <md-tooltip>Afficher l'intro</md-tooltip>
+                        <md-icon  md-svg-src="../../image/play-button.svg" class="card-icon"></md-icon>
+                    </md-button>
+                </div>
+                <div flex="35" id="step3" flex-xs="60" layout="row" layout-align="center center"  >
                     <div flex="90">
                         <input class="input2" ng-model="search" ng-change="rechercher()" type="search" style="color:black;background-color:white;">
                     </div>
                     <div flex="10" >
-                        <img src="../image/search.png" ui-sref="axgrip.resultats_recherche.profil" style="width: 34px;  height: 34px;background-color: skyblue;cursor:pointer;"/>
+                        <img src="../image/search.png" ui-sref="axgrip.resultats_recherche.profil" style="width: 34px;  height: 34px;background-color: rgb(5,170,245);cursor:pointer;"/>
                     </div>
                 </div>
                 <div flex="10"></div>
-                <div flex="45"  class="accueil-menu" hide-xs>
+                <div flex="45" id="step4" class="accueil-menu" hide-xs>
                     <md-tabs  md-selected="selectedTab" class="accueil-button" md-dynamic-height flex>
-                            <md-tab  data-ui-sref="axgrip.accueil" >
-                                <md-tab-label> accueil</md-tab-label>
+                            <md-tab  ui-sref="axgrip.accueil" >
+                                <md-tab-label > accueil</md-tab-label>
                             </md-tab>
 
-                        <md-tab data-ui-sref="axgrip.mediatheque">
+                        <md-tab  ui-sref="axgrip.mediatheque">
                             <md-tab-label  >médiathèque</md-tab-label>
                         </md-tab>
-                        <md-tab data-ui-sref="axgrip.profils" >
+                        <md-tab  ui-sref="axgrip.profils" >
                             <md-tab-label  >profils</md-tab-label>
                         </md-tab>
                     </md-tabs>
                 </div>
-                <div flex="10" flex-xs="30" layout="row" layout-align="center end" >
+                <div flex="10" id="step5" flex-xs="30" layout="row" layout-align="center end" >
                     <md-menu-bar>
                         <md-menu>
                             <button ng-click="$mdOpenMenu()">

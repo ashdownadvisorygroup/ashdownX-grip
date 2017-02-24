@@ -1,7 +1,11 @@
 
-<div  layout="column"  flex="100" class="accueil"  style="background-color: rgb(34,34,34);">
+<div  layout="column"  flex="100" class="accueil"  style="background-color: rgb(34,34,34);" ng-intro-options="IntroOptions" ng-intro-method="CallMe"
+      ng-intro-oncomplete="CompletedEvent" ng-intro-onexit="ExitEvent"
+      ng-intro-onchange="ChangeEvent" ng-intro-onbeforechange="BeforeChangeEvent"
+      ng-intro-onafterchange="AfterChangeEvent"
+      ng-intro-autostart="ShouldAutoStart">
     <div flex layout="row">
-        <div flex="20" flex-sm="50" flex-md="50" flex-xs="100" ng-if="profil" layout="column" class="md-padding" layout-xs="column" class="prof" style="background-color: rgb(51,54,64);overflow: auto;border-right: 2px solid rgb(5,170,245);" >
+        <div flex="20" id="step8" flex-sm="50" flex-md="50" flex-xs="100" ng-if="profil" layout="column" class="md-padding" layout-xs="column" class="prof" style="background-color: rgb(51,54,64);overflow: auto;border-right: 2px solid rgb(5,170,245);" >
             <div flex="5"></div>
             <div flex="10">
                 <u class="descriptioncat_med">Nom:</u><br>
@@ -27,26 +31,25 @@
                 <md-divider></md-divider>
             </div>
             <div flex="5">
-                <md-button class="md-raised md-primary" permission="['admin']" >Modifier le profil</md-button>
-               <!-- <md-button class="md-raised md-primary" permission="['admin']" ui-sref="axgrip.modifprofil({id:profil._id})">Modifier le profil</md-button>-->
+               <md-button class="md-raised md-primary" permission="['admin']" ui-sref="axgrip.modifprofil({id:profil._id})">Modifier le profil</md-button>
             </div>
         </div>
-        <div flex="10"></div>
-        <div flex="85" layout="column" >
-            <div flex="5"></div>
+        <div flex="5" ng-class="{'flex-10': !profil}" ng-hide="profil"></div>
+        <div flex="70" layout="column" ng-class="{'flex-85': !profil}">
+            <div flex="5" ng-hide="profil"></div>
             <div flex="5" layout="row" flex-xs="25">
                 <div flex="25"  ng-if="profile">
                     <h1 style="font-size: 20px">Liste des profils</h1>
                 </div>
                 <div flex="65" ng-show="profile">
-                    <input ng-model="searchprof"  class="reduceSize" style="text-align: center;" placeholder="entrer la recherche">
+                    <input ng-model="searchprof" id="step7" class="reduceSize" style="text-align: center;" placeholder="entrer la recherche">
                 </div>
                 <div flex ng-if="profil" hide-gt-xs> <h2> Liste des catégories</h2></div>
             </div>
-            <div flex="5" ng-if="profil" hide-xs> <h2> Liste des catégories</h2></div>
+            <div flex="5" ng-if="profil" style="text-align: center" hide-xs> <h2> Liste des catégories</h2></div>
             <div flex="5"></div>
             <div layout="row" flex="75"  flex-xs="100" flex-sm="75" flex-md="75" class="med_xss" layout-wrap>
-                <div layout="column" ng-repeat="prf in filteredprofile=( profile |filterBy: ['nom','description']:searchprof )"  >
+                <div id="step6" layout="column" ng-repeat="prf in filteredprofile=( profile |filterBy: ['nom','description']:searchprof )"  >
                     <md-card class="cardprofil" style="color:black;">
                         <md-card-title>
                             <md-card-title-text  style="cursor:pointer ;padding-left: 13px">
@@ -62,11 +65,11 @@
                         </md-card-actions>
                     </md-card>
                 </div>
-                <div layout="row" ng-repeat="ct in profil.categorieprofil" >
-                    <md-card class="cardprofcat " style="color:black;">
+                <div layout="row" id="step9" ng-repeat="ct in profil.categorieprofil | orderBy:'rang'" style="color:black;margin-left:12px">
+                    <md-card class="cardprofcat " >
                         <md-card-title>
                             <md-card-title-text style="cursor:pointer;padding-left: 12px;">
-                                <span class="md-subhead"  ui-sref="axgrip.categorie({id:ct._id})">Nom:{{ct.nom}}</span>
+                                <span class="md-headline"  ui-sref="axgrip.categorie({id:ct._id})">Nom:{{ct.nom}}</span>
                                 <span class="md-subhead" ui-sref="axgrip.categorie({id:ct._id})">Description:{{ct.description}}</span>
                             </md-card-title-text>
                         </md-card-title>
@@ -90,7 +93,7 @@
                             <md-input-container  class="md-icon-float md-block">
                                 <label>Nom</label>
                                 <md-icon md-svg-src="../../image/menu-button.svg" class="name"></md-icon>
-                                <input  type="text" ng-minlength="10"
+                                <input  type="text" ng-minlength="5"
                                         md-maxlength="60" name="nom" ng-model="profnew.nom">
                                 <div ng-messages="Formmodifprof.nom.$error">
                                     <div ng-message="md-maxlength">la taille ne doit pas depasser 60</div>
@@ -133,6 +136,50 @@
                 </div>
             </div>
 
+
+        </div>
+        <div flex="20" ng-if="profil" layout="column" style="border-left: 2px solid rgb(5,170,245);">
+            <div flex="50" layout="column">
+                <md-content style="background-color: rgb(51,54,64);color:white;overflow-y: auto;height:100px;"
+                            class="stage_list" flex>
+                    <section >
+                        <md-subheader id="step10" >Liste des encadreurs</md-subheader>
+                        <md-list class="">
+                            <md-list-item class="md-3-line list_stage"
+                                          ng-repeat="item in profil.userprofil">
+                                <img ng-src="{{item.photo}}?{{$index}}" class="md-avatar" alt="{{item.name}}">
+                                <div class="md-list-item-text">
+                                    <a ui-sref="axgrip.useraccount({id:item._id})" style="text-decoration: none;">
+                                        <h3 style="color:white;cursor:pointer;font-size: 12px">{{item.name}}</h3>
+                                    </a>
+                                </div>
+                                <md-divider md-inset ng-if="!$last"></md-divider>
+                            </md-list-item>
+                        </md-list>
+                    </section>
+                </md-content>
+            </div>
+            <div flex="50" layout="column">
+                <md-content style="background-color: rgb(51,54,64);color:white;overflow-y: auto;height:100px;"
+                            class="stage_list" flex>
+                    <section >
+                        <md-subheader id="step11">Utilisateurs ayant achevé le profil</md-subheader>
+
+                        <md-list class="">
+                            <md-list-item class="md-3-line list_stage"
+                                          ng-repeat="i in profil.users">
+                                <img ng-src="{{i.photo}}?{{$index}}" class="md-avatar" alt="{{i.name}}">
+                                <div class="md-list-item-text">
+                                    <a ui-sref="axgrip.useraccount({id:i._id})" style="text-decoration: none;">
+                                        <h3 style="color:white;cursor:pointer;font-size: 12px">{{i.name}}</h3>
+                                    </a>
+                                </div>
+                                <md-divider md-inset ng-if="!$last"></md-divider>
+                            </md-list-item>
+                        </md-list>
+                    </section>
+                </md-content>
+            </div>
 
         </div>
     </div>

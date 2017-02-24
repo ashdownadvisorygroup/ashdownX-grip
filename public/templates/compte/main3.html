@@ -2,7 +2,7 @@
     <div flex="90" >
     <div ng-show="stagiaires.length >0" flex layout="column" style="background-color: rgb(51,54,64);overflow-y: auto;border-left: 2px solid rgb(5,170,245);" hide-xs>
         <div flex="10">
-            <div flex>
+            <div flex id="step12">
                 <input ng-model="searchstagiaire" class="reduceSize" style="text-align: center"  placeholder="entrer la recherche">
             </div>
 
@@ -10,7 +10,7 @@
         <div flex="100">
             <md-content style="background-color: rgb(51,54,64);color:white;overflow: auto;height: 528px;" >
                 <section>
-                    <md-subheader >Liste des stagiaires</md-subheader>
+                    <md-subheader id="step13" >Liste des stagiaires</md-subheader>
                     <md-list class="make-scrollable"  >
                         <md-list-item class="md-3-line" ng-repeat="item in filteredStagiaires=( stagiaires |filterBy: ['name']:searchstagiaire)"
                                       style="height:7%;"  >

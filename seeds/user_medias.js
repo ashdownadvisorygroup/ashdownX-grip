@@ -10,7 +10,7 @@ addSeed(MediaUser, {
     dependencies: [Media,User],
     seed: function (media,user) {
         return [{
-            progression: "1%",
+            progression: "1",
             media:media[0],
             user:user[0],
             notation:"2"
@@ -20,7 +20,7 @@ addSeed(MediaUser, {
             notation:"5"
 
         } ,{
-            progression: "0%",
+            progression: "0",
             media:media[4],
             user:user[3],
             notation:"3"
@@ -40,6 +40,30 @@ addSeed(MediaUser, {
             progression: "6",
             media:media[3],
             user:user[3],
+            notation:"2"
+
+        }, {
+            progression: "6",
+            media:media[5],
+            user:user[3],
+            notation:"2"
+
+        }, {
+            progression: "6",
+            media:media[2],
+            user:user[0],
+            notation:"5"
+
+        }, {
+            progression: "6",
+            media:media[4],
+            user:user[0],
+            notation:"3"
+
+        }, {
+            progression: "6",
+            media:media[3],
+            user:user[5],
             notation:"2"
 
         }];

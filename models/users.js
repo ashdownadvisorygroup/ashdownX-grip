@@ -18,6 +18,7 @@ var UserSchema = new mongoose.Schema({
     groups:[{type : mongoose.Schema.Types.ObjectId, ref : "Group"}],
     profil:[{type : mongoose.Schema.Types.ObjectId, ref : "Profil"}],
     mediauser:[{type: mongoose.Schema.Types.ObjectId, ref: 'MediaUser'}],
+    userprofil:[{type: mongoose.Schema.Types.Mixed, ref: 'UserProfil'}],
     master:[{type : mongoose.Schema.Types.ObjectId, ref : "Profil"}],
     encadreur:[{type : mongoose.Schema.Types.ObjectId, ref : "Profil"}]
     //ensemble des profils qu'il peut noter

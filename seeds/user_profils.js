@@ -10,16 +10,20 @@ addSeed(UserProfil, {
     dependencies: [Profil,User],
     seed: function (profil,user) {
         return [{
-            progression: "1%",
+            progression: "100",
             profil:profil[0],
             user:user[0]
+        },{
+            progression: "100",
+            profil:profil[0],
+            user:user[6]
         }, {
-            progression: "0%",
+            progression: "0",
             profil:profil[2],
             user:user[3]
 
         } ,{
-            progression: "0%",
+            progression: "0",
             profil:profil[2],
             user:user[3]
         }, {
@@ -28,14 +32,60 @@ addSeed(UserProfil, {
             user:user[0]
 
         }, {
-            progression: "6",
+            progression: "100",
             profil:profil[2],
             user:user[4]
+
+        }, {
+            progression: "100",
+            profil:profil[2],
+            user:user[1]
+
+        }, {
+            progression: "100",
+            profil:profil[2],
+            user:user[3]
 
         }, {
             progression: "6",
             profil:profil[3],
             user:user[3]
+        }, {
+            progression: "0",
+            profil:profil[1],
+            user:user[11],
+            encadre:"true"
+        }, {
+            progression: "0",
+            profil:profil[2],
+            user:user[11],
+            encadre:"true"
+        }, {
+            progression: "0",
+            profil:profil[3],
+            user:user[11],
+            encadre:"true"
+        }, {
+            progression: "0",
+            profil:profil[0],
+            user:user[12],
+            encadre:"true"
+        }, {
+            progression: "0",
+            profil:profil[4],
+            user:user[12],
+            encadre:"true"
+        }, {
+            progression: "0",
+            profil:profil[3],
+            user:user[13],
+            encadre:"true"
+
+        }, {
+            progression: "6",
+            profil:profil[2],
+            user:user[13],
+            encadre:"true"
         }];
     }
 });

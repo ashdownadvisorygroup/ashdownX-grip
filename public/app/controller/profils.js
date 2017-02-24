@@ -3,9 +3,29 @@
  */
 app.controller('ProfilsCtrl', ['$scope','$cookieStore',
     'CategorieFactory','LivreFactory','ProfilFactory', '$stateParams', '$state','AuthService','$mdToast','$mdDialog',
-    '$filter',
+    '$filter','IntroFactory',
     function ($scope,$cookieStore, CategorieFactory,LivreFactory,ProfilFactory, $stateParams, $state, AuthService,$mdToast,
-              $mdDialog,$filter) {
+              $mdDialog,$filter,IntroFactory) {
+        if($stateParams.guide===true)
+        {
+            angular.element(document).ready(function () {
+                $scope.CallMe();
+            });
+            $stateParams.guide=false;
+        }
+        $scope.IntroOptions = {
+            steps:IntroFactory.getSteps('profils'),
+            showStepNumbers: true,
+            exitOnOverlayClick: true,
+            exitOnEsc:true,
+            nextLabel: '<strong>Suivant!</strong>',
+            prevLabel: '<span style="color:green">Précédent</span>',
+            skipLabel: 'Quitter',
+            doneLabel: 'Merci'
+        };
+        $scope.ShouldAutoStart = IntroFactory.auto_start_intro('profils');
+        $scope.ExitEvent = IntroFactory.ExitEvent;
+        $scope.ChangeEvent = IntroFactory.changeEvent;
         /***
          *
          *partie des toast pour les notification
@@ -120,14 +140,36 @@ app.controller('ProfilsCtrl', ['$scope','$cookieStore',
     }])
     .controller('ProfilCtrl', ['$scope','$cookieStore',
         'CategorieFactory','LivreFactory','ProfilFactory', '$stateParams', '$state','AuthService','$mdToast',
-        function ($scope,$cookieStore, CategorieFactory,LivreFactory,ProfilFactory, $stateParams, $state, AuthService,$mdToast) {
-            var tab =[],iduser,medPerPage=5;$scope.currentPage=1;$scope.step=5;
+        'IntroFactory',
+        function ($scope,$cookieStore, CategorieFactory,LivreFactory,ProfilFactory, $stateParams, $state, AuthService,$mdToast,
+                  IntroFactory) {
+            if($stateParams.guide===true)
+            {
+                angular.element(document).ready(function () {
+                    $scope.CallMe();
+                });
+                $stateParams.guide=false;
+            }
+            $scope.IntroOptions = {
+                steps:IntroFactory.getSteps('profil'),
+                showStepNumbers: true,
+                exitOnOverlayClick: true,
+                exitOnEsc:true,
+                nextLabel: '<strong>Suivant!</strong>',
+                prevLabel: '<span style="color:green">Précédent</span>',
+                skipLabel: 'Quitter',
+                doneLabel: 'Merci'
+            };
+            $scope.ShouldAutoStart = IntroFactory.auto_start_intro('profil');
+            $scope.ExitEvent = IntroFactory.ExitEvent;
+            $scope.ChangeEvent = IntroFactory.changeEvent;
+            var tab =[],iduser,medPerPage=6;$scope.currentPage=1;$scope.step=5;
             ProfilFactory.getOne($stateParams.id).then(function (profils) {
-
                 $scope.profil = profils;
                 angular.forEach($scope.profil.categorieprofil,function(dat){
                     dat.description=text_truncate(dat.description,46);
                 })
+                console.log($scope.profil.categorieprofil)
                     $scope.total = Math.ceil(profils.categorieprofil.length/medPerPage);
                     $scope.profil.categorieprofil= profils.categorieprofil.slice(0,medPerPage);
                     $scope.gotoPage = function() {
@@ -190,7 +232,6 @@ app.controller('ProfilsCtrl', ['$scope','$cookieStore',
             $scope.closeToast = function() {
                 $mdToast.hide();
             };
-            $scope.profnew={data:[""]};
             $scope.addRow = function(index){
                 var name="";
                 if($scope.profnew.data.length <= index+1){
@@ -201,13 +242,16 @@ app.controller('ProfilsCtrl', ['$scope','$cookieStore',
                 if($event.which == 1)
                     $scope.profnew.data.splice(index,1);
             }
-            ProfilFactory.getOne($stateParams.id).then(function (profils) {
-
-                $scope.profnew = profils;
+         ProfilFactory.getOne($stateParams.id).then(function (profils) {
+             $scope.profnew = profils;
+             $scope.profnew.data=$scope.profnew.objectifs//permet d'afficher les objectifs du profil et pouvoir les modifier
+             $scope.profnew.categorie=[];//permet de modifier les catégories du profil
 
             });
+            CategorieFactory.get().then(function (categories) {//obtention de toutes les categories
+                $scope.categories = categories;
+            });
             $scope.modifprof=function(){
-
                 ProfilFactory.modifierProfil($scope.profnew).then(function(answer) {
                     text="reussi"
                     $scope.showActionToast(text);

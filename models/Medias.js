@@ -8,6 +8,7 @@ var MediaSchema   = new mongoose.Schema({
     logo: String,
     description: String,
     link: String,
+    type: String,
     date: { type: Date, default: Date.now },
     creator:{type : mongoose.Schema.Types.ObjectId, ref : "User"},
     rate:{type: Number, default: 0},

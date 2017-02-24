@@ -1,7 +1,12 @@
-<div  layout="row"  flex class="accueil"  style="background-color: rgb(34,34,34);">
+<div  layout="row"  flex class="accueil"  style="background-color: rgb(34,34,34);"
+      ng-intro-options="IntroOptions" ng-intro-method="CallMe"
+      ng-intro-oncomplete="CompletedEvent" ng-intro-onexit="ExitEvent"
+      ng-intro-onchange="ChangeEvent" ng-intro-onbeforechange="BeforeChangeEvent"
+      ng-intro-onafterchange="AfterChangeEvent"
+      ng-intro-autostart="ShouldAutoStart">
     <div flex="25" ng-if="aff_med" layout="column" style="background-color: rgb(51,54,64);overflow-y: auto;border-right: 2px solid rgb(5,170,245);min-height: 580px; ">
         <div flex="100" >
-            <ul>
+            <ul id="step6">
                 <li ng-repeat="prf in profile">
                     {{ prf.nom }}
                     <ul>
@@ -54,13 +59,13 @@
     <div layout="column"  flex="65">
         <div flex="10" layout="row" style="padding-top: 1em;">
             <md-menu-bar>
-                    <button ui-sref="axgrip.user({id:iduser})"  style="background-color: white;">
+                    <button id="step7" ui-sref="axgrip.user({id:iduser})"  style="background-color: white;">
                         user
                     </button>
-                    <button ui-sref="axgrip.profil_termines({id:iduser})" style="background-color: white;">
+                    <button id="step8" ui-sref="axgrip.profil_termines({id:iduser})" style="background-color: white;">
                         profils
                     </button>
-                    <button ui-sref="axgrip.useraccount({id:iduser})" style="background-color: white;">
+                    <button id="step9" ui-sref="axgrip.useraccount({id:iduser})" style="background-color: white;">
                         Médias
                     </button>
             </md-menu-bar>

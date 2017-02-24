@@ -4,9 +4,29 @@
 
 app.controller('UseraccountCtrl', ['$scope','$cookieStore',
     'CategorieFactory','LivreFactory','UserFactory','ProfilFactory', '$stateParams', '$state','AuthService','$mdToast',
-    '$filter',
+    '$filter','IntroFactory',
     function ($scope,$cookieStore, CategorieFactory,LivreFactory,UserFactory,ProfilFactory,
-              $stateParams, $state, AuthService,$mdToast,$filter) {
+              $stateParams, $state, AuthService,$mdToast,$filter,IntroFactory) {
+        if($stateParams.guide===true)
+        {
+            angular.element(document).ready(function () {
+                $scope.CallMe();
+            });
+            $stateParams.guide=false;
+        }
+        $scope.IntroOptions = {
+            steps:IntroFactory.getSteps('useraccount'),
+            showStepNumbers: true,
+            exitOnOverlayClick: true,
+            exitOnEsc:true,
+            nextLabel: '<strong>Suivant!</strong>',
+            prevLabel: '<span style="color:green">Précédent</span>',
+            skipLabel: 'Quitter',
+            doneLabel: 'Merci'
+        };
+        $scope.ShouldAutoStart = IntroFactory.auto_start_intro('useraccount');
+        $scope.ExitEvent = IntroFactory.ExitEvent;
+        $scope.ChangeEvent = IntroFactory.changeEvent;
         $scope.aff_med=true;
 
         $scope.currentPage=1;

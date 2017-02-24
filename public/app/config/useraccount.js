@@ -13,6 +13,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
                     controller: 'UseraccountCtrl'
                 }
             },
+            params: { guide: null },
             access: { requiredLogin: true }
         })
         .state('axgrip.user', {
