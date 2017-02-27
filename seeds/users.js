@@ -13,8 +13,6 @@ addSeed(User, {
             name: "admin",
             password:"admin",
             groups:[groups[0]],
-            master:[profil[1],profil[0]],
-            encadreur:[profil[0],profil[1]],
             email:"o@gmail.com",
             photo:"data/photos/photo1.png"
         }];
