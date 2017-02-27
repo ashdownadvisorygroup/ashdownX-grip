@@ -37,9 +37,7 @@ app.controller('ProfilsCtrl', ['$scope','$cookieStore',
             left: false,
             right: true
         };
-
         $scope.toastPosition = angular.extend({},last);
-
         $scope.getToastPosition = function() {
             sanitizePosition();
 
@@ -47,7 +45,6 @@ app.controller('ProfilsCtrl', ['$scope','$cookieStore',
                 .filter(function(pos) { return $scope.toastPosition[pos]; })
                 .join(' ');
         };
-
         function sanitizePosition() {
             var current = $scope.toastPosition;
 

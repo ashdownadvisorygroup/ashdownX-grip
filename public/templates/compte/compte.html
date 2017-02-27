@@ -352,7 +352,7 @@
                         <md-input-container class="md-block">
                             <md-icon md-svg-src="../../image/web-design.svg" style="display:inline-block;"></md-icon>
                             <label>Profil(s) de l'utilisateur</label>
-                            <md-select multiple ng-model="utilisateur.profil" ng-required="true">
+                            <md-select multiple ng-model="utilisateur.profil" >
                                 <md-option ng-repeat="profil in profils" value="{{profil._id}}">{{profil.nom}}
                                 </md-option>
                             </md-select>

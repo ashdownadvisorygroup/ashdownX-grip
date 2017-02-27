@@ -5,7 +5,7 @@ var mongoose     = require('mongoose');
 
 var UserProfilSchema   = new mongoose.Schema({
     progression: String,//permet de connaitre la progression d'un utilisateur dans un profil de formation
-    encadre:{type: Boolean, default: false},//permet de savoir si l'utilisateur encadre le profil ou non
+    encadre:String,//permet de savoir si l'utilisateur encadre le profil ou non
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     profil:{ type: mongoose.Schema.Types.ObjectId, ref: 'Profil' }
 });//permet de savoir la progression d'un utilisateur dans un profil donne

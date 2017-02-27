@@ -371,7 +371,6 @@ app.controller('CategoriesCtrl', ['$scope','$cookieStore',
             }
         }
         $scope.creationmedia= function () {
-
             if(!$scope.mediai.logo)$scope.mediai.logo="data/logos/photo0.png";
             $scope.mediai.categorie=indik;
             console.log($scope.mediai)
@@ -456,13 +455,13 @@ app.controller('CategoriesCtrl', ['$scope','$cookieStore',
         $scope.currentPage=1;
         $scope.step=5;
         var medPerPage=10;
-
         CategorieFactory.getOne($stateParams.id).then(function (categories) {//obtention de toutes les categories
             $scope.medias = categories.medias;
             if($scope.medias.length==0){
                 $scope.medias=[];
             }
-            else{
+            else
+            {
                 var len=$scope.medias.length;
                 for (var i = 0; i < len; i++) {
                     if($scope.medias.indexOf(null)>-1){
@@ -471,7 +470,6 @@ app.controller('CategoriesCtrl', ['$scope','$cookieStore',
                     }
                 }
             }
-
             $scope.categorie = categories;
             afficher_ecran($scope.medias);
             $scope.total = Math.ceil($scope.medias.length/medPerPage);

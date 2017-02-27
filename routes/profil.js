@@ -148,8 +148,9 @@ router.get('/profil/:profil',passport.authenticate('jwt', { session: false}), fu
         var d;
         var list=[];
         var list2=[];
-        CategorieProfil.find()
-            .where('profil').equals(req.params.profil)
+        var b=req.params.profil;
+       CategorieProfil.find()
+            .where('profil').equals(mongoose.Types.ObjectId(req.params.profil))
             .sort({ rang : 1 })
             .populate('categorie')
             .exec(function (errmed, result){
@@ -157,7 +158,7 @@ router.get('/profil/:profil',passport.authenticate('jwt', { session: false}), fu
                     return next(errmed);
                 }
                 var query = UserProfil.find()
-                    .where('profil').equals(req.params.profil)
+                    .where('profil').equals(mongoose.Types.ObjectId(req.params.profil))
                     .where('progression').equals("100")
                     .populate('user');
                 query.exec(function (err, user_profil) {
@@ -171,24 +172,22 @@ router.get('/profil/:profil',passport.authenticate('jwt', { session: false}), fu
                     user_profil.forEach(function(dat) {
                                 list.push(dat.user);
                     });
-                    var query2 = UserProfil.find()
-                        .where('profil').equals(req.params.profil)
+                    UserProfil.find()
+                        .where('profil').equals(mongoose.Types.ObjectId(req.params.profil))
                         .where('encadre').equals("true")
-                         .sort({ progression : 1 })
-                        .populate('user');
-                    query2.exec(function (err, user_profil) {
-                        if (err) {
-                            console.log(err);
-                            return res.json("il ya erreur dans la requete reessayer svp");
-                        }
-                        if (!user_profil) {
-                            return res.json("pas de userprofil correspondant a la recherche");
-                        }
-                        else{
+                        .populate('user')
+                        .exec(function (err, profil_enc) {
+                            if (err) {
+                                console.log(err);
+                                return res.json("il ya erreur dans la requete reessayer svp");
+                            }
+                            if (!profil_enc) {
+                                return res.json("pas de userprofil correspondant a la recherche");
+                            }
                             d = req.profil;
                             d.categorieprofil=[];
                             d.users=list;//liste des utilisateurs qui ont terminé le profil
-                            user_profil.forEach(function(dat) {
+                            profil_enc.forEach(function(dat) {
                                 d.userprofil.push(dat.user);
                             });
                             var taille=result.length;
@@ -201,13 +200,16 @@ router.get('/profil/:profil',passport.authenticate('jwt', { session: false}), fu
                                 d.categorieprofil[i]=obj;
                                 //console.log(d)
                             }
-                        }
-                        res.json(d);
+                            res.json(d);
                         });
+
+
 
 
                 });
             });
+
+
     }
 
 });
@@ -237,7 +239,8 @@ router.post('/profils',mustBe.authorized("admin"),passport.authenticate('jwt', {
             var profCat = CategorieProfil.collection.initializeUnorderedBulkOp({useLegacyOps: true});
             var i=1;
             req.body.categorie.forEach(function(cat_id){
-                profCat.insert({profil: prf._id, categorie:cat_id, progression: '0',rang:i});
+                console.log(typeof cat_id);
+                profCat.insert({profil: prf._id, categorie:mongoose.Types.ObjectId(cat_id), progression: '0',rang:i});
                 i++;
             });
             profCat.execute(function(er, result) {

@@ -146,7 +146,7 @@ router.get('/user/:user', passport.authenticate('jwt', {session: false}), functi
                 return next(new Error('can\'t find user'));
             }
             UserProfil.find()
-                .where('user').equals(req.params.user)
+                .where('user').equals(user._id)
                 .where('encadre').equals('false')
                 .populate('profil')
                 .exec( function (err, userprof) {
@@ -158,9 +158,6 @@ router.get('/user/:user', passport.authenticate('jwt', {session: false}), functi
                             if (err) {
                                 return next(err);
                             }
-                            Profil.find()
-                                .where("description").regex(req.query.search).exec(function (err,prfs ){
-                            });
                             res.json(user);
                         });
                 });
@@ -455,13 +452,39 @@ router.post('/signup', passport.authenticate('jwt', {session: false}), function 
                     return res.json({success: false, msg: 'utilisateur ou email deja existant.'});
                 }
                 if (req.body.master) {
+                    var list=[],list2=[];
                     newUser.master.push.apply(newUser.master, req.body.master);
-                   /* var mas=req.body.master;
-                    var profUser = UserProfil.collection.initializeUnorderedBulkOp({useLegacyOps: true});
-                    req.body.profil.forEach(function (prof_id) {
-                        profUser.insert({user: newUser._id, profil: prof_id, progression: '0'});
-                    });*/
-
+                    CategorieProfil.find()
+                        .where('profil').in(newUser.master)
+                        .exec(function (err, cat){
+                            cat.forEach(function(c){
+                                  list.push(c.categorie.toString())
+                            })
+                            var unique = list.filter(function(elem, index, self) {
+                                return index == self.indexOf(elem);
+                            })
+                            unique.forEach(function(c){
+                                c=mongoose.Types.ObjectId(c);
+                            })
+                            CategorieMedia.find()
+                                .where('categorie').in(unique)
+                                .exec(function (err, med){
+                                    med.forEach(function(m){
+                                        if(list2.indexOf(m.media) == -1){
+                                            list2.push(m.media);
+                                        }
+                                    })
+                                   var medUser = MediaUser.collection.initializeUnorderedBulkOp({useLegacyOps: true});
+                                    list2.forEach(function (id) {
+                                        medUser.insert({user: newUser._id, media: id});
+                                    });
+                                    medUser.execute(function(err,res){
+                                        if(err){
+                                            console.log(err)
+                                        }
+                                    })
+                                })
+                        })
                 }
                 if (req.body.encadreur) {
                     newUser.encadreur.push.apply(newUser.encadreur, req.body.encadreur);
@@ -479,63 +502,65 @@ router.post('/signup', passport.authenticate('jwt', {session: false}), function 
                     var profUser2 = UserProfil.collection.initializeUnorderedBulkOp({useLegacyOps: true});
                     if(req.body.profil){
                         req.body.profil.forEach(function (prof_id) {
-                            profUser.insert({user: newUser._id, profil: prof_id, progression: '0',encadre:'false'});
+                            profUser.insert({user: newUser._id, profil:  mongoose.Types.ObjectId(prof_id), progression: '0',encadre:'false'});
                         });
-                    }
-                    if(req.body.encadreur){
-                        req.body.encadreur.forEach(function (prof_id) {
-                            profUser2.insert({user: newUser._id, profil: prof_id, progression: '0',encadre:'true'});
-                        });
-                    }
-                    profUser2.execute(function(err,res){
                         profUser.execute(function (er, result) {
                             if (er) {
                                 console.error(er);
                                 return res.json({success: false, msg: "Erreur d'enregistrement."});
-                            } else {
-                                var Transport = nodemailer.createTransport({
-                                    service: 'Gmail',
-                                    auth: {
-                                        user: 'phibi.noubissi@gmail.com',
-                                        pass: 'phibi1234'
-                                    }
-                                });
-                                var data = {
-                                    nom: newUser.name,
-                                    prenom: newUser.prenom,
-                                    password: req.body.password
-                                };
-                                var content=ejs.renderFile(__dirname + '/../emails/welcome/welcome.ejs', data, function (err, data) {
-                                    var mailOptions = {
-                                        to: newUser.email,
-                                        from: 'phibi.noubissi@gmail.com',
-                                        subject: 'Compte crée',
-                                        html: data,
-                                        attachments: [{
-                                            filename: 'GRIP_Logo.png',
-                                            path: 'https://cask.scotch.io/2014/10/04-sample-app.png',
-                                            cid: 'ashdownx_logo' //same cid value as in the html img src
-                                        },{
-                                            filename: 'Ashdown Advisory Group.png',
-                                            path: appRoot + '/emails/welcome/Ashdown Advisory Group.png',
-                                            cid: 'logo_ashdown' //same cid value as in the html img src
-                                        },{   // file on disk as an attachment
-                                            filename: 'welcome.txt',
-                                            path: __dirname + '/../emails/welcome/welcome.txt' // stream this file
-                                        },]
-                                    };
-                                    Transport.sendMail(mailOptions, function (err) {
-                                        if (err) {
-                                            console.log(err);
-                                        }
-                                        if (res.headersSent) {
-                                            console.log(res.headersSent);
-                                        }
-                                        res.json({success: true, msg: newUser});
-                                    });
-                                })
-
                             }
+                        });
+                    }
+                    if(req.body.encadreur){
+                        req.body.encadreur.forEach(function (prof_id) {
+                            profUser2.insert({user: newUser._id, profil:  mongoose.Types.ObjectId(prof_id), progression: '0',encadre:'true'});
+                        });
+                        profUser2.execute(function(err,res){
+                            if(err){
+                                console.log(err)
+                            }
+                        })
+                    }
+                     var Transport = nodemailer.createTransport({
+                        service: 'Gmail',
+                        auth: {
+                            user: 'phibi.noubissi@gmail.com',
+                            pass: 'phibi1234'
+                        }
+                    });
+                    var data = {
+                        nom: newUser.name,
+                        prenom: newUser.email,
+                        password: req.body.password
+                    };
+                    var content=ejs.renderFile(__dirname + '/../emails/welcome/welcome.ejs', data, function (err, data) {
+                        var mailOptions = {
+                     forceEmbeddedImages: true,
+                            to: newUser.email,
+                            from: 'phibi.noubissi@gmail.com',
+                            subject: 'Compte crée',
+                            html: data,
+                            attachments: [{
+                                filename: 'GRIP_Logo.png',
+                                path: 'https://cask.scotch.io/2014/10/04-sample-app.png',
+                                cid: 'ashdownx_logo' //same cid value as in the html img src
+                            },{
+                                filename: 'Ashdown Advisory Group.png',
+                                path: appRoot + '/emails/welcome/Ashdown Advisory Group.png',
+                                cid: 'logo_ashdown' //same cid value as in the html img src
+                            },{   // file on disk as an attachment
+                                filename: 'welcome.txt',
+                                path: __dirname + '/../emails/welcome/welcome.txt' // stream this file
+                            },]
+                        };
+                        Transport.sendMail(mailOptions, function (err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                            if (res.headersSent) {
+                                console.log(res.headersSent);
+                            }
+                            res.json({success: true, msg: newUser});
                         });
                     })
                 });

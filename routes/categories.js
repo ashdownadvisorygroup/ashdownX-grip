@@ -81,6 +81,21 @@ router.get('/categories', function (req, res, next) {
     }
 
 });
+router.get('/mediauser', function (req, res, next) {
+    var token = getToken(req.headers);
+    if (token || true) {
+        /*var decoded = jwt.decode(token, config.secret);
+        var ids=decoded._id;
+        console.log(decoded);*/
+        MediaUser.find(function (err, categories) {
+            if (err) {
+                return next(err);
+            }
+            res.json(categories)
+        });
+    }
+
+});
 
 router.get('/categorie/:categorie',passport.authenticate('jwt', { session: false}), function (req, res) {
     var token = getToken(req.headers);
@@ -89,8 +104,7 @@ router.get('/categorie/:categorie',passport.authenticate('jwt', { session: false
         CategorieMedia.find()
             .populate('media')
             .exec(function (errmed, result){
-
-                    if (errmed) {
+                if (errmed) {
                         return next(errmed);
                     }
                     d= req.categorie;
@@ -106,6 +120,8 @@ router.get('/categorie/:categorie',passport.authenticate('jwt', { session: false
                             }
                         }
                     }
+                console.log(typeof v[0])
+
                 d.categoriemedia=[];
                 MediaUser.find()
                     .where('media').in(v)
@@ -114,6 +130,7 @@ router.get('/categorie/:categorie',passport.authenticate('jwt', { session: false
                         if (errmed) {
                             return next(errmed);
                         }
+                        console.log(ofmed)
                         var list=[];
                         ofmed.forEach(function(dat) {
                             list.push(dat.user);//pour récupérer tous les master de la dite catégorie en prenant les master de tous ses médias
@@ -269,7 +286,7 @@ router.route('/categories/:categorie/media',passport.authenticate('jwt', { sessi
                 }
 
                 var  CatMed= CategorieMedia.collection.initializeUnorderedBulkOp({useLegacyOps: true});
-                CatMed.insert({media: media._id, categorie:req.params.categorie});
+                CatMed.insert({media: media._id, categorie:mongoose.Types.ObjectId(req.params.categorie)});
                 CatMed.execute(function(er, result) {
                     if(er) {
                         console.error(er);
@@ -363,7 +380,7 @@ router.route('/categories/:categorie/medias',passport.authenticate('jwt', { sess
                     return next(err);
                 }
                 var  CatMed= CategorieMedia.collection.initializeUnorderedBulkOp({useLegacyOps: true});
-                CatMed.insert({media: media._id, categorie:req.params.categorie});
+                CatMed.insert({media: media._id, categorie:mongoose.Types.ObjectId(req.params.categorie)});
                 CatMed.execute(function(er, result) {
                     if(er) {
                         console.error(er);

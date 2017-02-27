@@ -1339,6 +1339,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
             return $q(function(resolve, reject) {
                 Upload.upload({url:'/signup',method: 'POST',data:user }).then(function(result) {
                     if (result.data.success) {
+                        console.log(result.data.user_profils)
                         resolve(result.data.msg);
                     } else {
 

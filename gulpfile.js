@@ -15,6 +15,7 @@ var gulp = require('gulp'),
 var gulpFilter = require('gulp-filter')
     watch = require('gulp-watch')
     rename = require('gulp-rename')
+var cleanCSS = require('gulp-clean-css');
 // Paths
 var bower = require('gulp-bower-files')
 var src = {
@@ -105,21 +106,17 @@ gulp.task('javascript', function() {
 });
 //tâche de tous les fichiers css qui ne sont pas dans vendor et nos styles écrits
 gulp.task('stylesheets', function() {
-
     return gulp.src(src.styl)
-        .pipe(concat('stylesheets.css'))
-        .pipe(gulp.dest(dist.css))
-        .pipe(rename('stylesheets.min.css'))
-        .pipe(uglify())
+        .pipe(cleanCSS({debug: true}, function(details) {
+            //console.log(details.name + ': ' + details.stats.originalSize);
+            //console.log(details.name + ': ' + details.stats.minifiedSize);
+        }))
         .pipe(gulp.dest(dist.css));
 });
 //tâche de tous les fichiers css que nous avons écrit
 gulp.task('axgrip', function() {
-
     return gulp.src(src.css)
-        .pipe(concat('axgrip.css'))
-        .pipe(gulp.dest(dist.css))
-        .pipe(rename('axgrip.min.css'))
-        .pipe(uglify())
+        .pipe(cleanCSS({debug: true}, function(details) {
+        }))
         .pipe(gulp.dest(dist.css));
 })
