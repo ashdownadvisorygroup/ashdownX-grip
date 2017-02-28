@@ -7,14 +7,15 @@
 </head>
 <body layout="column">
 <div flex="20" layout="row">
-    <div><img style="float:left" src="" alt=""></div>
-    <div><img style="float:right;" src="" alt=""></div>
+    <div><img  src="<%= photo2 %>" alt=""></div>
+    <div><img  src="<%= photo1 %>" alt=""></div>
+    <div><img  src="cid:<%= photo %>" alt=""></div>
     <div style="padding:10px;color:white;background:blue;text-align: center;margin:0 5px">
         <h1>Bienvenue dans la Plateforme Axgrip</h1>
     </div>
     <br><br>
     <div style="padding: 15px;">
-        Bonjour Mr/Mme <strong><%= nom %></strong> &nbsp; <strong><%= prenom %></strong> <br>
+        Bonjour Mr/Mme <strong><%= nom %></strong> &nbsp;  <br>
         <p>
             Votre compte vient d'être crée dans la plateforme Axgrip. <br>
             Cette plateforme permet de capitaliser les connaissances de l'entreprise <em>Ashdown Advisory Group</em>
@@ -24,7 +25,7 @@
             voici votre login: <br>
         </p>
 
-        Login: <strong><%= nom %></strong>
+        Login: <strong><%= prenom %></strong>
         <br>
         Mot de passe: <strong><%= password %></strong><br>
         <br>

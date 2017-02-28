@@ -1284,6 +1284,22 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         deferred.reject(error);
                     });
                     return deferred.promise;
+                },
+                updatenotation: function(usmed){
+                    factory.loadUserCredentials();
+                    var deferred = $q.defer();
+                    console.log(usmed);
+                    $http({
+                        method: 'PUT',
+                        url: '/medianotation/'+usmed.id,
+                        data: usmed
+                    }).then(function(success){
+                        deferred.resolve(success.data);
+                    },function(error,status){
+                        //let the function caller know the error
+                        deferred.reject(error);
+                    });
+                    return deferred.promise;
                 }
 
 
@@ -1339,7 +1355,6 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
             return $q(function(resolve, reject) {
                 Upload.upload({url:'/signup',method: 'POST',data:user }).then(function(result) {
                     if (result.data.success) {
-                        console.log(result.data.user_profils)
                         resolve(result.data.msg);
                     } else {
 

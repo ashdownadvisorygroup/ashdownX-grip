@@ -217,14 +217,6 @@ router.get('/profil/:profil',passport.authenticate('jwt', { session: false}), fu
 router.post('/profils',mustBe.authorized("admin"),passport.authenticate('jwt', { session: false}), function (req, res, next) {
     var token = getToken(req.headers);
     if (token) {
-        console.log(req.body.categorie);
-        req.checkBody('nom', 'Veuillez renseigne les nom').notEmpty();
-        req.checkBody('nom', 'Veuillez ajouter des caractere aux nom').len(4, 60);
-        var errors = req.validationErrors();
-        if (errors) {
-            res.json(errors, 422);
-            return;
-        }
         var prf = new Profil();
         prf.nom=req.body.nom;
         prf.description=req.body.description;

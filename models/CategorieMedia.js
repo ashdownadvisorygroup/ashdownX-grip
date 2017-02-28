@@ -4,7 +4,6 @@
 var mongoose  = require('mongoose');
 
 var CategorieMediaSchema   = new mongoose.Schema({
-    rang: String,
     categorie: { type: mongoose.Schema.Types.ObjectId, ref: 'Categorie' },
     media:{ type: mongoose.Schema.Types.ObjectId, ref: 'Media' }
 });//permet de savoir le rang d'un media appartenant à un profil donné

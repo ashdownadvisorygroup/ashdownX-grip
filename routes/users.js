@@ -431,7 +431,6 @@ router.post('/signup', passport.authenticate('jwt', {session: false}), function 
                 return;
             }
             var name = "";
-
             if (req.files != undefined) {
                 req.files.forEach(function (file) {
 
@@ -442,10 +441,7 @@ router.post('/signup', passport.authenticate('jwt', {session: false}), function 
                     fs.writeFile(filepath + filename, file.buffer);
                 });
             }
-
-
             newUser.photo = name;
-
             newUser.save(function (err, newUser) {
                 if (err) {
                     console.log(err);
@@ -454,37 +450,6 @@ router.post('/signup', passport.authenticate('jwt', {session: false}), function 
                 if (req.body.master) {
                     var list=[],list2=[];
                     newUser.master.push.apply(newUser.master, req.body.master);
-                    CategorieProfil.find()
-                        .where('profil').in(newUser.master)
-                        .exec(function (err, cat){
-                            cat.forEach(function(c){
-                                  list.push(c.categorie.toString())
-                            })
-                            var unique = list.filter(function(elem, index, self) {
-                                return index == self.indexOf(elem);
-                            })
-                            unique.forEach(function(c){
-                                c=mongoose.Types.ObjectId(c);
-                            })
-                            CategorieMedia.find()
-                                .where('categorie').in(unique)
-                                .exec(function (err, med){
-                                    med.forEach(function(m){
-                                        if(list2.indexOf(m.media) == -1){
-                                            list2.push(m.media);
-                                        }
-                                    })
-                                   var medUser = MediaUser.collection.initializeUnorderedBulkOp({useLegacyOps: true});
-                                    list2.forEach(function (id) {
-                                        medUser.insert({user: newUser._id, media: id});
-                                    });
-                                    medUser.execute(function(err,res){
-                                        if(err){
-                                            console.log(err)
-                                        }
-                                    })
-                                })
-                        })
                 }
                 if (req.body.encadreur) {
                     newUser.encadreur.push.apply(newUser.encadreur, req.body.encadreur);
@@ -500,9 +465,10 @@ router.post('/signup', passport.authenticate('jwt', {session: false}), function 
                      */
                     var profUser = UserProfil.collection.initializeUnorderedBulkOp({useLegacyOps: true});
                     var profUser2 = UserProfil.collection.initializeUnorderedBulkOp({useLegacyOps: true});
+                    var profUser3 = UserProfil.collection.initializeUnorderedBulkOp({useLegacyOps: true});
                     if(req.body.profil){
                         req.body.profil.forEach(function (prof_id) {
-                            profUser.insert({user: newUser._id, profil:  mongoose.Types.ObjectId(prof_id), progression: '0',encadre:'false'});
+                            profUser.insert({user: newUser._id, profil:  mongoose.Types.ObjectId(prof_id), progression: '0',encadre:'false',master:'false'});
                         });
                         profUser.execute(function (er, result) {
                             if (er) {
@@ -511,9 +477,19 @@ router.post('/signup', passport.authenticate('jwt', {session: false}), function 
                             }
                         });
                     }
+                    if(req.body.master){
+                        req.body.master.forEach(function (prof_id) {
+                            profUser3.insert({user: newUser._id, profil:  mongoose.Types.ObjectId(prof_id), progression: '0',encadre:'false',master:"true"});
+                        });
+                        profUser3.execute(function(err,res){
+                            if(err){
+                                console.log(err)
+                            }
+                        })
+                    }
                     if(req.body.encadreur){
                         req.body.encadreur.forEach(function (prof_id) {
-                            profUser2.insert({user: newUser._id, profil:  mongoose.Types.ObjectId(prof_id), progression: '0',encadre:'true'});
+                            profUser2.insert({user: newUser._id, profil:  mongoose.Types.ObjectId(prof_id), progression: '0',encadre:'true',master:'false'});
                         });
                         profUser2.execute(function(err,res){
                             if(err){
@@ -528,14 +504,17 @@ router.post('/signup', passport.authenticate('jwt', {session: false}), function 
                             pass: 'phibi1234'
                         }
                     });
+                    var h=appRoot + '\emails\welcome\Ashdown Advisory Group.png';
                     var data = {
                         nom: newUser.name,
                         prenom: newUser.email,
-                        password: req.body.password
+                        password: req.body.password,
+                        photo:'unique@kreata.ee',
+                        photo2:'c:/Users/HP8470P/WebstormProjects/ashdownX-grip/emails/welcome/GRIP_Logo.png',
+                        photo1:appRoot + '/emails/welcome/Ashdown Advisory Group.png'
                     };
                     var content=ejs.renderFile(__dirname + '/../emails/welcome/welcome.ejs', data, function (err, data) {
                         var mailOptions = {
-                     forceEmbeddedImages: true,
                             to: newUser.email,
                             from: 'phibi.noubissi@gmail.com',
                             subject: 'Compte crée',
@@ -547,7 +526,7 @@ router.post('/signup', passport.authenticate('jwt', {session: false}), function 
                             },{
                                 filename: 'Ashdown Advisory Group.png',
                                 path: appRoot + '/emails/welcome/Ashdown Advisory Group.png',
-                                cid: 'logo_ashdown' //same cid value as in the html img src
+                                cid: 'unique@kreata.ee' //same cid value as in the html img src
                             },{   // file on disk as an attachment
                                 filename: 'welcome.txt',
                                 path: __dirname + '/../emails/welcome/welcome.txt' // stream this file
@@ -602,7 +581,6 @@ router.put('/user/:user', passport.authenticate('jwt', {session: false}), functi
             }
             var name;
             var obj = req.body;
-            console.log(req.files)
             if (req.files == undefined || req.files.length == 0) {
                 delete obj.photo;
             }
@@ -673,7 +651,7 @@ router.get('/users', passport.authenticate('jwt', {session: false}), function (r
 });
 router.post('/authenticate', function (req, res) {//login
 
-    User.findOne({name: req.body.name/*,roups: req.body.groups*/}, function (err, user) {
+    User.findOne({email: req.body.email/*,roups: req.body.groups*/}, function (err, user) {
         if (err || !user) {
             res.send({success: false, msg: 'Authentication failed. User not found.'});
         } else {
@@ -696,8 +674,6 @@ router.post('/authenticate', function (req, res) {//login
                             if (err) {
                                 return next(err);
                             }
-
-
                             var users = {
                                 success: "",
                                 name: "",

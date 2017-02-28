@@ -113,8 +113,9 @@ app.directive('starRating',
                 };
 
                 scope.toggle = function(index) {
-                    angular.forEach(ProfilFactory.allMedias,function(media){
+                    angular.forEach(ProfilFactory.allMedias,function(media){//on récupère tous les médias du master en cours car on a envoyé ses profils et récupéré les médias de ces profils
                         if(media._id==attrs.objectid){
+                            console.log(media._id==attrs.objectid)
                             scope.ratingValue = index + 1;
                             scope.onRatingSelected({
                                 rating : index + 1

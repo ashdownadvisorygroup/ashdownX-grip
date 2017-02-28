@@ -240,7 +240,7 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
             var sat=[];
             $scope.currentPage= $scope.currentPageProf=1;
             $scope.step=$scope.stepProf=2;
-            var medPerPage= 10,medPerPage_prof=3;
+            var medPerPage= 8,medPerPage_prof=3;
             $scope.quantity = 1;
             $scope.aff=false;
             $scope.determinateValue=40;

@@ -7,7 +7,7 @@ var CategorieSchema   = new mongoose.Schema({
     nom: String,
     description: String,
     date: { type: Date, default: Date.now },
-    medias: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Media' }],
+    medias: [{ type: mongoose.Schema.Types.Mixed, ref: 'Media' }],
     categorieprofil : [{type : mongoose.Schema.Types.ObjectId, ref : "CategorieProfil"}],
     categoriemedia:[{ type: mongoose.Schema.Types.Mixed, ref: 'CategorieMedia' }]
 });

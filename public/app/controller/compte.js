@@ -358,7 +358,9 @@ app.controller('CompteCtrl', ['$scope','$cookieStore',
             $scope.groups = groups;
         });
         $scope.nouveauuser=function(){
+            if(!$scope.utilisateur.photo)$scope.utilisateur.photo =  "../../image/user.png";
             AuthService.register($scope.utilisateur).then(function(answer) {
+                console.log(answer)
                 text="compte crée et email recu";
                 $scope.showActionToast(text);
             }, function(err) {

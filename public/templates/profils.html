@@ -53,8 +53,12 @@
                     <md-card class="cardprofil" style="color:black;">
                         <md-card-title>
                             <md-card-title-text  style="cursor:pointer ;padding-left: 13px">
-                                <span class="md-headline" ng-click="triscat(prf);">Nom:{{prf.nom}}</span>
-                                <span class="md-subhead" ng-click="triscat(prf);">Description:{{prf.description}}</span>
+                                <span class="md-headline" ng-click="triscat(prf);">
+                                    Nom:{{prf.nom}}
+                                </span>
+                                <span class="md-subhead" ng-click="triscat(prf);">
+                                    Description:{{prf.description}}
+                                </span>
                             </md-card-title-text>
                         </md-card-title>
                         <md-card-actions layout="row" layout-align="center center" class="cardi">
@@ -69,8 +73,12 @@
                     <md-card class="cardprofcat " >
                         <md-card-title>
                             <md-card-title-text style="cursor:pointer;padding-left: 12px;">
-                                <span class="md-headline"  ui-sref="axgrip.categorie({id:ct._id})">Nom:{{ct.nom}}</span>
-                                <span class="md-subhead" ui-sref="axgrip.categorie({id:ct._id})">Description:{{ct.description}}</span>
+                                <span class="md-headline"  ui-sref="axgrip.categorie({id:ct._id})">
+                                    Nom:{{ct.nom}}
+                                </span>
+                                <span class="md-subhead" ui-sref="axgrip.categorie({id:ct._id})">
+                                    Description:{{ct.description}}
+                                </span>
                             </md-card-title-text>
                         </md-card-title>
                     </md-card>
@@ -144,10 +152,10 @@
                             class="stage_list" flex>
                     <section >
                         <md-subheader id="step10" >Liste des encadreurs</md-subheader>
-                        <md-list class="">
+                        <md-list class="" style="color:white">
                             <md-list-item class="md-3-line list_stage"
                                           ng-repeat="item in profil.userprofil">
-                                <img ng-src="{{item.photo}}?{{$index}}" class="md-avatar" alt="{{item.name}}">
+                                <img ui-sref="axgrip.useraccount({id:item._id})" ng-src="{{item.photo}}?{{$index}}" class="md-avatar" alt="{{item.name}}">
                                 <div class="md-list-item-text">
                                     <a ui-sref="axgrip.useraccount({id:item._id})" style="text-decoration: none;">
                                         <h3 style="color:white;cursor:pointer;font-size: 12px">{{item.name}}</h3>
@@ -165,10 +173,10 @@
                     <section >
                         <md-subheader id="step11">Utilisateurs ayant achevé le profil</md-subheader>
 
-                        <md-list class="">
+                        <md-list class="" style="color:white;">
                             <md-list-item class="md-3-line list_stage"
                                           ng-repeat="i in profil.users">
-                                <img ng-src="{{i.photo}}?{{$index}}" class="md-avatar" alt="{{i.name}}">
+                                <img ui-sref="axgrip.useraccount({id:item._id})" ng-src="{{i.photo}}?{{$index}}" class="md-avatar" alt="{{i.name}}">
                                 <div class="md-list-item-text">
                                     <a ui-sref="axgrip.useraccount({id:i._id})" style="text-decoration: none;">
                                         <h3 style="color:white;cursor:pointer;font-size: 12px">{{i.name}}</h3>

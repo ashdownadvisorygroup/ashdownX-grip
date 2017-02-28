@@ -21,15 +21,15 @@
 
                                 </div>
                                 <div>
-                                    <md-button id="step8" class="button_show" ng-click="ajoutermedia(cat)" aria-label="a">
+                                    <md-button id="step8" style="background-color: transparent" class="card-button" ng-click="ajoutermedia(cat)" aria-label="a">
                                         <md-tooltip>Ajouter un média a la catégorie</md-tooltip>
                                         <md-icon  md-svg-src="../../image/add.svg" class="card-icon"></md-icon>
                                     </md-button>
-                                    <md-button id="step9" permission="['admin']" class="button_show" ng-click="modifiercat(cat)" aria-label="a">
+                                    <md-button id="step9" permission="['admin']" style="background-color: transparent" class="card-button" ng-click="modifiercat(cat)" aria-label="a">
                                         <md-tooltip>Modifier la catégorie</md-tooltip>
                                         <md-icon  md-svg-src="../../image/create-new-pencil-button.svg" class="card-icon"></md-icon>
                                     </md-button>
-                                    <md-button id="step10" permission="['admin']" class="button_show" ng-click="showConfirmdecat($event, cat)" aria-label="a">
+                                    <md-button id="step10" permission="['admin']" style="background-color: transparent" class="card-button" ng-click="showConfirmdecat($event, cat)" aria-label="a">
                                         <md-tooltip>Supprimer la catégorie</md-tooltip>
                                         <md-icon md-svg-src="../../image/rubbish-bin-delete-button.svg" class="card-icon"></md-icon>
                                     </md-button>
@@ -115,7 +115,7 @@
                             <md-card-actions layout="row" layout-align="start center" class="cardi">
                                 <div ng-init="rating = star.rating + 1" ></div>
                                 <div layout="row" class="star-rating" star-rating rating-value="rating" disable="true" readonly="true"
-                                     data-max="5" on-rating-selected="rateFunction(rating,med)" ng-click="rate(med);" ng-model="med.rate"
+                                     data-max="5" on-rating-selected="rateFunction(rating,med)"  ng-model="med.rate.valeur"
                                      objectId="{{med._id}}" ></div>
 
 
@@ -140,11 +140,10 @@
 
                 </div>
             </div>
-            <div flex="10" flex-xs="100" ng-hide="afficheMedia || affichemodifcat" layout="row">
-                <div flex="5"  flex-xs="100" flex-offset-xs="0" flex-offset="85">
-                    <wan-material-paging wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
+            <div flex="10" flex-xs="100" flex-offset-xs="0" ng-hide="afficheMedia || affichemodifcat" layout-align="center center" layout="row">
+                <wan-material-paging wmp-total="total" goto-page="gotoPage()" position="center" current-page="currentPage" step="step">
                     </wan-material-paging>
-                </div>
+
             </div>
 
 

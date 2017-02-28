@@ -73,6 +73,31 @@ router.get('/medias',passport.authenticate('jwt', { session: false}), function (
     }
 
 });
+router.put('/medianotation/:media',passport.authenticate('jwt', { session: false}), function (req, res, next) {
+    var token = getToken(req.headers);
+    if (token) {
+        Media.findById(req.params.media, function (err, client) {
+            if (err) {
+                console.log(err);
+                return next(err);
+            }
+            if (!client) {
+                return next(new Error('can\'t find media'));
+            }
+            client.rate.valeur=Math.ceil((client.rate.valeur*client.rate.nombre+req.body.notation*1)/(client.rate.nombre+1));
+            console.log(client.rate.valeur);
+            client.rate.nombre=client.rate.nombre+1;
+            client.save(function (err, n) {
+                if (err) {
+                    return next(err);
+                }
+                console.log(n);
+              res.json(n);
+            });
+        });
+    }
+
+});
 
 router.get('/media/:media',passport.authenticate('jwt', { session: false}), function (req, res) {
     var token = getToken(req.headers);

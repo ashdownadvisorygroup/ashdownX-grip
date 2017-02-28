@@ -18,6 +18,8 @@ var router = express.Router();
 var multer = require('multer');
 var mongoose = require('mongoose');
 var Categorie = mongoose.model('Categorie');
+var CategorieProfil = mongoose.model('CategorieProfil');
+var UserProfil = mongoose.model('UserProfil');
 var User = mongoose.model('User');
 var Group = mongoose.model('Group');
 var Media = mongoose.model('Media');
@@ -100,47 +102,37 @@ router.get('/mediauser', function (req, res, next) {
 router.get('/categorie/:categorie',passport.authenticate('jwt', { session: false}), function (req, res) {
     var token = getToken(req.headers);
     if (token) {
-        var d;var j=0;
-        CategorieMedia.find()
-            .populate('media')
-            .exec(function (errmed, result){
-                if (errmed) {
-                        return next(errmed);
-                    }
-                    d= req.categorie;
-                   d.medias = [];
-                var v=[];
-                    var taille=result.length;
-                    for(var i = 0; i<taille; i++) {
-                        if(result[i].categorie==req.params.categorie){
-                            if(result[i].media){
-                                d.medias[j]=result[i].media;
-                                v.push(result[i].media._id)//pour récupérer tous les médias de la catégorie
-                                j++;
-                            }
-                        }
-                    }
-                console.log(typeof v[0])
-
+        var d;var j=0;var prof=[];
+        CategorieProfil.find({"categorie": req.params.categorie})
+            .exec(function(err,s){
+                s.forEach(function(r){
+                    prof.push(r.profil)
+                })
+                d= req.categorie;
                 d.categoriemedia=[];
-                MediaUser.find()
-                    .where('media').in(v)
+                CategorieMedia.find({"categorie": req.params.categorie})
+                    .populate('media')
+                    .exec(function(err,rs){
+                        rs.forEach(function(dat) {
+                            d.medias.push(dat.media);//pour récupérer tous les médias de la dite catégorie en prenant les master de tous ses médias
+                        });
+                    })
+                UserProfil.find({"profil": {$in: prof}})
+                    .where('master').equals('true')//sélections de tous les conseillers de la catégorie
                     .populate('user')
-                    .exec(function (errmed, ofmed){
-                        if (errmed) {
-                            return next(errmed);
-                        }
-                        console.log(ofmed)
+                    .exec(function(err,usprof){
+                        if(err)console.log(err)
                         var list=[];
-                        ofmed.forEach(function(dat) {
+                        usprof.forEach(function(dat) {
+                            if(list.indexOf(dat.user))
                             list.push(dat.user);//pour récupérer tous les master de la dite catégorie en prenant les master de tous ses médias
                         });
                         d.categoriemedia=list;
-                       // res.json(d.categoriemedia)
+                        //console.log(d)
                         res.json(d);
-                    });
+                    })
 
-                });
+            })
     }
 
 });

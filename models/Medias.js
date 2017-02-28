@@ -11,7 +11,11 @@ var MediaSchema   = new mongoose.Schema({
     type: String,
     date: { type: Date, default: Date.now },
     creator:{type : mongoose.Schema.Types.ObjectId, ref : "User"},
-    rate:{type: Number, default: 0},
+    rate:{
+        //type: Number, default: 0,
+            valeur: Number,default:0,//valeur moyenne de la notation du média
+            nombre:  Number,default:0//nombre de ceux qui ont déjà noté
+    },
     readed: {type: Number, default: 0},
     downloaded: {type: Number, default: 0},
     mediauser : [{type : mongoose.Schema.Types.ObjectId, ref : "MediaUser"}],

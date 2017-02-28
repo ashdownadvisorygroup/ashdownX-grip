@@ -373,11 +373,13 @@ app.controller('CategoriesCtrl', ['$scope','$cookieStore',
         $scope.creationmedia= function () {
             if(!$scope.mediai.logo)$scope.mediai.logo="data/logos/photo0.png";
             $scope.mediai.categorie=indik;
-            console.log($scope.mediai)
             if(["mp4", "MP4","mp3","MP3","pdf"].includes(fileExtension2)){
                 CategorieFactory.ajouterlivre($scope.mediai).then(function (media) {
+                    console.log(media)
                     text="reussi media crée";
                     $scope.showActionToast(text);
+                },function(err){
+                    console.log(err)
                 });
             }
             else{
@@ -389,34 +391,15 @@ app.controller('CategoriesCtrl', ['$scope','$cookieStore',
             }
         }
         //////envoie de la notation du master au serveur
-        $scope.rateFunction = function(rating,med) {
-            var usmed={};
-            usmed.media=med._id;
-            usmed.user=$cookieStore.get('user').id;
-            UserFactory.getOnemediauser(usmed).then(function(usmd)//recuperation d'un mediauser:user+:media unique
-            {
-                if(usmd==null || usmd==undefined){
-                    usmd={media:"",user:"",notation:""};
-                    usmd.media=med._id;
-                    usmd.user=$cookieStore.get('user').id;
-                    usmd.notation=rating;
-                    UserFactory.creerusermedia(usmd).then(function (us) {//dans le cas ou il n'existe pas on cree un
-                        UserFactory.getmedianotation(med._id).then(function(s){//mise a jour du champ rate de la table media
-                            text="notation enregistrée";
-                            $scope.showActionToast(text);
-                        })
-                    })
-                }
-                else{
-                    usmd.notation=rating;
-                    UserFactory.updateusermedia(usmd).then(function (us) {//dans le cas ou il existe on update;
-                        UserFactory.getmedianotation(med._id).then(function(s){
-                            text="notation enregistrée";
-                            $scope.showActionToast(text);
-                        })
-                    })
-                }
-            });
+       $scope.rateFunction = function(rating,med) {
+           var usmed={notation:rating,id:med._id};
+            LivreFactory.updatenotation(usmed).then(function(m){
+                    console.log(m)
+                text="notation enregistrée";
+                $scope.showActionToast(text);
+            },function(err){
+                console.log(err);
+            })
         };
 
     }])

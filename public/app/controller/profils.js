@@ -74,11 +74,16 @@ app.controller('ProfilsCtrl', ['$scope','$cookieStore',
         var tab =[],iduser,medPerPage=8;$scope.currentPage=1;$scope.step=5;
         ProfilFactory.get().then(function (profils) {
             $scope.profils = profils;
+            angular.forEach($scope.profils,function(dat){
+                dat.nom=text_truncate(dat.nom,20)
+                dat.description=text_truncate(dat.description,15);
+            })
             tab=$scope.profils;
             ProfilFactory.getcategorieProfils(tab,iduser).then(function () {
                 $scope.profile= ProfilFactory.profsCats;
                 angular.forEach($scope.profile,function(dat){
-                    dat.description=text_truncate(dat.description,46);
+                    dat.nom=text_truncate(dat.nom,20)
+                    dat.description=text_truncate(dat.description,40);
                 })
                 $scope.total = Math.ceil(ProfilFactory.profsCats.length/medPerPage);
                 $scope.profile= ProfilFactory.profsCats.slice(0,medPerPage);

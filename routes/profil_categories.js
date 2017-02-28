@@ -29,7 +29,20 @@ const addSeed = require('mongoose-plugin-seed').addSeed;
 const mongooseSeed = require('mongoose-plugin-seed').seed;
 var Group = mongoose.model('Group');
 
+function removeDuplicates(arr, prop) {
+    var new_arr = [];
+    var lookup  = {};
 
+    for (var i in arr) {
+        lookup[arr[i][prop]] = arr[i];
+    }
+
+    for (i in lookup) {
+        new_arr.push(lookup[i]);
+    }
+
+    return new_arr;
+}
 router.param('categorie_profil', function (req, res, next, id) {
     if (id == undefined) {
         return next(new Error('categorie_profil undifined'));
@@ -62,32 +75,27 @@ router.post('/categorie_profils/user_master',passport.authenticate('jwt', { sess
             .exec(function (erruser, ofuser) {
             if (erruser) {
                 return next(erruser);
-            }
-                var list=[];
+            }var list=[];
                 ofuser.forEach(function(dat) {
                     if(dat.categorie){
                         if(list.indexOf(dat.categorie._id) == -1){
-                            list.push(dat.categorie._id);
+                            list.push(dat.categorie._id);//récupération de toutes les catégories de profils de l'utilisateur en cours
                         }
                     }
-
-               });
+                });
+                console.log(list);
                 var v=[];
-                CategorieMedia.find()
+                CategorieMedia.find({"categorie": {$in: list}})//récupération de tous les médias de catégories de l'utilisateur den cours
                     .populate('media')
                     .exec(function (errmed, ofmed){
                         if (errmed) {
                             return next(errmed);
                         }
-                        for(var i = 0; i<ofmed.length; i++) {
+                      //  Media.find({"categorie": {$in: removeDuplicates(ofmed,"media")}}) permet d'enlever les dupliqués
 
-                            if(list.indexOf(ofmed[i].categorie) == -1){
-                                if(ofmed[i].media){v.push(ofmed[i])}
-
-                            }
-
-                        }
-                        res.json({ofuser:ofuser, ofmed: v});
+                       // console.log(ofmed.length);
+                       // removeDuplicates(ofmed,"media");
+                        res.json({ofuser:ofuser, ofmed: ofmed});
                     });
             });
     }
