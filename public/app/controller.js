@@ -415,6 +415,7 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
             AuthService.login($scope.user).then(function(msg) {
                 $state.go('axgrip.accueil');
             }, function(errMsg) {
+                console.log(errMsg)
                 text="identification incorrect"
                 $scope.showActionToast(text);
                 $state.go('new');

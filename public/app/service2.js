@@ -1372,6 +1372,7 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         $cookieStore.put('user',result.data);
                         resolve(result.data.msg);
                     } else {
+                        console.log(result.data.msg)
                         reject(result.data.msg);
                     }
                 });

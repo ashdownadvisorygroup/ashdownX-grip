@@ -652,8 +652,10 @@ router.get('/users', passport.authenticate('jwt', {session: false}), function (r
 router.post('/authenticate', function (req, res) {//login
 
     User.findOne({email: req.body.email/*,roups: req.body.groups*/}, function (err, user) {
+
         if (err || !user) {
-            res.send({success: false, msg: 'Authentication failed. User not found.'});
+            //res.send({success: false, msg: 'Authentication failed. User not found.'});
+            res.send({success: false, msg: err});
         } else {
             // check if password matches
             user.comparePassword(req.body.password, function (err, isMatch) {
@@ -709,7 +711,8 @@ router.post('/authenticate', function (req, res) {//login
                             res.json(users);
                         });
                 } else {
-                    res.send({success: false, msg: 'Authentication failed. Wrong password.'});
+                   // res.send({success: false, msg: 'Authentication failed. Wrong password.'});
+                    res.send({success: false, msg: err});
                 }
             });
         }
