@@ -141,6 +141,10 @@ app.controller('CategoriesCtrl', ['$scope','$cookieStore',
         /*partie presentation mediatheque*/
         LivreFactory.get().then(function (medias) {
             $scope.medias = medias;
+            angular.forEach($scope.medias,function(dat){
+                dat.nom=text_truncate(dat.nom,10);
+            })
+
             $scope.changevalue=function(val){
                     if(val=="tt"){
                         $scope.medias = medias;
@@ -199,6 +203,14 @@ app.controller('CategoriesCtrl', ['$scope','$cookieStore',
                 }
                 else {
                     $scope.medias=$filter('filter')(medias,{ type: val });
+                    $scope.total = Math.ceil($scope.medias.length/medPerPage);
+                    afficher_ecran($scope.medias);
+                    var tmpe=$scope.medias;
+                    $scope.medias=  $scope.medias.slice(0,medPerPage);
+                    $scope.gotoPage = function() {
+                        var i=$scope.currentPage;
+                        $scope.medias= tmpe.slice(medPerPage*i-medPerPage,medPerPage*i);
+                    };
                 }
 
             }
@@ -440,6 +452,9 @@ app.controller('CategoriesCtrl', ['$scope','$cookieStore',
         var medPerPage=10;
         CategorieFactory.getOne($stateParams.id).then(function (categories) {//obtention de toutes les categories
             $scope.medias = categories.medias;
+            angular.forEach($scope.medias,function(dat){
+                dat.nom=text_truncate(dat.nom,13);
+            })
             if($scope.medias.length==0){
                 $scope.medias=[];
             }
@@ -499,6 +514,14 @@ app.controller('CategoriesCtrl', ['$scope','$cookieStore',
                 }
                 else {
                     $scope.medias=$filter('filter')(categories.medias,{ type: val });
+                    $scope.total = Math.ceil($scope.medias.length/medPerPage);
+                    afficher_ecran($scope.medias);
+                    var tempe=$scope.medias;
+                    $scope.medias=  $scope.medias.slice(0,medPerPage);
+                    $scope.gotoPage = function() {
+                        var i=$scope.currentPage;
+                        $scope.medias= tmpe.slice(medPerPage*i-medPerPage,medPerPage*i);
+                    };
                 }
 
             }

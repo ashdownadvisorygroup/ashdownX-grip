@@ -7,14 +7,14 @@ var Profil = mongoose.model('Profil');
 addSeed(Profil, {
     seed: function () {
         return [{
-            nom: "Développement web Laravel",
+            nom: "Développement Laravel",
             description: "Développement d'applications web avec le framework Laravel",
             objectifs: "Développer avec le framework Laravel"
         }, {
-            nom: "Développement Web Mean",
+            nom: "Développement Mean",
             description: "Développement web avec la base de données Nosql MongodB",
             objectifs: "Construire des applications web avec le Framework Expressgrip" +
-            "Utiliser la base de données MongoDB avec Nodegrip"
+            "Utiliser la base de données MongoDB avec Node"
         }, {
             nom: "Android",
             description: "programmation d'applications Android",
@@ -23,7 +23,8 @@ addSeed(Profil, {
         }, {
             nom: "Programmation Web",
             description: "Programmation web",
-            objectifs: "maitriser les bases de la programmation webgripcréer des applications web et des sites de façon professionnelle"
+            objectifs: "maitriser les bases de la programmation webgripcréer" +
+            " des applications web et des sites de façon professionnelle"
         }];
     }
 });

@@ -411,7 +411,7 @@ addSeed(Media, {
 
         }, {
             nom: "Média_php",
-            logo:"data/logos/photo0.png",
+            logo:"data/logos/youtube.png",
             description: "c'est le livre 3 vidéo youtube",
             link: "https://www.youtube.com/watch?v=YjtjGaZtQCg",
             rate:{
@@ -425,7 +425,7 @@ addSeed(Media, {
 
         }, {
             nom: "Média_angularmaterial",
-            logo:"data/logos/photo0.png",
+            logo:"data/logos/youtube.png",
             description: "c'est le livre 3 vidéo youtube",
             link: "https://www.youtube.com/watch?v=gOSdZJ7gpOc",
 
@@ -440,7 +440,7 @@ addSeed(Media, {
 
         }, {
             nom: "Média_js1",
-            logo:"data/logos/photo0.png",
+            logo:"data/logos/youtube.png",
             description: "c'est le livre 3 vidéo youtube",
             link: "https://www.youtube.com/watch?v=cQZOfeKrWDs",
             rate:{
@@ -454,7 +454,7 @@ addSeed(Media, {
 
         }, {
             nom: "Média_JQuery1",
-            logo:"data/logos/photo0.png",
+            logo:"data/logos/youtube.png",
             description: "c'est le livre 3 vidéo youtube",
             link: "https://www.youtube.com/watch?v=N3ii2HxJAHo",
             rate:{

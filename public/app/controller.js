@@ -275,6 +275,12 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
 
                  };
              $scope.allmedias=ProfilFactory.allMedias;//tous les medias des profils de l'utilisateur
+                 angular.forEach($scope.allmedias,function(dat){
+                     if(dat){
+                         console.log(dat)
+                         dat.nom=text_truncate(dat.nom,12);//réduire la taille de titre du média
+                     }
+                 })
              $scope.total = Math.ceil(ProfilFactory.allMedias.length/medPerPage);
              $scope.allmedias= ProfilFactory.allMedias.slice(0,medPerPage);
              $scope.gotoPage = function() {
@@ -432,6 +438,11 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
             $scope.affiche3= false;
 
         };
+        UserFactory.get().then(function(msg){
+            console.log(msg)
+        },function(err){
+            console.log(err)
+        })
         var pourToken;
         $scope.forgot=function(){
             UserFactory.forgot($scope.user).then(function(msg) {
@@ -446,35 +457,39 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
                 $scope.newUser2();
             });
         };
-        $http.get('/check-reset').then(function(data){
-            var data=data.data;
-            if(data){
-                text="vous êtes autorisés à modifier le mot de passe";
-                $scope.showActionToast(text);
-                $scope.affiche=false;
-                $scope.affiche2=false;
-                $scope.affiche3=true;
-                UserFactory.getToken($cookieStore.get('moment')).then(function(response){
-                    $scope.updatespassword=function(){
-                        UserFactory.updatepassword($scope.user,$cookieStore.get('moment')).then(function(msg) {
-                            text="mot de passe reinitialisé";
-                            $scope.showActionToast(text);
-                            $scope.affiche= true;
-                            $scope.affiche3= false;
-                        }, function(errMsg) {
-                            alert('mauvais');
-                        });
-                    }
-                });
-            }
-            else{
-                text="désolé email incorrect";
-                $scope.showActionToast(text);
-                $scope.affiche=true;
-                $scope.affiche2=false;
-                $scope.affiche3=false;
-            }
-        });
+        if($cookieStore.get('moment')){
+            $http.get('/check-reset').then(function(data){
+                var data=data.data;
+                if(data){
+                    text="vous êtes autorisés à modifier le mot de passe";
+                    $scope.showActionToast(text);
+                    $scope.affiche=false;
+                    $scope.affiche2=false;
+                    $scope.affiche3=true;
+                    UserFactory.getToken($cookieStore.get('moment')).then(function(response){
+                        $scope.updatespassword=function(){
+                            UserFactory.updatepassword($scope.user,$cookieStore.get('moment')).then(function(msg) {
+                                text="mot de passe reinitialisé";
+                                $scope.showActionToast(text);
+                                $scope.affiche= true;
+                                $scope.affiche3= false;
+                                $cookieStore.remove('moment');
+                            }, function(errMsg) {
+                                alert('mauvais');
+                            });
+                        }
+                    });
+                }
+                else{
+                    text="désolé email incorrect";
+                    $scope.showActionToast(text);
+                    $scope.affiche=true;
+                    $scope.affiche2=false;
+                    $scope.affiche3=false;
+                }
+            });
+}
+
 
 });
 

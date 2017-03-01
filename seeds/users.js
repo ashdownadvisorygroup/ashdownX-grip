@@ -19,14 +19,14 @@ addSeed(User, {
             email:"admin@gmail.com",
             photo:"data/photos/photo1.png"
         }, {
-            name: "Vanex",
+            name: "Vanex Mbeunang",
             password:"vanex",
             groups:[groups[1]],
             profil:[profil[0],profil[1],profil[2]],
             email:"vanexmbeunang@gmail.com",
             photo:"data/photos/photo2.png"
         }, {
-            name: "James",
+            name: "James Assiene",
             password:"james",
             groups:[groups[1]],
             profil:[profil[1],profil[3]],
@@ -35,7 +35,7 @@ addSeed(User, {
 
 
         }, {
-            name: "arnaud",
+            name: "Arnaud Tchana",
             password:"arnaud",
             groups:[groups[0]],
             encadreur:[profil[1],profil[2]],
@@ -43,7 +43,7 @@ addSeed(User, {
             email:"arnaud@gmail.com",
             photo:"data/photos/photo5.png"
         }, {
-            name: "wilfried",
+            name: "Wilfried NDJATHE",
             password:"wilfried",
             groups:[groups[0]],
             encadreur:[profil[3],profil[1]],

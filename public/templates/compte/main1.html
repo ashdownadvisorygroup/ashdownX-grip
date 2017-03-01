@@ -3,6 +3,12 @@
         <div flex layout="column" style="background-color: rgb(51,54,64);border-right: 2px solid rgb(5,170,245);" hide-xs>
             <input id="step6" ng-model="searchprofcat" class="reduceSize" style="text-align: center" placeholder="entrer la recherche">
             <div style="text-align: center"><h3>Liste des profils</h3></div>
+            <div   ng-if="profile.length==0">
+                <h2>
+                    Aucun profil de
+                    <p style="text-align: center">formation</p>
+                </h2>
+            </div>
             <ul style="overflow-y: auto;min-height: 455px;" id="step7">
                 <li style="display: block;cursor:pointer;" class="un" ui-sref="axgrip.profil({id:prf._id})"
                     ng-repeat="prf in filteredprofile=( profile |filterBy: ['nom','description','objectifs']:searchprofcat)">
@@ -33,6 +39,7 @@
                 </li>
 
             </ul>
+
         </div>
     </div>
 </div>

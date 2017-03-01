@@ -12,12 +12,12 @@
                 {{profil.nom}}
                 <md-divider></md-divider>
             </div>
-            <div flex="40" >
+            <div flex="40" style="overflow-y: auto;">
                 <u class="descriptioncat_med">Description:</u><br>
                 {{profil.description}}
                 <md-divider></md-divider>
             </div>
-            <div flex="40" >
+            <div flex="40" style="overflow-y: auto;" >
                 <u class="descriptioncat_med">Objectifs du profil:</u><br>
 
                 <ol>
@@ -62,7 +62,7 @@
                             </md-card-title-text>
                         </md-card-title>
                         <md-card-actions layout="row" layout-align="center center" class="cardi">
-                            <md-button permission="['admin']"  class="card-button" ng-click="showConfirmdelprof($event,prf)" aria-label="a">
+                            <md-button permission="['admin']"  style="background-color: transparent" class="card-button" ng-click="showConfirmdelprof($event,prf)" aria-label="a">
                                 <md-tooltip>Supprimer le profil</md-tooltip>
                                 <md-icon md-svg-src="../../image/rubbish-bin-delete-button.svg" class="card-icon"></md-icon>
                             </md-button>
@@ -154,7 +154,7 @@
                         <md-subheader id="step10" >Liste des encadreurs</md-subheader>
                         <md-list class="" style="color:white">
                             <md-list-item class="md-3-line list_stage"
-                                          ng-repeat="item in profil.userprofil">
+                                          ng-repeat="item in profil.userprofil | unique: 'name'">
                                 <img ui-sref="axgrip.useraccount({id:item._id})" ng-src="{{item.photo}}?{{$index}}" class="md-avatar" alt="{{item.name}}">
                                 <div class="md-list-item-text">
                                     <a ui-sref="axgrip.useraccount({id:item._id})" style="text-decoration: none;">
@@ -175,7 +175,7 @@
 
                         <md-list class="" style="color:white;">
                             <md-list-item class="md-3-line list_stage"
-                                          ng-repeat="i in profil.users">
+                                          ng-repeat="i in profil.users | unique: 'name'">
                                 <img ui-sref="axgrip.useraccount({id:item._id})" ng-src="{{i.photo}}?{{$index}}" class="md-avatar" alt="{{i.name}}">
                                 <div class="md-list-item-text">
                                     <a ui-sref="axgrip.useraccount({id:i._id})" style="text-decoration: none;">

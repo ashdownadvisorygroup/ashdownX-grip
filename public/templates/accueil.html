@@ -65,6 +65,11 @@
                         </li>
 
                     </ul>
+                    <div  style="text-align: center" ng-if="profile.length==0">
+                        <h1>
+                            Aucun profil de formation
+                        </h1>
+                    </div>
                 </div>
 
                 <div flex="10" flex-xs="100" layout="row" hide-gt-xs>
@@ -116,6 +121,11 @@
                             </li>
 
                         </ul>
+                    </div>
+                    <div layout="column" layout-align="center center" style="text-align: center" ng-if="profile.length==0">
+                        <h2>
+                            Aucun profil de formation
+                        </h2>
                     </div>
 
 
@@ -212,9 +222,17 @@
                         </md-card>
                     </div>
                 </div>
+                <div  layout="column" layout-align="center center" style=" padding-left:300px" ng-if="profile.length==0">
+                    <h1><strong>
+                        Bienvenu dans la Plateforme
+                    </strong>
+
+                    </h1>
+                </div>
 
             </div>
-            <div flex="10" layout="row" hide-xs>
+
+            <div flex="10" ng-if="profile.length !=0" layout="row" hide-xs>
                 <div flex="50"></div>
                 <div flex="50">
                     <wan-material-paging wmp-total="total" goto-page="gotoPage()" position="center"

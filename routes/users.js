@@ -651,7 +651,8 @@ router.get('/users', passport.authenticate('jwt', {session: false}), function (r
 });
 router.post('/authenticate', function (req, res) {//login
 
-    User.findOne({email: req.body.email/*,roups: req.body.groups*/}, function (err, user) {
+    User.findOne({email: req.body.email/*,roups: req.body.groups*/},
+        function (err, user) {
 
         if (err || !user) {
             //res.send({success: false, msg: 'Authentication failed. User not found.'});

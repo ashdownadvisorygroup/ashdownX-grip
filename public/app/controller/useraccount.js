@@ -49,11 +49,17 @@ app.controller('UseraccountCtrl', ['$scope','$cookieStore',
                     ProfilFactory.getcategorieProfils(tab,iduser).then(function () {
                         $scope.profile= ProfilFactory.profsCats;
                 $scope.allmedias=ProfilFactory.allMedias;//tous les medias des profils de l'utilisateur
+                        angular.forEach($scope.allmedias,function(dat){
+                            if(dat){
+                                dat.nom=text_truncate(dat.nom,10);//réduire la taille de titre du média
+                            }
+                        })
                 $scope.total = Math.ceil(ProfilFactory.allMedias.length/medPerPage);
                 $scope.allmedias= ProfilFactory.allMedias.slice(0,medPerPage);
                 $scope.gotoPage = function() {//pagination
-                    var i=$scope.currentPage;
+                    var i=$scope.currentPage;//il ya un problème à ce niveau
                     $scope.allmedias= ProfilFactory.allMedias.slice(medPerPage*i-medPerPage,medPerPage*i);
+                    afficher_ecran($scope.allmedias)
                 };
                 $scope.longueur=ProfilFactory.allMedias.length;
                 afficher_ecran($scope.allmedias)
@@ -79,6 +85,7 @@ app.controller('UseraccountCtrl', ['$scope','$cookieStore',
         $scope.tri=function(cat,prof){
             if(CategorieFactory.currentCat != cat) {
                 $scope.allmedias=cat.medias;
+                afficher_ecran($scope.allmedias)
                 CategorieFactory.currentCat = cat;
             }
             $scope.selected = [];

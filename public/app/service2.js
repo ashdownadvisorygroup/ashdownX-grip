@@ -813,7 +813,8 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         method: 'GET',
                         url: '/profil/'+id
                     }).then(function(success){
-                        success.data.objectifs=success.data.objectifs.split(factory.valsplit);
+                        console.log(typeof success.data.objectifs)
+                        if(success.data.objectifs)success.data.objectifs=success.data.objectifs.split(factory.valsplit);
                             //ici on recupère la chaine de caractère et on la rend sous forme de tableau pour pouvoir afficher ç l'ecran
                         deferred.resolve(success.data);
                     },function(error,status){
@@ -847,7 +848,9 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         factory.allMedias=groupeBy(success.data.ofuser,success.data.ofmed).alm;
                         factory.profsCats=groupeBy(success.data.ofuser,success.data.ofmed).pc;
                         angular.forEach(factory.profsCats,function(dat){
-                            dat.objectifs=dat.objectifs.split(factory.valsplit);
+                            console.log(dat.objectifs);
+                            console.log(typeof dat.objectifs);
+                            if(dat.objectifs)dat.objectifs=dat.objectifs.split(factory.valsplit);
                             //ici on recupère la chaine de caractère et on la rend sous forme de tableau pour pouvoir afficher ç l'ecran
                         })
                         //sharedProfils.setProfils(factory.profsCats);

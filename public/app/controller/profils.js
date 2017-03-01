@@ -167,8 +167,10 @@ app.controller('ProfilsCtrl', ['$scope','$cookieStore',
             $scope.ChangeEvent = IntroFactory.changeEvent;
             var tab =[],iduser,medPerPage=6;$scope.currentPage=1;$scope.step=5;
             ProfilFactory.getOne($stateParams.id).then(function (profils) {
+                console.log(profils);
                 $scope.profil = profils;
                 angular.forEach($scope.profil.categorieprofil,function(dat){
+                    dat.nom=text_truncate(dat.nom,15);
                     dat.description=text_truncate(dat.description,46);
                 })
                     $scope.total = Math.ceil(profils.categorieprofil.length/medPerPage);
