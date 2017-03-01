@@ -15,7 +15,6 @@ var groupeBy = function(profcat, catmed) {//fonction qui recupère les profils d
                 }
             }
         }
-
     });
     angular.forEach(profcat, function(pc) {
         if(pc){
@@ -813,7 +812,6 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         method: 'GET',
                         url: '/profil/'+id
                     }).then(function(success){
-                        console.log(typeof success.data.objectifs)
                         if(success.data.objectifs)success.data.objectifs=success.data.objectifs.split(factory.valsplit);
                             //ici on recupère la chaine de caractère et on la rend sous forme de tableau pour pouvoir afficher ç l'ecran
                         deferred.resolve(success.data);
@@ -848,8 +846,6 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         factory.allMedias=groupeBy(success.data.ofuser,success.data.ofmed).alm;
                         factory.profsCats=groupeBy(success.data.ofuser,success.data.ofmed).pc;
                         angular.forEach(factory.profsCats,function(dat){
-                            console.log(dat.objectifs);
-                            console.log(typeof dat.objectifs);
                             if(dat.objectifs)dat.objectifs=dat.objectifs.split(factory.valsplit);
                             //ici on recupère la chaine de caractère et on la rend sous forme de tableau pour pouvoir afficher ç l'ecran
                         })
@@ -908,14 +904,12 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                     factory.loadUserCredentials();
                     var deferred = $q.defer();
                     prof.objectifs=prof.data.join(factory.valsplit)
-                    console.log(prof.objectifs)
                     delete prof.data;
                     $http({
                         method: 'POST',
                         url: '/profils',
                         data: prof
                     }).then(function(success){
-                        console.log(success)
                         deferred.resolve(success.data);
                     },function(error){
                         console.log(error)
@@ -1193,7 +1187,6 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                     });
                     return deferred.promise;
                 }
-
             };
             return factory;
         }])
@@ -1291,7 +1284,6 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                 updatenotation: function(usmed){
                     factory.loadUserCredentials();
                     var deferred = $q.defer();
-                    console.log(usmed);
                     $http({
                         method: 'PUT',
                         url: '/medianotation/'+usmed.id,
@@ -1375,7 +1367,6 @@ app.factory('CategorieFactory', ['$http','$q','Upload',
                         $cookieStore.put('user',result.data);
                         resolve(result.data.msg);
                     } else {
-                        console.log(result.data.msg)
                         reject(result.data.msg);
                     }
                 });

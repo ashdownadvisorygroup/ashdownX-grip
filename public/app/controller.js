@@ -277,7 +277,6 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
              $scope.allmedias=ProfilFactory.allMedias;//tous les medias des profils de l'utilisateur
                  angular.forEach($scope.allmedias,function(dat){
                      if(dat){
-                         console.log(dat)
                          dat.nom=text_truncate(dat.nom,12);//réduire la taille de titre du média
                      }
                  })
@@ -417,7 +416,6 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
         $scope.affiche2=false;
         $scope.affiche3=false;
         $scope.logino = function() {
-            console.log($scope.user)
             AuthService.login($scope.user).then(function(msg) {
                 $state.go('axgrip.accueil');
             }, function(errMsg) {
@@ -438,11 +436,6 @@ app.controller('HeaderCtrl', function($scope,CategorieFactory,UserFactory,GroupF
             $scope.affiche3= false;
 
         };
-        UserFactory.get().then(function(msg){
-            console.log(msg)
-        },function(err){
-            console.log(err)
-        })
         var pourToken;
         $scope.forgot=function(){
             UserFactory.forgot($scope.user).then(function(msg) {
