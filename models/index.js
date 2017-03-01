@@ -5,7 +5,7 @@ require('./Categories');
 require('./Medias');
 require('./Users');
 require('./Groups');
-require('./Profil');
+require('./Profils');
 require('./ProfilCategorie');
 require('./UserMedias');
 require('./CategorieMedia');
