@@ -184,12 +184,13 @@ router.get('/profil/:profil',passport.authenticate('jwt', { session: false}), fu
                             if (!profil_enc) {
                                 return res.json("pas de userprofil correspondant a la recherche");
                             }
-                            d = req.profil;
-                            d.categorieprofil=[];
-                            d.users=list;//liste des utilisateurs qui ont terminé le profil
                             profil_enc.forEach(function(dat) {
-                                d.userprofil.push(dat.user);
+                                list2.push(dat.user);
                             });
+                            d = req.profil;
+                            d.users=list;//liste des utilisateurs qui ont terminé le profil
+                            d.userencadre=list2;
+
                             var taille=result.length;
                             for(var i = 0; i<taille; i++) {
                                 var obj={nom:"",description:"",rang:"",_id:""};

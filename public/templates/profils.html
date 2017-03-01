@@ -154,7 +154,7 @@
                         <md-subheader id="step10" >Liste des encadreurs</md-subheader>
                         <md-list class="" style="color:white">
                             <md-list-item class="md-3-line list_stage"
-                                          ng-repeat="item in profil.userprofil | unique: 'name'">
+                                          ng-repeat="item in profil.userencadre | unique: 'name'">
                                 <img ui-sref="axgrip.useraccount({id:item._id})" ng-src="{{item.photo}}?{{$index}}" class="md-avatar" alt="{{item.name}}">
                                 <div class="md-list-item-text">
                                     <a ui-sref="axgrip.useraccount({id:item._id})" style="text-decoration: none;">

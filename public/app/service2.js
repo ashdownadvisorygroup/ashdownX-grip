@@ -25,7 +25,6 @@ var groupeBy = function(profcat, catmed) {//fonction qui recupère les profils d
                         if (r._id == pc.profil._id)
                             existe = i;
                     }
-
                 });
                 if(existe == -1) {
                     var profil = pc.profil;
@@ -41,7 +40,6 @@ var groupeBy = function(profcat, catmed) {//fonction qui recupère les profils d
                 }
             }
         }
-
     });
     return {pc: result, alm:allMedias};
 };
